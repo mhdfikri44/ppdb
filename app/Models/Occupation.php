@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Occupation extends Model
+{
+    public function guardian(): HasMany
+    {
+        return $this->hasMany(Guardian::class);
+    }
+
+    protected $fillable = [
+        'name'
+    ];
+}

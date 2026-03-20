@@ -1,0 +1,484 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Education;
+use App\Models\Occupation;
+use App\Models\Religion;
+use App\Models\Student;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
+class StudentController extends Controller
+{
+    /**
+     * Menampilkan halaman beranda siswa.
+     */
+    public function index()
+    {
+        $student = Student::with('documents', 'registration')->findOrFail(8);
+        $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
+
+        $reg = $student->registration;
+        $status = [
+            'data'        => $reg->status_data ? 'Lengkap' : 'Belum lengkap',
+            'dokumen'     => $reg->status_dokumen ? 'Lengkap' : 'Belum lengkap',
+            'konfirmasi'  => $reg->is_locked,
+            'pendaftaran' => [
+                'status'  => 'Belum lengkap',
+                'ket'     => '',
+                'warna'   => 'warning',
+                'icon'    => 'file-description'
+            ],
+        ];
+
+        // status pendaftaran
+        if (!$reg->status_data && !$reg->status_dokumen) {
+            $status['pendaftaran']['ket'] = 'Lengkapi data & dokumen terlebih dahulu.';
+        } elseif (!$reg->status_dokumen) {
+            $status['pendaftaran']['ket'] = 'Lengkapi dokumen terlebih dahulu.';
+        } elseif (!$reg->is_locked && $reg->status_verifikasi === 'Pending') {
+            $status['pendaftaran']['status'] = 'Belum konfirmasi';
+            $status['pendaftaran']['ket'] = 'Konfirmasi untuk melanjutkan pendaftaran.';
+            $status['pendaftaran']['icon'] = 'send';
+        } elseif ($reg->is_locked && $reg->status_verifikasi === 'Pending') {
+            $status['pendaftaran']['status'] = 'Sudah konfirmasi';
+            $status['pendaftaran']['ket'] = 'Menunggu verifikasi dari panitia.';
+            $status['pendaftaran']['warna'] = 'info';
+            $status['pendaftaran']['icon'] = 'clock';
+        } elseif ($reg->status_verifikasi === 'Ditolak') {
+            $status['pendaftaran']['status'] = 'Pendaftaran ditolak';
+            $status['pendaftaran']['ket'] = 'Alasan penolakan: ' . $reg->rejected_message;
+            $status['pendaftaran']['warna'] = 'danger';
+            $status['pendaftaran']['icon'] = 'alert-circle';
+        } elseif ($reg->status_verifikasi === 'Disetujui') {
+            $status['pendaftaran']['status'] = 'Pendaftaran disetujui';
+            $status['pendaftaran']['ket'] = 'Selamat ya! Pendaftaranmu sudah disetujui.';
+            $status['pendaftaran']['warna'] = 'success';
+            $status['pendaftaran']['icon'] = 'circle-check';
+        }
+
+        // alur pendaftaran
+        $alur = [
+            'data'       => $reg->status_data ? 'Selesai' : 'Belum Selesai',
+            'dokumen'    => $reg->status_dokumen ? 'Selesai' : 'Belum Selesai',
+            'konfirmasi' => $reg->is_locked ? 'Selesai' : 'Belum Selesai',
+            'verifikasi' => $reg->status_verifikasi
+        ];
+
+        return view('student.pages.beranda', compact('student', 'pasfoto', 'status', 'alur'));
+    }
+
+    /**
+     * Menampilkan halaman registrasi siswa baru.
+     */
+    public function create()
+    {
+        return view('student.register');
+    }
+
+    /**
+     * Simpan data registrasi siswa baru.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nisn' => 'required|unique:students,nisn|digits:10',
+            'nama_lengkap' => 'required|string|max:255',
+            'password' => 'required|string|min:8|max:100',
+            'konfirmasi_password' => 'required|same:password',
+        ]);
+
+        $student = Student::create([
+            'nisn' => $request->nisn,
+            'nama_lengkap' => ucwords(strtolower($request->nama_lengkap)),
+            'password' => Hash::make($request->password)
+        ]);
+
+        $student->guardian->create([]);
+        $student->registration->create([]);
+
+        dd('Registrasi berhasil! Silakan login.');
+    }
+
+    /**
+     * Menampilkan halaman edit data pribadi.
+     */
+    public function edit1(Student $student)
+    {
+        $student->load('registration');
+        $religions = Religion::all();
+        return view('student.pages.identitas1', compact('student', 'religions'));
+    }
+
+    /**
+     * Menampilkan halaman edit data keluarga.
+     */
+    public function edit2(Student $student)
+    {
+        $requiredFields = [
+            'nama_lengkap',
+            'nik',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'jenis_kelamin',
+            'religion_id',
+            'hobi',
+            'cita_cita',
+        ];
+        foreach ($requiredFields as $field) {
+            if (empty($student->$field)) {
+                return back()->with('error', 'Lengkapi dahulu data pribadi.');
+            }
+        }
+
+        $student->load('guardian', 'registration');
+        $student->guardian->penghasilan_ayah = $student->guardian->penghasilan_ayah ? number_format($student->guardian->penghasilan_ayah, 0, ',', '.') : '';
+        $student->guardian->penghasilan_ibu = $student->guardian->penghasilan_ibu ? number_format($student->guardian->penghasilan_ibu, 0, ',', '.') : '';
+        $student->guardian->penghasilan_wali = $student->guardian->penghasilan_wali ? number_format($student->guardian->penghasilan_wali, 0, ',', '.') : '';
+
+        $educations = Education::all();
+        $occupations = Occupation::all();
+        return view('student.pages.identitas2', compact('student', 'occupations', 'educations'));
+    }
+
+    /**
+     * Menampilkan halaman edit data sekolah asal.
+     */
+    public function edit3(Student $student)
+    {
+        $student->load('guardian', 'registration');
+
+        $pribadiRequiredFields = [
+            'nama_lengkap',
+            'nik',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'jenis_kelamin',
+            'religion_id',
+            'hobi',
+            'cita_cita',
+        ];
+        foreach ($pribadiRequiredFields as $field) {
+            if (empty($student->$field)) {
+                return back()->with('error', 'Lengkapi dahulu data pribadi.');
+            }
+        }
+
+        $keluargaRequiredFields = [
+            'anak_keberapa',
+            'jumlah_saudara',
+            'tempat_tinggal',
+            'transportasi',
+            'jarak_tempuh',
+            'waktu_tempuh',
+            'no_kk',
+        ];
+        foreach ($keluargaRequiredFields as $field) {
+            if (empty($student->$field)) {
+                return back()->with('error', 'Lengkapi dahulu data keluarga.');
+            }
+        }
+
+        $orangTuaRequiredFields = [
+            'nama_ayah',
+            'nik_ayah',
+            'tempat_lahir_ayah',
+            'tanggal_lahir_ayah',
+            'father_education_id',
+            'father_occupation_id',
+            'penghasilan_ayah',
+            'hp_ayah',
+            'keterangan_ayah',
+
+            'nama_ibu',
+            'nik_ibu',
+            'tempat_lahir_ibu',
+            'tanggal_lahir_ibu',
+            'mother_education_id',
+            'mother_occupation_id',
+            'penghasilan_ibu',
+            'hp_ibu',
+            'keterangan_ibu',
+        ];
+        foreach ($orangTuaRequiredFields as $field) {
+            if (empty($student->guardian->$field)) {
+                return back()->with('error', 'Lengkapi dahulu data keluarga.');
+            }
+        }
+
+        return view('student.pages.identitas3', compact('student'));
+    }
+
+    /**
+     * Simpan perubahan data pribadi.
+     */
+    public function update1(Request $request, Student $student)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'nik' => 'required|digits:16|unique:students,nik,' . $student->id,
+            'tempat_lahir' => 'required|string|max:50',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:L,P',
+            'religion_id' => 'required|exists:religions,id',
+            'hobi' => 'required|string|max:100',
+            'cita_cita' => 'required|string|max:100',
+            'prestasi' => 'nullable|string|max:255',
+            'penyakit' => 'nullable|string|max:255',
+        ], [
+            'religion_id.required' => 'Agama wajib dipilih.',
+            'religion_id.exists'   => 'Pilihan agama tidak valid.',
+        ]);
+
+        $student->update([
+            'nama_lengkap' => ucwords(strtolower($request->nama_lengkap)),
+            'nik' => $request->nik,
+            'tempat_lahir' => ucwords(strtolower($request->tempat_lahir)),
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'religion_id' => $request->religion_id,
+            'hobi' => ucwords(strtolower($request->hobi)),
+            'cita_cita' => ucwords(strtolower($request->cita_cita)),
+            'prestasi' => ucfirst(strtolower($request->prestasi)),
+            'penyakit' => ucfirst(strtolower($request->penyakit)),
+        ]);
+
+        return redirect()->route('student.edit2', $student->nisn)->with('sukses', 'Berhasil menyimpan data pribadi!');
+    }
+
+    /**
+     * Simpan perubahan data keluarga.
+     */
+    public function update2(Request $request, Student $student)
+    {
+        $request->validate([
+            'anak_keberapa' => 'required|integer|min:1|max:999',
+            'jumlah_saudara' => 'required|integer|min:0|max:999',
+            'tempat_tinggal' => 'required|in:Bersama orang tua,Kos,Lainnya',
+            'transportasi' => 'required|string|max:50',
+            'jarak_tempuh' => 'required|numeric|min:0.1|max:100',
+            'waktu_tempuh' => 'required|integer|min:1|max:300',
+            'no_kk' => 'required|digits:16',
+            'no_kip_pkh_kks_kps' => 'nullable|digits_between:1,30',
+
+            'nama_ayah' => 'required|string|max:255',
+            'nik_ayah' => 'required|digits:16|unique:guardians,nik_ayah,' . ($student->guardian->id),
+            'tempat_lahir_ayah' => 'required|string|max:50',
+            'tanggal_lahir_ayah' => 'required|date',
+            'father_education_id' => 'required|exists:educations,id',
+            'father_occupation_id' => 'required|exists:occupations,id',
+            'penghasilan_ayah' => 'required|string|max:20',
+            'hp_ayah' => 'required|string|max:15',
+            'keterangan_ayah' => 'required|in:Masih Hidup,Meninggal,Cerai',
+
+            'nama_ibu' => 'required|string|max:255',
+            'nik_ibu' => 'required|digits:16|unique:guardians,nik_ibu,' . ($student->guardian->id),
+            'tempat_lahir_ibu' => 'required|string|max:50',
+            'tanggal_lahir_ibu' => 'required|date',
+            'mother_education_id' => 'required|exists:educations,id',
+            'mother_occupation_id' => 'required|exists:occupations,id',
+            'penghasilan_ibu' => 'required|string|max:20',
+            'hp_ibu' => 'required|string|max:15',
+            'keterangan_ibu' => 'required|in:Masih Hidup,Meninggal,Cerai',
+
+            'nama_wali' => 'nullable|string|max:255',
+            'tempat_lahir_wali' => 'nullable|string|max:50',
+            'tanggal_lahir_wali' => 'nullable|date',
+            'wali_education_id' => 'nullable|exists:educations,id',
+            'wali_occupation_id' => 'nullable|exists:occupations,id',
+            'penghasilan_wali' => 'nullable|string|max:20',
+            'hp_wali' => 'nullable|string|max:15',
+        ], [
+            'father_education_id.required' => 'Pendidikan ayah wajib dipilih.',
+            'father_education_id.exists'   => 'Pendidikan ayah tidak valid.',
+            'father_occupation_id.required' => 'Pekerjaan ayah wajib dipilih.',
+            'father_occupation_id.exists'   => 'Pekerjaan ayah tidak valid.',
+
+            'mother_education_id.required' => 'Pendidikan ibu wajib dipilih.',
+            'mother_education_id.exists'   => 'Pendidikan ibu tidak valid.',
+            'mother_occupation_id.required' => 'Pekerjaan ibu wajib dipilih.',
+            'mother_occupation_id.exists'   => 'Pekerjaan ibu tidak valid.',
+
+            'wali_education_id.exists'   => 'Pendidikan wali tidak valid.',
+            'wali_occupation_id.exists'   => 'Pekerjaan wali tidak valid.',
+        ]);
+
+        $student->update([
+            'anak_keberapa' => $request->anak_keberapa,
+            'jumlah_saudara' => $request->jumlah_saudara,
+            'tempat_tinggal' => $request->tempat_tinggal,
+            'transportasi' => ucwords(strtolower($request->transportasi)),
+            'jarak_tempuh' => $request->jarak_tempuh,
+            'waktu_tempuh' => $request->waktu_tempuh,
+            'no_kk' => $request->no_kk,
+            'no_kip_pkh_kks_kps' => $request->no_kip_pkh_kks_kps ? $request->no_kip_pkh_kks_kps : null,
+        ]);
+
+        $student->guardian->update([
+            'nama_ayah' => ucwords(strtolower($request->nama_ayah)),
+            'nik_ayah' => $request->nik_ayah,
+            'tempat_lahir_ayah' => ucwords(strtolower($request->tempat_lahir_ayah)),
+            'tanggal_lahir_ayah' => $request->tanggal_lahir_ayah,
+            'father_education_id' => $request->father_education_id,
+            'father_occupation_id' => $request->father_occupation_id,
+            'penghasilan_ayah' => str_replace('.', '', $request->penghasilan_ayah),
+            'hp_ayah' => $request->hp_ayah,
+            'keterangan_ayah' => $request->keterangan_ayah,
+
+            'nama_ibu' => ucwords(strtolower($request->nama_ibu)),
+            'nik_ibu' => $request->nik_ibu,
+            'tempat_lahir_ibu' => ucwords(strtolower($request->tempat_lahir_ibu)),
+            'tanggal_lahir_ibu' => $request->tanggal_lahir_ibu,
+            'mother_education_id' => $request->mother_education_id,
+            'mother_occupation_id' => $request->mother_occupation_id,
+            'penghasilan_ibu' => str_replace('.', '', $request->penghasilan_ibu),
+            'hp_ibu' => $request->hp_ibu,
+            'keterangan_ibu' => $request->keterangan_ibu,
+
+            'nama_wali' => $request->nama_wali ? ucwords(strtolower($request->nama_wali)) : null,
+            'tempat_lahir_wali' => $request->tempat_lahir_wali ? ucwords(strtolower($request->tempat_lahir_wali)) : null,
+            'tanggal_lahir_wali' => $request->tanggal_lahir_wali ? $request->tanggal_lahir_wali : null,
+            'wali_education_id' => $request->wali_education_id ? $request->wali_education_id : null,
+            'wali_occupation_id' => $request->wali_occupation_id ? $request->wali_occupation_id : null,
+            'penghasilan_wali' => $request->penghasilan_wali ? str_replace('.', '', $request->penghasilan_wali) : null,
+            'hp_wali' => $request->hp_wali ? $request->hp_wali : null
+        ]);
+
+        return redirect()->route('student.edit3', $student->nisn)->with('sukses', 'Berhasil menyimpan data keluarga!');
+    }
+
+    /**
+     * Simpan perubahan data sekolah asal.
+     */
+    public function update3(Request $request, Student $student)
+    {
+        $request->validate([
+            'tahun_lulus' => 'required|digits:4',
+            'asal_sekolah' => 'required|string|max:255',
+            'alamat_asal_sekolah' => 'required|string|max:255',
+        ]);
+
+        $student->update([
+            'tahun_lulus' => $request->tahun_lulus,
+            'asal_sekolah' => ucwords(strtolower($request->asal_sekolah)),
+            'alamat_asal_sekolah' => $request->alamat_asal_sekolah,
+        ]);
+
+        $student->registration->update([
+            'status_data' => true,
+        ]);
+
+        return redirect()->route('student.document', $student->nisn)->with('sukses', 'Berhasil menyimpan data sekolah asal!');
+    }
+
+    /**
+     * Menampilkan halaman dokumen siswa.
+     */
+    public function document(Student $student)
+    {
+        if (!$student->registration->status_data) {
+            return redirect()->route('student.edit1', $student->nisn)->with('error', 'Lengkapi dahulu data identitas.');
+        }
+
+        $requiredDocs = [
+            'pasfoto',
+            'suket_sekolah',
+            'kk',
+            'ktp',
+            'akta',
+            'nisn',
+            'suket_ngaji'
+        ];
+
+        $student->load('documents');
+        $docs = $student->documents->pluck('path', 'jenis_dokumen')->toArray();
+
+        $uploadedDocs = $student->documents
+            ->pluck('path', 'jenis_dokumen') // ambil dokumen yang sudah diupload
+            ->keys() // ambil key-nya saja (jenis_dokumen)
+            ->toArray();
+        $missingDocs = array_diff($requiredDocs, $uploadedDocs);
+        $allDocsUploaded = empty($missingDocs);
+        $emptyDocs = implode(', ', array_map(fn($d) => str_replace('_', ' ', $d), $missingDocs));
+
+        return view('student.pages.dokumen', compact('student', 'docs', 'emptyDocs', 'allDocsUploaded'));
+    }
+
+    /**
+     * Simpan unggahan dokumen siswa.
+     */
+    public function upload(Request $request, Student $student, $jenis)
+    {
+        $request->validate([
+            $jenis => 'required|mimes:png,jpg,jpeg,pdf|max:2048'
+        ]);
+
+        $file = $request->file($jenis); // ambil file yang diupload
+        $extension = $file->getClientOriginalExtension(); // ambil extensi/format file asli
+        $filename = $jenis . '_' . $student->nisn . '.' . $extension; // ganti nama file {jenis}_{nisn}.{extensi}
+
+        // Cek apakah sebelumnya sudah ada file untuk jenis ini
+        $existing = $student->documents()->where('jenis_dokumen', $jenis)->first();
+        if ($existing) {
+            // Hapus file lama dari storage
+            if (Storage::disk('public')->exists($existing->path)) {
+                Storage::disk('public')->delete($existing->path);
+            }
+        }
+
+        $path = $file->storeAs(
+            'document/' . str_replace('_', '-', $jenis),  // nama folder
+            $filename,  // nama file
+            'public'    // simpan di storage/app/public
+        );
+
+        $student->documents()->updateOrCreate(
+            ['jenis_dokumen' => $jenis],
+            ['path' => $path]
+        );
+
+        return back()->with('sukses', 'Dokumen berhasil diunggah!');
+    }
+
+    /**
+     * Kunci unggahan dokumen.
+     */
+    public function lock(Student $student)
+    {
+        $student->registration->update([
+            'status_dokumen' => true
+        ]);
+        return redirect()->route('student.index')->with('sukses', 'Berhasil mengunci dokumen!');
+        // return back()->with('sukses', 'Berhasil mengunci dokumen!');
+    }
+
+    /**
+     * Buka kunci unggahan dokumen.
+     */
+    public function unlock(Student $student)
+    {
+        $student->registration->update([
+            'status_dokumen' => false
+        ]);
+        return back()->with('sukses', 'Berhasil membuka kunci dokumen!');
+    }
+
+    /**
+     * Konfirmasi pendaftaran siswa.
+     */
+    public function confirm(Student $student)
+    {
+        $student->registration->generateNoPendaftaran();
+        return redirect()->route('student.index')->with('sukses-konfirmasi', 'Pendaftaran berhasil dikonfirmasi.');
+    }
+
+    /**
+     * Remove user from list.
+     */
+    public function destroy(Student $student)
+    {
+        //
+    }
+}

@@ -1,0 +1,109 @@
+.swal2-container {
+    z-index: 9999;
+}
+
+/* Biar label terlihat seperti input box */
+.file-name-box {
+    flex: 1;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    /* sama dengan form-control */
+    padding: 0.375rem 0.75rem;
+    font-size: 0.95rem;
+    background-color: #f8f9fa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    /* bisa diklik */
+}
+
+.file-name-box:hover {
+    background-color: #e9ecef;
+}
+
+.kotak {
+    display: grid;
+    gap: 20px;
+}
+
+/* Mobile (default) */
+.kotak {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "one"
+        "two"
+        "three"
+        "four";
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .kotak {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "one two"
+            "one three"
+            "four three";
+    }
+}
+
+.item1 {
+    grid-area: one;
+}
+.item2 {
+    grid-area: two;
+}
+.item3 {
+    grid-area: three;
+}
+.item4 {
+    grid-area: four;
+}
+
+/* .item {
+  padding: 40px;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 8px;
+} */
+
+/* Modal verifikasi pendaftar */
+
+#modalVerifikasi .modal-content {
+    height: 85vh;
+    /* Tinggi modal tetap */
+}
+
+#modalVerifikasi .modal-body {
+    overflow: hidden;
+    /* Mencegah scroll pada body utama */
+}
+
+/* Area Tab yang boleh scroll */
+#modalVerifikasi .tab-content {
+    height: calc(85vh - 200px);
+    /* Menghitung sisa ruang untuk scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px;
+}
+
+/* Mengatur tampilan scrollbar di dalam modal */
+.tab-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tab-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.tab-content::-webkit-scrollbar-thumb {
+    background: #dcdcdc;
+    border-radius: 10px;
+}
+
+.tab-content::-webkit-scrollbar-thumb:hover {
+    background: #c1c1c1;
+}
