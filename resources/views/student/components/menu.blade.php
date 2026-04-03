@@ -37,11 +37,11 @@
                 <div data-i18n="Dokumen">Dokumen</div>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="#" class="menu-link">
+        {{-- <li class="menu-item">
+            <a href="{{ route('student.schedule', $student->nisn) }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-calendar"></i>
                 <div data-i18n="Jadwal Tes">Jadwal Tes</div>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </aside>

@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Occupation;
 use App\Models\Religion;
+use App\Models\Setting;
 use App\Models\Student;
+use App\Models\TestPractice;
+use App\Models\TestWritten;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -17,11 +21,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::with('documents', 'registration')->findOrFail(8);
+        $student = Student::with('documents', 'registration')->findOrFail(1);
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
 
         $reg = $student->registration;
         $status = [
+            'is_result_publish' => Setting::get('final_result_published'),
             'data'        => $reg->status_data ? 'Lengkap' : 'Belum lengkap',
             'dokumen'     => $reg->status_dokumen ? 'Lengkap' : 'Belum lengkap',
             'konfirmasi'  => $reg->is_locked,
@@ -472,6 +477,27 @@ class StudentController extends Controller
     {
         $student->registration->generateNoPendaftaran();
         return redirect()->route('student.index')->with('sukses-konfirmasi', 'Pendaftaran berhasil dikonfirmasi.');
+    }
+
+    public function cetakKartuTes(Student $student)
+    {
+        $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
+
+        $tes['praktik'] = TestPractice::where('student_id', $student->id)->first();
+        $tes['tertulis'] = TestWritten::where('student_id', $student->id)->first();
+
+        $pdf = FacadePdf::loadView('pdf.kartu-tes', compact('student', 'tes', 'pasfoto'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('kartu-tes.pdf');
+    }
+
+    public function seeResult(Student $student)
+    {
+        $student->registration->update([
+            'has_seen_result' => true
+        ]);
+        return redirect()->route('student.index');
     }
 
     /**

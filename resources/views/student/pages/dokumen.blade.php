@@ -8,7 +8,6 @@
         <div class="item item1">
             {{-- Ilustrasi --}}
             <img src="{{ asset('assets/img/mts/Documents.png') }}" alt="ilustrasi dokumen" width="90%">
-            {{-- <a href="https://storyset.com/work">Work illustrations by Storyset</a> --}}
         </div>
 
         {{-- Dokumen sudah lengkap? --}}
@@ -475,6 +474,9 @@
                                 <label class="form-label fw-bold">
                                     7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
+                                    <a href="" target="_blank" class="form-text text-primary d-block mt-0">
+                                        Download Format
+                                    </a>
                                 </label>
                                 <div class="input-group">
                                     <!-- input file diganti dengan label (custom) -->

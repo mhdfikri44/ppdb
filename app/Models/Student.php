@@ -39,6 +39,16 @@ class Student extends Model
         return $this->belongsTo(Religion::class);
     }
 
+    public function testPractice(): HasOne
+    {
+        return $this->hasOne(TestPractice::class);
+    }
+
+    public function testWritten(): HasOne
+    {
+        return $this->hasOne(TestWritten::class);
+    }
+
     protected $fillable = [
         'nisn',
         'nama_lengkap',

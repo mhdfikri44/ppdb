@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TestController;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', function () {
-    return redirect()->route('student.index');
+    $isOpen = Setting::get('ppdb_open');
+    return view('index', compact('isOpen'));
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -30,8 +30,28 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::put('{student}/verifikasi', 'verify')->name('verify');
             Route::put('{student}/verifikasi/cancel', 'cancelApproved')->name('cancel.approved');
         });
+
+        Route::prefix('test')->name('test.')->group(function () {
+            Route::get('praktik', 'testPraktik')->name('praktik');
+            Route::get('tertulis', 'testTertulis')->name('tertulis');
+            Route::get('praktik/data', 'testPraktikData')->name('praktik.data');
+            Route::get('tertulis/data', 'testTertulisData')->name('tertulis.data');
+
+            Route::get('template', 'downloadTemplateJadwal')->name('download.template');
+            Route::post('import/jadwal', 'importJadwal')->name('import.jadwal');
+            Route::delete('clear/jadwal', 'clearJadwal')->name('clear.jadwal');
+        });
+
+        Route::get('penilaian', 'scoring')->name('scoring');
+        Route::get('penilaian/data', 'scoringData')->name('scoring.data');
+
+        Route::get('penilaian/template', 'downloadTemplateNilai')->name('scoring.template');
+        Route::post('penilaian/import/nilai', 'importNilai')->name('scoring.import.nilai');
+
+        Route::post('penilaian/passed', 'passed')->name('scoring.passed');
+        Route::post('penilaian/failed', 'failed')->name('scoring.failed');
     });
-    Route::resource('test', TestController::class);
+
     Route::resource('/', AdminController::class);
 });
 
@@ -50,6 +70,9 @@ Route::prefix('student')->name('student.')->group(function () {
         Route::put('{student}/dokumen/mengunci', 'lock')->name('document.lock');
         Route::put('{student}/dokumen/membuka', 'unlock')->name('document.unlock');
         Route::put('{student}/konfirmasi', 'confirm')->name('confirm');
+
+        Route::get('{student:nisn}/cetak-kartu-tes', 'cetakKartuTes')->name('cetak.kartu.tes');
+        Route::put('{student:nisn}/lihat-hasil', 'seeResult')->name('lihat.hasil');
     });
     Route::resource('/', StudentController::class)->except(['edit', 'update', 'show', 'destroy']);
 });

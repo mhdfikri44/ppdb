@@ -25,6 +25,7 @@
                                 <th>NISN</th>
                                 <th>Data</th>
                                 <th>Berkas</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -75,6 +76,10 @@
                 {
                     data: "status_dokumen",
                     name: "registration.status_dokumen"
+                },
+                {
+                    data: "status_verifikasi",
+                    name: "registration.status_verifikasi"
                 },
                 {
                     data: "aksi",

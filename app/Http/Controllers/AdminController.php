@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JadwalTemplateExport;
+use App\Exports\NilaiTemplateExport;
+use App\Imports\JadwalImport;
+use App\Imports\NilaiImport;
 use App\Models\Admin;
 use App\Models\Registration;
 use App\Models\Student;
+use App\Models\TestPractice;
+use App\Models\TestWritten;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
@@ -91,7 +98,6 @@ class AdminController extends Controller
     public function studentData()
     {
         $data = Student::query()->with(['registration']);
-        // dd($data->get()->toArray());
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -107,6 +113,14 @@ class AdminController extends Controller
                 }
                 return '<span class="badge rounded-pill bg-danger">Belum lengkap</span>';
             })
+            ->addColumn('status_verifikasi', function ($data) {
+                if ($data->registration->status_verifikasi === 'Disetujui') {
+                    return '<span class="badge rounded-pill bg-success">Disetujui</span>';
+                } elseif ($data->registration->status_verifikasi === 'Ditolak') {
+                    return '<span class="badge rounded-pill bg-danger">Ditolak</span>';
+                }
+                return '<span class="badge rounded-pill bg-secondary">Pending</span>';
+            })
             ->addColumn('aksi', function ($data) {
                 return '
                 <div class="d-inline-flex align-items-center gap-1">
@@ -116,14 +130,14 @@ class AdminController extends Controller
                     <form action="' . route('admin.student.delete', $data->id) . '" method="post">
                         ' . csrf_field() . '
                         ' . method_field("DELETE") . '
-                        <button type="button" class="btn btn-icon btn-warning waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                        <button type="button" class="btn btn-icon btn-danger waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
                             <span class="ti ti-trash"></span>
                         </button>
                     </form>
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'status_data', 'status_dokumen'])
+            ->rawColumns(['aksi', 'status_data', 'status_dokumen', 'status_verifikasi'])
             ->toJson();
     }
 
@@ -280,5 +294,152 @@ class AdminController extends Controller
             'status_verifikasi' => 'Pending',
         ]);
         return back()->with('sukses', 'Verifikasi dibatalkan.');
+    }
+
+    /**
+     * Mengelola penjadwalan tes.
+     */
+    public function testPraktik()
+    {
+        $hasTest = TestPractice::exists();
+        return view('admin.pages.tes-praktik', compact('hasTest'));
+    }
+
+    public function testTertulis()
+    {
+        $hasTest = TestWritten::exists();
+        return view('admin.pages.tes-tertulis', compact('hasTest'));
+    }
+
+    public function testPraktikData()
+    {
+        $data = TestPractice::with('student.registration');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    public function testTertulisData()
+    {
+        $data = TestWritten::with('student.registration');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    public function downloadTemplateJadwal()
+    {
+        return Excel::download(new JadwalTemplateExport, 'template-jadwal-tes.xlsx');
+    }
+
+    public function downloadTemplateNilai()
+    {
+        return Excel::download(new NilaiTemplateExport, 'template-input-nilai.xlsx');
+    }
+
+    public function importJadwal(Request $request)
+    {
+        $request->validate([
+            'jadwal_tes' => 'required|mimes:xlsx,xls|max:1024',
+            'type' => 'required|in:praktik,tertulis',
+        ]);
+
+        Excel::import(new JadwalImport($request->type), $request->file('jadwal_tes'));
+        return back()->with('sukses', 'Jadwal berhasil diimport');
+    }
+
+    public function importNilai(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls|max:1024',
+        ]);
+
+        Excel::import(new NilaiImport, $request->file('file'));
+        return response()->json(['message' => 'Nilai berhasil diimport.']);
+    }
+
+    public function clearJadwal(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:praktik,tertulis',
+        ]);;
+
+        if ($request->type === 'praktik') {
+            TestPractice::truncate();
+        } else {
+            TestWritten::truncate();
+        }
+        return back()->with('sukses', 'Jadwal berhasil dikosongkan');
+    }
+
+    /**
+     * Mengelola nilai dan kelulusan.
+     */
+    public function scoring()
+    {
+        return view(('admin.pages.penilaian'));
+    }
+
+    public function scoringData()
+    {
+        $data = Student::query()
+            ->whereHas('registration', function ($q) {
+                $q->where('status_verifikasi', 'Disetujui');
+            })
+            ->whereHas('testPractice')
+            ->whereHas('testWritten')
+            ->with(['registration', 'testPractice', 'testWritten'])
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('final_score', function ($data) {
+                $practiceScore = $data->testPractice->score;
+                $writtenScore = $data->testWritten->score;
+
+                if ($practiceScore === null && $writtenScore === null) {
+                    return 0;
+                }
+                return ($practiceScore * 0.6) + ($writtenScore * 0.4);
+            })
+            ->addColumn('keterangan', function ($data) {
+                if ($data->testPractice->score === null && $data->testWritten->score === null) {
+                    return '<span class="badge rounded-pill bg-secondary">Belum ujian</span>';
+                }
+                if ($data->registration->lulus) {
+                    return '<span class="badge rounded-pill bg-success">Lulus</span>';
+                }
+                return '<span class="badge rounded-pill bg-danger">Tidak Lulus</span>';
+            })
+            ->rawColumns(['keterangan'])
+            ->toJson();
+    }
+
+    public function passed(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:students,id',
+        ]);
+
+        Student::whereIn('id', $request->ids)->each(function ($student) {
+            $student->registration->update(['lulus' => true]);
+        });
+
+        return response()->json(['message' => 'Siswa berhasil ditandai lulus.']);
+    }
+
+    public function failed(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:students,id',
+        ]);
+
+        Student::whereIn('id', $request->ids)->each(function ($student) {
+            $student->registration->update(['lulus' => false]);
+        });
+
+        return response()->json(['message' => 'Siswa berhasil ditandai tidak lulus.']);
     }
 }

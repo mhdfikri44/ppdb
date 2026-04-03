@@ -75,19 +75,6 @@ class RegistrationFactory extends Factory
         ]);
     }
 
-    // 3. Sudah lengkap (siap diverifikasi)
-    public function lengkap()
-    {
-        return $this->state(fn() => [
-            'no_pendaftaran' => fake()->unique()->bothify('P2026####'),
-            'status_data' => true,
-            'status_dokumen' => true,
-            'is_locked' => true,
-            'locked_at' => now(),
-            'status_verifikasi' => 'Pending',
-        ]);
-    }
-
     // 4. Disetujui (terverifikasi)
     public function disetujui()
     {

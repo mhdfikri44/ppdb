@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('rejected_message')->nullable();
 
             $table->boolean('lulus')->default(false);
+            $table->boolean('has_seen_result')->default(false);
             $table->timestamps();
         });
     }

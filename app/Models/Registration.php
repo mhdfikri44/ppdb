@@ -29,6 +29,7 @@ class Registration extends Model
         'status_verifikasi',
         'rejected_message',
         'lulus',
+        'has_seen_result',
     ];
 
     public function generateNoPendaftaran()

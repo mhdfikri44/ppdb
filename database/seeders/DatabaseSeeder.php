@@ -15,35 +15,34 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            SettingSeeder::class,
             AdminSeeder::class,
             OccupationSeeder::class,
             ReligionSeeder::class,
             EducationSeeder::class,
-            TestSeeder::class,
         ]);
 
-        // $distributions = [
-        //     'draft' => 20,
-        //     'isiData' => 20,
-        //     'lengkap' => 30,
-        //     'disetujui' => 20,
-        //     'ditolak' => 10,
-        // ];
+        $distributions = [
+            'draft' => 20,
+            'isiData' => 20,
+            'disetujui' => 20,
+            'ditolak' => 10,
+        ];
 
-        // foreach ($distributions as $state => $count) {
-        //     Student::factory($count)
-        //         ->has(Guardian::factory(), 'guardian')
-        //         ->has(Registration::factory()->$state(), 'registration')
-        //         ->create();
-        // }
+        foreach ($distributions as $state => $count) {
+            Student::factory($count)
+                ->has(Guardian::factory(), 'guardian')
+                ->has(Registration::factory()->$state(), 'registration')
+                ->create();
+        }
 
-        $students = Student::factory(50)
-            ->has(Guardian::factory(), 'guardian')
-            ->has(Registration::factory()->isiData(), 'registration')
-            ->create();
+        // $students = Student::factory(50)
+        //     ->has(Guardian::factory(), 'guardian')
+        //     ->has(Registration::factory()->disetujui(), 'registration')
+        //     ->create();
 
-        $students->each(function ($student) {
-            $student->registration->generateNoPendaftaran();
-        });
+        // $students->each(function ($student) {
+        //     $student->registration->generateNoPendaftaran();
+        // });
     }
 }
