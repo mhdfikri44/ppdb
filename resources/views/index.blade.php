@@ -73,8 +73,8 @@
             </div>
             <div class="relative">
                 <div class="absolute -z-10 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full top-0 right-0"></div>
-                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=800"
-                    alt="Students" class="rounded-[2rem] shadow-2xl border-8 border-white">
+                <img src="{{ asset('assets/img/mts/hero2.jpg') }}" alt="siswa mengamati"
+                    class="rounded-[2rem] shadow-2xl border-8 border-white">
             </div>
         </div>
     </section>
@@ -124,8 +124,8 @@
                         <i class="fas fa-upload text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Tes Praktik & Wawancara</h3>
+                    <p class="text-sm text-slate-400 text-left mt-2">21 - 24 April 2026</p>
                     {{-- <p class="text-sm text-indigo-400 text-left mt-2 font-semibold">21 - 24 April 2026</p> --}}
-                    <p class="text-sm text-slate-400 text-left mt-2">25 April 2026</p>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
@@ -145,7 +145,7 @@
                         <i class="fas fa-bullhorn text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Pengumuman Hasil</h3>
-                    <p class="text-sm text-slate-400 text-left mt-2">30 April 2026</p>
+                    <p class="text-sm text-slate-400 text-left mt-2">28 April 2026</p>
                 </div>
             </div>
         </div>
@@ -154,11 +154,15 @@
     <section id="syarat" class="py-20">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold">Syarat Pendaftaran</h2>
-            <p class="text-slate-500 mt-2">Pastikan semua dokumen dalam format digital (PDF/JPG)</p>
+            <p class="text-slate-500 mt-2">Pastikan semua dokumen dalam format digital <strong>(PDF/JPG)</strong></p>
 
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12">
                 <div class="bento-card col-span-2 md:col-span-3">
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-slate-600">
+                        <div
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> Umur maksimal pendaftar 15 tahun
+                        </div>
                         <div
                             class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Pasfoto Latar Merah
