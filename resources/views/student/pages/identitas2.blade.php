@@ -171,7 +171,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($educations as $education)
-                            <option value="{{ $education->id }}" @selected(old('father_education_id', $student->father_education_id) == $education->id)>
+                            <option value="{{ $education->id }}" @selected(old('father_education_id', $student->guardian->father_education_id) == $education->id)>
                                 {{ $education->name }}
                             </option>
                         @endforeach
@@ -188,7 +188,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($occupations as $occupation)
-                            <option value="{{ $occupation->id }}" @selected(old('father_occupation_id', $student->father_occupation_id) == $occupation->id)>
+                            <option value="{{ $occupation->id }}" @selected(old('father_occupation_id', $student->guardian->father_occupation_id) == $occupation->id)>
                                 {{ $occupation->name }}
                             </option>
                         @endforeach
@@ -293,7 +293,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($educations as $education)
-                            <option value="{{ $education->id }}" @selected(old('mother_education_id', $student->mother_education_id) == $education->id)>
+                            <option value="{{ $education->id }}" @selected(old('mother_education_id', $student->guardian->mother_education_id) == $education->id)>
                                 {{ $education->name }}
                             </option>
                         @endforeach
@@ -310,7 +310,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($occupations as $occupation)
-                            <option value="{{ $occupation->id }}" @selected(old('mother_occupation_id', $student->mother_occupation_id) == $occupation->id)>
+                            <option value="{{ $occupation->id }}" @selected(old('mother_occupation_id', $student->guardian->mother_occupation_id) == $occupation->id)>
                                 {{ $occupation->name }}
                             </option>
                         @endforeach
@@ -409,7 +409,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($educations as $education)
-                            <option value="{{ $education->id }}" @selected(old('wali_education_id', $student->wali_education_id) == $education->id)>
+                            <option value="{{ $education->id }}" @selected(old('wali_education_id', $student->guardian->wali_education_id) == $education->id)>
                                 {{ $education->name }}
                             </option>
                         @endforeach
@@ -427,7 +427,7 @@
                         @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
                         @foreach ($occupations as $occupation)
-                            <option value="{{ $occupation->id }}" @selected(old('wali_occupation_id', $student->wali_occupation_id) == $occupation->id)>
+                            <option value="{{ $occupation->id }}" @selected(old('wali_occupation_id', $student->guardian->wali_occupation_id) == $occupation->id)>
                                 {{ $occupation->name }}
                             </option>
                         @endforeach

@@ -182,9 +182,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     // Saat tombol diklik, scroll ke atas dengan efek halus
-    btnUp.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+    if (btnUp) {
+        btnUp.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 
     // ====== KONFIRMASI KUNCI DOKUMEN (MODAL) ======
     document.querySelectorAll(".btn-kunci").forEach((btn) => {
