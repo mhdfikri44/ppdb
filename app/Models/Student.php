@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use HasFactory;
+
+    protected $guard = 'student';
 
     protected $appends = [
         'jenis_kelamin_label',

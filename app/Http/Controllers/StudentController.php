@@ -6,12 +6,10 @@ use App\Models\Education;
 use App\Models\Occupation;
 use App\Models\Religion;
 use App\Models\Setting;
-use App\Models\Student;
 use App\Models\TestPractice;
 use App\Models\TestWritten;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
@@ -21,12 +19,13 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::with('documents', 'registration')->findOrFail(1);
+        $student = auth('student')->user();
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
 
         $reg = $student->registration;
         $status = [
             'is_result_publish' => Setting::get('final_result_published'),
+            'is_open' => Setting::get('ppdb_open'),
             'data'        => $reg->status_data ? 'Lengkap' : 'Belum lengkap',
             'dokumen'     => $reg->status_dokumen ? 'Lengkap' : 'Belum lengkap',
             'konfirmasi'  => $reg->is_locked,
@@ -76,42 +75,12 @@ class StudentController extends Controller
     }
 
     /**
-     * Menampilkan halaman registrasi siswa baru.
-     */
-    public function create()
-    {
-        return view('student.register');
-    }
-
-    /**
-     * Simpan data registrasi siswa baru.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nisn' => 'required|unique:students,nisn|digits:10',
-            'nama_lengkap' => 'required|string|max:255',
-            'password' => 'required|string|min:8|max:100',
-            'konfirmasi_password' => 'required|same:password',
-        ]);
-
-        $student = Student::create([
-            'nisn' => $request->nisn,
-            'nama_lengkap' => ucwords(strtolower($request->nama_lengkap)),
-            'password' => Hash::make($request->password)
-        ]);
-
-        $student->guardian->create([]);
-        $student->registration->create([]);
-
-        dd('Registrasi berhasil! Silakan login.');
-    }
-
-    /**
      * Menampilkan halaman edit data pribadi.
      */
-    public function edit1(Student $student)
+    public function edit1()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
         $student->load('registration');
         $religions = Religion::all();
         return view('student.pages.identitas1', compact('student', 'religions'));
@@ -120,28 +89,22 @@ class StudentController extends Controller
     /**
      * Menampilkan halaman edit data keluarga.
      */
-    public function edit2(Student $student)
+    public function edit2()
     {
-        $requiredFields = [
-            'nama_lengkap',
-            'nik',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'jenis_kelamin',
-            'religion_id',
-            'hobi',
-            'cita_cita',
-        ];
-        foreach ($requiredFields as $field) {
-            if (empty($student->$field)) {
-                return back()->with('error', 'Lengkapi dahulu data pribadi.');
-            }
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+        $student->load('guardian', 'registration');
+
+        if (!$student->registration->is_biodata_complete) {
+            return back()->with('error', 'Lengkapi dahulu data pribadi.');
         }
 
-        $student->load('guardian', 'registration');
-        $student->guardian->penghasilan_ayah = $student->guardian->penghasilan_ayah ? number_format($student->guardian->penghasilan_ayah, 0, ',', '.') : '';
-        $student->guardian->penghasilan_ibu = $student->guardian->penghasilan_ibu ? number_format($student->guardian->penghasilan_ibu, 0, ',', '.') : '';
-        $student->guardian->penghasilan_wali = $student->guardian->penghasilan_wali ? number_format($student->guardian->penghasilan_wali, 0, ',', '.') : '';
+        $student->guardian->penghasilan_ayah
+            = $student->guardian->penghasilan_ayah ? number_format($student->guardian->penghasilan_ayah, 0, ',', '.') : '';
+        $student->guardian->penghasilan_ibu
+            = $student->guardian->penghasilan_ibu ? number_format($student->guardian->penghasilan_ibu, 0, ',', '.') : '';
+        $student->guardian->penghasilan_wali
+            = $student->guardian->penghasilan_wali ? number_format($student->guardian->penghasilan_wali, 0, ',', '.') : '';
 
         $educations = Education::all();
         $occupations = Occupation::all();
@@ -151,66 +114,18 @@ class StudentController extends Controller
     /**
      * Menampilkan halaman edit data sekolah asal.
      */
-    public function edit3(Student $student)
+    public function edit3()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
         $student->load('guardian', 'registration');
 
-        $pribadiRequiredFields = [
-            'nama_lengkap',
-            'nik',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'jenis_kelamin',
-            'religion_id',
-            'hobi',
-            'cita_cita',
-        ];
-        foreach ($pribadiRequiredFields as $field) {
-            if (empty($student->$field)) {
-                return back()->with('error', 'Lengkapi dahulu data pribadi.');
-            }
+        if (!$student->registration->is_biodata_complete) {
+            return back()->with('error', 'Lengkapi dahulu data pribadi.');
         }
 
-        $keluargaRequiredFields = [
-            'anak_keberapa',
-            'jumlah_saudara',
-            'tempat_tinggal',
-            'transportasi',
-            'jarak_tempuh',
-            'waktu_tempuh',
-            'no_kk',
-        ];
-        foreach ($keluargaRequiredFields as $field) {
-            if (empty($student->$field)) {
-                return back()->with('error', 'Lengkapi dahulu data keluarga.');
-            }
-        }
-
-        $orangTuaRequiredFields = [
-            'nama_ayah',
-            'nik_ayah',
-            'tempat_lahir_ayah',
-            'tanggal_lahir_ayah',
-            'father_education_id',
-            'father_occupation_id',
-            'penghasilan_ayah',
-            'hp_ayah',
-            'keterangan_ayah',
-
-            'nama_ibu',
-            'nik_ibu',
-            'tempat_lahir_ibu',
-            'tanggal_lahir_ibu',
-            'mother_education_id',
-            'mother_occupation_id',
-            'penghasilan_ibu',
-            'hp_ibu',
-            'keterangan_ibu',
-        ];
-        foreach ($orangTuaRequiredFields as $field) {
-            if (empty($student->guardian->$field)) {
-                return back()->with('error', 'Lengkapi dahulu data keluarga.');
-            }
+        if (!$student->registration->is_family_complete) {
+            return back()->with('error', 'Lengkapi dahulu data keluarga.');
         }
 
         return view('student.pages.identitas3', compact('student'));
@@ -219,8 +134,11 @@ class StudentController extends Controller
     /**
      * Simpan perubahan data pribadi.
      */
-    public function update1(Request $request, Student $student)
+    public function update1(Request $request)
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'nik' => 'required|digits:16|unique:students,nik,' . $student->id,
@@ -250,14 +168,21 @@ class StudentController extends Controller
             'penyakit' => ucfirst(strtolower($request->penyakit)),
         ]);
 
-        return redirect()->route('student.edit2', $student->nisn)->with('sukses', 'Berhasil menyimpan data pribadi!');
+        $student->registration->update([
+            'is_biodata_complete' => true,
+        ]);
+
+        return redirect()->route('student.edit2')->with('sukses', 'Berhasil menyimpan data pribadi!');
     }
 
     /**
      * Simpan perubahan data keluarga.
      */
-    public function update2(Request $request, Student $student)
+    public function update2(Request $request)
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $request->validate([
             'anak_keberapa' => 'required|integer|min:1|max:999',
             'jumlah_saudara' => 'required|integer|min:0|max:999',
@@ -351,14 +276,21 @@ class StudentController extends Controller
             'hp_wali' => $request->hp_wali ? $request->hp_wali : null
         ]);
 
-        return redirect()->route('student.edit3', $student->nisn)->with('sukses', 'Berhasil menyimpan data keluarga!');
+        $student->registration->update([
+            'is_family_complete' => true,
+        ]);
+
+        return redirect()->route('student.edit3')->with('sukses', 'Berhasil menyimpan data keluarga!');
     }
 
     /**
      * Simpan perubahan data sekolah asal.
      */
-    public function update3(Request $request, Student $student)
+    public function update3(Request $request)
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $request->validate([
             'tahun_lulus' => 'required|digits:4',
             'asal_sekolah' => 'required|string|max:255',
@@ -375,16 +307,20 @@ class StudentController extends Controller
             'status_data' => true,
         ]);
 
-        return redirect()->route('student.document', $student->nisn)->with('sukses', 'Berhasil menyimpan data sekolah asal!');
+        return redirect()->route('student.document')->with('sukses', 'Berhasil menyimpan data sekolah asal!');
     }
 
     /**
      * Menampilkan halaman dokumen siswa.
      */
-    public function document(Student $student)
+    public function document()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+        $student->load('documents', 'registration');
+
         if (!$student->registration->status_data) {
-            return redirect()->route('student.edit1', $student->nisn)->with('error', 'Lengkapi dahulu data identitas.');
+            return redirect()->route('student.edit1')->with('error', 'Lengkapi dahulu data identitas.');
         }
 
         $requiredDocs = [
@@ -397,7 +333,6 @@ class StudentController extends Controller
             'suket_ngaji'
         ];
 
-        $student->load('documents');
         $docs = $student->documents->pluck('path', 'jenis_dokumen')->toArray();
 
         $uploadedDocs = $student->documents
@@ -414,8 +349,11 @@ class StudentController extends Controller
     /**
      * Simpan unggahan dokumen siswa.
      */
-    public function upload(Request $request, Student $student, $jenis)
+    public function upload(Request $request, $jenis)
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $request->validate([
             $jenis => 'required|mimes:png,jpg,jpeg,pdf|max:2048'
         ]);
@@ -450,8 +388,11 @@ class StudentController extends Controller
     /**
      * Kunci unggahan dokumen.
      */
-    public function lock(Student $student)
+    public function lock()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $student->registration->update([
             'status_dokumen' => true
         ]);
@@ -462,8 +403,11 @@ class StudentController extends Controller
     /**
      * Buka kunci unggahan dokumen.
      */
-    public function unlock(Student $student)
+    public function unlock()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $student->registration->update([
             'status_dokumen' => false
         ]);
@@ -473,14 +417,19 @@ class StudentController extends Controller
     /**
      * Konfirmasi pendaftaran siswa.
      */
-    public function confirm(Student $student)
+    public function confirm()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $student->registration->generateNoPendaftaran();
         return redirect()->route('student.index')->with('sukses-konfirmasi', 'Pendaftaran berhasil dikonfirmasi.');
     }
 
-    public function cetakKartuTes(Student $student)
+    public function cetakKartuTes()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
 
         $tes['praktik'] = TestPractice::where('student_id', $student->id)->first();
@@ -492,8 +441,33 @@ class StudentController extends Controller
         return $pdf->stream('kartu-tes.pdf');
     }
 
-    public function seeResult(Student $student)
+    public function cetakSuratNgaji()
     {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
+        $pdf = FacadePdf::loadView('pdf.surat-mengaji', compact('student', 'pembimbing'))
+            ->setPaper('A4', 'portrait');;
+
+        return $pdf->stream('format-surat-mengaji.pdf');
+    }
+
+    public function cetakFormulir()
+    {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
+        $pdf = FacadePdf::loadView('pdf.formulir-penerimaan', compact('student'))
+            ->setPaper('A4', 'portrait');
+
+        return $pdf->stream('formulir-penerimaan.pdf');
+    }
+
+    public function seeResult()
+    {
+        /** @var \App\Models\Student $student */
+        $student = auth('student')->user();
+
         $student->registration->update([
             'has_seen_result' => true
         ]);
@@ -503,7 +477,7 @@ class StudentController extends Controller
     /**
      * Remove user from list.
      */
-    public function destroy(Student $student)
+    public function destroy()
     {
         //
     }

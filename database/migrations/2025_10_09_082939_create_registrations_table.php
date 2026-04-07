@@ -19,6 +19,9 @@ return new class extends Migration
             $table->boolean('status_data')->default(false);
             $table->boolean('status_dokumen')->default(false);
 
+            $table->boolean('is_biodata_complete')->default(false);
+            $table->boolean('is_family_complete')->default(false);
+
             $table->boolean('is_locked')->default(false);
             $table->timestamp('locked_at')->nullable();
             $table->enum('status_verifikasi', ['Pending', 'Disetujui', 'Ditolak'])->default('Pending');

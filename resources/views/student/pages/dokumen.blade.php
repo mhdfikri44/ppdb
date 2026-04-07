@@ -474,7 +474,8 @@
                                 <label class="form-label fw-bold">
                                     7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
-                                    <a href="" target="_blank" class="form-text text-primary d-block mt-0">
+                                    <a href="{{ route('student.cetak.surat.mengaji') }}" target="_blank"
+                                        class="form-text text-primary d-block mt-0">
                                         Download Format
                                     </a>
                                 </label>

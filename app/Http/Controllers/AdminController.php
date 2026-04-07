@@ -6,7 +6,6 @@ use App\Exports\JadwalTemplateExport;
 use App\Exports\NilaiTemplateExport;
 use App\Imports\JadwalImport;
 use App\Imports\NilaiImport;
-use App\Models\Admin;
 use App\Models\Registration;
 use App\Models\Student;
 use App\Models\TestPractice;
@@ -22,8 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = Admin::findOrFail(1);
-
+        $admin = auth('admin')->user();
         $stat = [
             'total'     => Registration::count(),
             'belum'     => Registration::where('status_verifikasi', 'Pending')->where('is_locked', false)->count(),
@@ -35,55 +33,6 @@ class AdminController extends Controller
 
         return view('admin.pages.beranda', compact('admin', 'stat'));
     }
-
-    /**
-     * Display the form for creating new admin.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Storing new created admin.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove admin from list.
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
-
 
     /**
      * Menampilkan halaman daftar siswa.
@@ -122,18 +71,24 @@ class AdminController extends Controller
                 return '<span class="badge rounded-pill bg-secondary">Pending</span>';
             })
             ->addColumn('aksi', function ($data) {
-                return '
-                <div class="d-inline-flex align-items-center gap-1">
-                    <a href="' . route('admin.student.detail', $data->nisn) . '" class="btn btn-icon btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
-                        <span class="ti ti-eye"></span>
-                    </a>
+                $deleteButton = '';
+                if (auth('admin')->user()->role === 'superadmin') {
+                    $deleteButton = '
                     <form action="' . route('admin.student.delete', $data->id) . '" method="post">
                         ' . csrf_field() . '
                         ' . method_field("DELETE") . '
                         <button type="button" class="btn btn-icon btn-danger waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
                             <span class="ti ti-trash"></span>
                         </button>
-                    </form>
+                    </form>';
+                }
+
+                return '
+                <div class="d-inline-flex align-items-center gap-1">
+                    <a href="' . route('admin.student.detail', $data->nisn) . '" class="btn btn-icon btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
+                        <span class="ti ti-eye"></span>
+                    </a>
+                    ' . $deleteButton . '
                 </div>
                 ';
             })
@@ -260,6 +215,9 @@ class AdminController extends Controller
      */
     public function studentDelete(Student $student)
     {
+        if (auth('admin')->user()->role !== 'superadmin') {
+            abort(403);
+        }
         $student->delete();
         return back()->with('sukses', 'Calon siswa berhasil dihapus!');
     }

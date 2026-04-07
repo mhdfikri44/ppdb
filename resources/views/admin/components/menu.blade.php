@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="{{ route('admin.index') }}" class="app-brand-link gap-2">
+        <a href="{{ route('landingPage') }}" class="app-brand-link gap-2">
             <span class="app-brand-logo">
                 <img src="{{ asset('assets/img/mts/logo-mts.png') }}" alt="logo app" width="50">
             </span>
@@ -73,8 +73,8 @@
             </a>
         </li>
 
-        <li class="menu-item">
-            <a href="#" class="menu-link">
+        <li class="menu-item {{ Route::is('admin.setting*') ? 'active' : '' }}"">
+            <a href="{{ route('admin.setting.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-settings"></i>
                 <div>Pengaturan</div>
             </a>

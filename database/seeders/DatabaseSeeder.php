@@ -22,19 +22,19 @@ class DatabaseSeeder extends Seeder
             EducationSeeder::class,
         ]);
 
-        $distributions = [
-            'draft' => 20,
-            'isiData' => 20,
-            'disetujui' => 20,
-            'ditolak' => 10,
-        ];
+        // $distributions = [
+        //     'draft' => 20,
+        //     'isiData' => 20,
+        //     'disetujui' => 20,
+        //     'ditolak' => 10,
+        // ];
 
-        foreach ($distributions as $state => $count) {
-            Student::factory($count)
-                ->has(Guardian::factory(), 'guardian')
-                ->has(Registration::factory()->$state(), 'registration')
-                ->create();
-        }
+        // foreach ($distributions as $state => $count) {
+        //     Student::factory($count)
+        //         ->has(Guardian::factory(), 'guardian')
+        //         ->has(Registration::factory()->$state(), 'registration')
+        //         ->create();
+        // }
 
         // $students = Student::factory(50)
         //     ->has(Guardian::factory(), 'guardian')

@@ -9,6 +9,7 @@
     <div class="row">
         <div class="col-xl-4 col-lg-5 col-md-6">
 
+            <!-- Hasil Akhir -->
             @if ($status['is_result_publish'] && $student->registration->status_verifikasi == 'Disetujui')
                 @if (!$student->registration->has_seen_result)
                     <style>
@@ -41,7 +42,7 @@
                         }
                     </style>
                     <div class="text-center mb-4">
-                        <form id="formResult" action="{{ route('student.lihat.hasil', $student->nisn) }}" method="post">
+                        <form id="formResult" action="{{ route('student.lihat.hasil') }}" method="post">
                             @csrf
                             @method('PUT')
                             <button type="submit" class="btn btn-primary btn-highlight">
@@ -96,7 +97,7 @@
                                     <div class="me-3"> <i class="ti ti-confetti fs-1"></i> </div>
                                     <div>
                                         <h4 class="text-white mb-1">Selamat! Anda Dinyatakan LULUS</h4>
-                                        <p class="mb-0">Selamat bergabung di keluarga besar MTsN 1 Kota Dumai.</p>
+                                        <p class="mb-0">Tunggu informasi daftar ulang digrup WA.</p>
                                     </div>
                                 </div>
                             </div>
@@ -206,21 +207,34 @@
                                         <span class="ti-xs ti ti-checkbox me-1"></span>Belum lengkap
                                     </button>
                                 @else
-                                    <form id="form-konfirmasi" action="{{ route('student.confirm', $student->id) }}"
-                                        method="POST">
-                                        @csrf @method('PUT')
-                                        <button type="button" id="btn-konfirmasi"
-                                            class="btn btn-success waves-effect waves-light w-100">
-                                            <span class="ti-xs ti ti-checkbox me-1"></span>Konfirmasi
+                                    @if ($status['is_open'])
+                                        <form id="form-konfirmasi" action="{{ route('student.confirm', $student->id) }}"
+                                            method="POST">
+                                            @csrf @method('PUT')
+                                            <button type="button" id="btn-konfirmasi"
+                                                class="btn btn-success waves-effect waves-light w-100">
+                                                <span class="ti-xs ti ti-checkbox me-1"></span>Konfirmasi
+                                            </button>
+                                        </form>
+                                    @else
+                                        <button type="button" class="btn btn-success w-100" disabled>
+                                            Pendaftaran Ditutup
                                         </button>
-                                    </form>
+                                    @endif
                                 @endif
                             @else
                                 @if ($student->registration->status_verifikasi == 'Disetujui')
-                                    <a href="{{ route('student.cetak.kartu.tes', $student->nisn) }}" type="button"
+                                    <a href="{{ route('student.cetak.kartu.tes') }}"
                                         class="btn btn-warning waves-effect waves-light" target="_blank">
                                         <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
                                     </a>
+
+                                    @if ($status['is_result_publish'])
+                                        {{-- <a href="{{ route('student.cetak.formulir') }}" --}}
+                                        <button class="btn btn-info waves-effect waves-light" target="_blank" disabled>
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
+                                        </button>
+                                    @endif
                                 @else
                                     <button type="button" class="btn btn-warning waves-effect waves-light" disabled>
                                         <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
@@ -269,7 +283,7 @@
                                     </span>
                                 </div>
                                 <span>Lengkapi data identitas dengan benar sebelum lanjut ke tahap berikutnya.</span>
-                                <a href="{{ route('student.edit1', $student->nisn) }}">Lengkapi sekarang.</a>
+                                <a href="{{ route('student.edit1') }}">Lengkapi sekarang.</a>
                             </div>
                         </li>
 
@@ -287,7 +301,7 @@
                                     </span>
                                 </div>
                                 <span>Unggah dokumen pendukung sesuai ketentuan. Pastikan file jelas dan tidak kabur.</span>
-                                <a href="{{ route('student.document', $student->nisn) }}">Unggah sekarang.</a>
+                                <a href="{{ route('student.document') }}">Unggah sekarang.</a>
                             </div>
                         </li>
 

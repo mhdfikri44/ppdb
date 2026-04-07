@@ -10,21 +10,21 @@
                 <div class="card-header py-1">
                     <ul id="datatabs" class="nav nav-tabs card-header-tabs d-flex justify-content-around" role="tablist">
                         <li class="nav-item">
-                            <a href="{{ route('student.edit1', $student->nisn) }}" type="button"
+                            <a href="{{ route('student.edit1') }}" type="button"
                                 class="{{ Route::is('student.edit1') ? 'active' : '' }} nav-link gap-1">
                                 <i class="ti ti-user d-none d-sm-inline"></i>
                                 <span>Pribadi</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('student.edit2', $student->nisn) }}" type="button"
+                            <a href="{{ route('student.edit2') }}" type="button"
                                 class="{{ Route::is('student.edit2') ? 'active' : '' }} nav-link gap-1">
                                 <i class="ti ti-home-2 d-none d-sm-inline"></i>
                                 <span>Keluarga</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('student.edit3', $student->nisn) }}" type="button"
+                            <a href="{{ route('student.edit3') }}" type="button"
                                 class="{{ Route::is('student.edit3') ? 'active' : '' }} nav-link gap-1">
                                 <i class="ti ti-school d-none d-sm-inline"></i>
                                 <span>Sekolah Asal</span>

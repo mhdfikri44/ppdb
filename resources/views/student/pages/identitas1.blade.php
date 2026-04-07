@@ -11,8 +11,9 @@
             <div class="row g-3">
                 <div class="col-sm-6">
                     <label for="nama_lengkap" class="form-label fw-bold">Nama Lengkap</label>
-                    <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control max-255" placeholder="Masukkan nama lengkap"
-                        value="{{ old('nama_lengkap', $student->nama_lengkap ?? '') }}" @disabled($student->registration->is_locked) />
+                    <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control max-255"
+                        placeholder="Masukkan nama lengkap" value="{{ old('nama_lengkap', $student->nama_lengkap ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('nama_lengkap')
                         <div id="nama_lengkap" class="form-text text-danger">
                             {{ $message }}
@@ -21,8 +22,9 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="nik" class="form-label fw-bold">NIK</label>
-                    <input type="text" id="nik" name="nik" class="form-control max-16 angka" placeholder="Masukkan nomor induk kependudukan"
-                        value="{{ old('nik', $student->nik ?? '') }}" @disabled($student->registration->is_locked) />
+                    <input type="text" id="nik" name="nik" class="form-control max-16 angka"
+                        placeholder="Masukkan nomor induk kependudukan" value="{{ old('nik', $student->nik ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('nik')
                         <div id="nik" class="form-text text-danger">
                             {{ $message }}
@@ -31,8 +33,9 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="tempat_lahir" class="form-label fw-bold">Tempat Lahir</label>
-                    <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control max-100" placeholder="Masukkan tempat lahir"
-                        value="{{ old('tempat_lahir', $student->tempat_lahir ?? '') }}" @disabled($student->registration->is_locked) />
+                    <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control max-100"
+                        placeholder="Masukkan tempat lahir" value="{{ old('tempat_lahir', $student->tempat_lahir ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('tempat_lahir')
                         <div id="tempat_lahir" class="form-text text-danger">
                             {{ $message }}
@@ -80,8 +83,9 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="hobi" class="form-label fw-bold">Hobi</label>
-                    <input type="text" id="hobi" name="hobi" class="form-control max-100" placeholder="Masukkan hobi"
-                        value="{{ old('hobi', $student->hobi ?? '') }}" @disabled($student->registration->is_locked) />
+                    <input type="text" id="hobi" name="hobi" class="form-control max-100"
+                        placeholder="Masukkan hobi" value="{{ old('hobi', $student->hobi ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('hobi')
                         <div id="hobi" class="form-text text-danger">
                             {{ $message }}
@@ -90,8 +94,9 @@
                 </div>
                 <div class="col-sm-6">
                     <label for="cita_cita" class="form-label fw-bold">Cita-cita</label>
-                    <input type="text" id="cita_cita" name="cita_cita" class="form-control max-100" placeholder="Masukkan cita-cita"
-                        value="{{ old('cita_cita', $student->cita_cita ?? '') }}" @disabled($student->registration->is_locked) />
+                    <input type="text" id="cita_cita" name="cita_cita" class="form-control max-100"
+                        placeholder="Masukkan cita-cita" value="{{ old('cita_cita', $student->cita_cita ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('cita_cita')
                         <div id="cita_cita" class="form-text text-danger">
                             {{ $message }}
@@ -131,7 +136,7 @@
                     @if (!$student->registration->is_locked)
                         <button type="submit" class="btn btn-success">Simpan</button>
                     @else
-                        <a href="{{ route('student.edit2', $student->nisn) }}" type="button" class="btn btn-primary btn-next">
+                        <a href="{{ route('student.edit2') }}" type="button" class="btn btn-primary btn-next">
                             <span class="align-middle d-sm-inline-block d-none">Selanjutnya</span>
                             <i class="ti ti-arrow-right"></i>
                         </a>

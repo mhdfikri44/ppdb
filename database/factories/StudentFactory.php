@@ -21,7 +21,7 @@ class StudentFactory extends Factory
         return [
             'nisn' => str_pad(fake()->numberBetween(0, 9999999999), 10, '0', STR_PAD_LEFT),
             'nama_lengkap' => fake()->name(),
-            'password' => Hash::make(fake()->word()),
+            'password' => Hash::make('12344321'),
 
             'nik' => str_pad(fake()->numberBetween(0, 9999999999), 16, '0', STR_PAD_LEFT),
             'tempat_lahir' => fake()->city(),

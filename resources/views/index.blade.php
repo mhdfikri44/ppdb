@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPDB Modern - Gerbang Masa Depanmu</title>
+    <title>{{ config('app.name') }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -28,7 +28,7 @@
                 <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight">E-PPDB</span>
+                <span class="font-bold text-xl tracking-tight">PPDB - MTsN 1 Kota Dumai</span>
             </div>
             <div class="hidden md:flex gap-8 font-medium text-slate-600">
                 <a href="#alur" class="hover:text-indigo-600 transition">Alur</a>
@@ -54,16 +54,16 @@
                 <p class="text-lg text-slate-500 mt-6 leading-relaxed">Selamat datang di portal pendaftaran siswa baru.
                     Proses mudah, transparan, dan terintegrasi secara online.</p>
                 <div class="mt-10 flex flex-wrap gap-4">
-                    @if ($isOpen)
+                    @if (!$isOpen)
                         <button
                             class="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 hover:scale-105 transition-transform flex items-center gap-2">
                             Pendaftaran Ditutup
                         </button>
                     @else
-                        <button
+                        <a href="{{ route('student.register.form') }}"
                             class="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 hover:scale-105 transition-transform flex items-center gap-2">
                             Daftar Sekarang <i class="fas fa-arrow-right text-sm"></i>
-                        </button>
+                        </a>
                     @endif
                     <a href="{{ route('student.index') }}"
                         class="px-8 py-4 bg-white border border-gray-200 rounded-2xl font-bold hover:bg-gray-100 transition">
@@ -85,97 +85,108 @@
             <p class="text-slate-500 mt-2">Ikuti langkah-langkah berikut untuk bergabung</p>
 
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mt-12">
-                <div class="p-6 rounded-3xl bg-slate-50 relative">
-                    <div class="text-4xl font-black text-indigo-100 absolute top-4 right-6">01</div>
+                {{-- kondisi pasif --}}
+                {{-- <div class="p-6 rounded-3xl bg-slate-50 relative">
+                    <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">01</div>
                     <div
                         class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600 mb-4">
                         <i class="fas fa-user-plus text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Registrasi</h3>
                     <p class="text-sm text-slate-400 text-left mt-2">1 - 30 April 2026</p>
-                </div>
-                <div class="p-6 rounded-3xl bg-slate-50 relative">
-                    <div class="text-4xl font-black text-indigo-100 absolute top-4 right-6">02</div>
+                </div> --}}
+
+                {{-- kondisi aktif --}}
+                <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
+                    <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">01</div>
                     <div
-                        class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600 mb-4">
+                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                        <i class="fas fa-user-plus text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-left">Pendaftaran Online</h3>
+                    <p class="text-sm text-slate-400 text-left mt-2">13 - 18 April 2026</p>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
+                    <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">02</div>
+                    <div
+                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-file-invoice text-xl"></i>
                     </div>
-                    <h3 class="font-bold text-left">Isi Data</h3>
-                    <p class="text-sm text-slate-400 text-left mt-2">1 - 10 Mei 2026</p>
+                    <h3 class="font-bold text-left">Pengumuman Administrasi</h3>
+                    <p class="text-sm text-slate-400 text-left mt-2">19 April 2026</p>
                 </div>
+
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">03</div>
                     <div
                         class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-upload text-xl"></i>
                     </div>
-                    <h3 class="font-bold text-left">Unggah Berkas</h3>
-                    <p class="text-sm text-indigo-400 text-left mt-2 font-semibold">2 - 10 Mei 2026</p>
+                    <h3 class="font-bold text-left">Tes Praktik & Wawancara</h3>
+                    {{-- <p class="text-sm text-indigo-400 text-left mt-2 font-semibold">21 - 24 April 2026</p> --}}
+                    <p class="text-sm text-slate-400 text-left mt-2">25 April 2026</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-50 relative">
-                    <div class="text-4xl font-black text-indigo-100 absolute top-4 right-6">04</div>
+
+                <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
+                    <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">04</div>
                     <div
-                        class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600 mb-4">
+                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-tasks text-xl"></i>
                     </div>
-                    <h3 class="font-bold text-left">Verifikasi</h3>
-                    <p class="text-sm text-slate-400 text-left mt-2">12 - 15 Mei 2026</p>
+                    <h3 class="font-bold text-left">Tes Akademik</h3>
+                    <p class="text-sm text-slate-400 text-left mt-2">25 April 2026</p>
                 </div>
-                <div class="p-6 rounded-3xl bg-slate-50 relative">
-                    <div class="text-4xl font-black text-indigo-100 absolute top-4 right-6">05</div>
+
+                <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
+                    <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">05</div>
                     <div
-                        class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-600 mb-4">
+                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-bullhorn text-xl"></i>
                     </div>
-                    <h3 class="font-bold text-left">Pengumuman</h3>
-                    <p class="text-sm text-slate-400 text-left mt-2">20 Mei 2026</p>
+                    <h3 class="font-bold text-left">Pengumuman Hasil</h3>
+                    <p class="text-sm text-slate-400 text-left mt-2">30 April 2026</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="syarat" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h2 class="text-3xl font-bold">Syarat Pendaftaran</h2>
-                    <p class="text-slate-500 mt-2">Pastikan semua dokumen dalam format digital (PDF/JPG)</p>
-                </div>
-            </div>
+    <section id="syarat" class="py-20">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold">Syarat Pendaftaran</h2>
+            <p class="text-slate-500 mt-2">Pastikan semua dokumen dalam format digital (PDF/JPG)</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bento-card md:col-span-2">
-                    <h3 class="font-bold text-xl mb-6 flex items-center gap-2">
-                        <i class="fas fa-copy text-indigo-600"></i> Dokumen Utama
-                    </h3>
-                    <div class="grid grid-cols-2 gap-4 text-slate-600">
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12">
+                <div class="bento-card col-span-2 md:col-span-3">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-slate-600">
                         <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-xs font-bold tracking-widest">
-                            <i class="fas fa-check-circle text-green-500"></i> Akta Kelahiran
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> Pasfoto Latar Merah
                         </div>
                         <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-xs font-bold tracking-widest">
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> Surat Keterangan Aktif Sekolah Asal
+                        </div>
+                        <div
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Kartu Keluarga
                         </div>
                         <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-xs font-bold tracking-widest">
-                            <i class="fas fa-check-circle text-green-500"></i> Ijazah / SKL
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> KTP Kedua Orang Tua
                         </div>
                         <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-xs font-bold tracking-widest">
-                            <i class="fas fa-check-circle text-green-500"></i> Pas Foto 3x4
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> Akta Kelahiran
                         </div>
-                    </div>
-                </div>
-
-                <div class="bento-card bg-indigo-600 text-white">
-                    <h3 class="font-bold text-xl mb-4">Jalur Prestasi</h3>
-                    <p class="text-indigo-100 text-sm leading-relaxed">Melampirkan sertifikat kejuaraan minimal tingkat
-                        Kabupaten/Kota dalam 3 tahun terakhir.</p>
-                    <div class="mt-8 pt-8 border-t border-indigo-500">
-                        <div class="flex items-center gap-2 font-bold italic">
-                            <i class="fas fa-trophy"></i>
-                            Beasiswa Penuh bagi Juara 1 Nasional
+                        <div
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                            <i class="fas fa-check-circle text-green-500"></i> Kartu NISN
+                        </div>
+                        <div
+                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest md:col-span-2">
+                            <i class="fas fa-check-circle text-green-500"></i> Surat Keterangan Mengaji/Ijazah MDA Atau
+                            TPA
                         </div>
                     </div>
                 </div>
@@ -189,9 +200,9 @@
                 <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
                     <i class="fas fa-graduation-cap text-xs"></i>
                 </div>
-                <span class="font-bold text-white uppercase tracking-tighter">E-PPDB 2026</span>
+                <span class="font-bold text-white uppercase tracking-tighter">PPDB</span>
             </div>
-            <p class="text-sm">© 2026 Sekolah Modern Indonesia. All rights reserved.</p>
+            <p class="text-sm">© 2026 MTsN 1 Kota Dumai. All rights reserved.</p>
             <div class="flex gap-4">
                 <a href="#" class="hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
                 <a href="#" class="hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
