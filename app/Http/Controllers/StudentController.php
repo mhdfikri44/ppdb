@@ -459,7 +459,7 @@ class StudentController extends Controller
         /** @var \App\Models\Student $student */
         $student = auth('student')->user();
 
-        $pdf = FacadePdf::loadView('pdf.surat-mengaji', compact('student', 'pembimbing'))
+        $pdf = FacadePdf::loadView('pdf.surat-mengaji', compact('student'))
             ->setPaper('A4', 'portrait');;
 
         return $pdf->stream('format-surat-mengaji.pdf');
