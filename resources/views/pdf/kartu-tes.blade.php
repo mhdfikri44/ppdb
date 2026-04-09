@@ -118,9 +118,8 @@
             <tr>
                 <td class="photo-cell">
                     <div class="photo-box">
-                        @if ($pasfoto)
-                            <img src="{{ public_path('storage/' . $pasfoto->path) }}" width="100" height="140"
-                                style="object-fit: cover;">
+                        @if ($fotoBase64)
+                            <img src="{{ $fotoBase64 }}" width="100" height="140" style="object-fit: cover;">
                         @else
                             <div style="padding-top: 60px; color: #ccc;">FOTO 3x4</div>
                         @endif

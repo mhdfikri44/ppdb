@@ -363,7 +363,7 @@ class StudentController extends Controller
 
         $file = $request->file($jenis); // ambil file yang diupload
         $extension = $file->getClientOriginalExtension(); // ambil extensi/format file asli
-        $filename = $jenis . '_' . $student->nisn . '.' . $extension; // ganti nama file {jenis}_{nisn}.{extensi}
+        $filename = $student->nisn . '_' . $jenis . '.' . $extension; // nama file {nisn}_{jenis}.{extensi}
 
         // Cek apakah sebelumnya sudah ada file untuk jenis ini
         $existing = $student->documents()->where('jenis_dokumen', $jenis)->first();
@@ -434,10 +434,21 @@ class StudentController extends Controller
         $student = auth('student')->user();
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
 
+        $fotoBase64 = null;
+        if ($pasfoto && $pasfoto->path) {
+            $pathFile = storage_path('app/private/' . $pasfoto->path);
+
+            if (file_exists($pathFile)) {
+                $type = pathinfo($pathFile, PATHINFO_EXTENSION);
+                $data = file_get_contents($pathFile);
+                $fotoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            }
+        }
+
         $tes['praktik'] = TestPractice::where('student_id', $student->id)->first();
         $tes['tertulis'] = TestWritten::where('student_id', $student->id)->first();
 
-        $pdf = FacadePdf::loadView('pdf.kartu-tes', compact('student', 'tes', 'pasfoto'))
+        $pdf = FacadePdf::loadView('pdf.kartu-tes', compact('student', 'tes', 'fotoBase64'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('kartu-tes.pdf');

@@ -228,11 +228,11 @@
                                         <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
                                     </a>
 
-                                    @if ($status['is_result_publish'])
-                                        {{-- <a href="{{ route('student.cetak.formulir') }}" --}}
-                                        <button class="btn btn-info waves-effect waves-light" target="_blank" disabled>
+                                    @if ($status['is_result_publish'] && $student->registration->has_seen_result && $student->registration->lulus)
+                                        <a href="{{ route('student.cetak.formulir') }}"
+                                            class="btn btn-info waves-effect waves-light" target="_blank">
                                             <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
-                                        </button>
+                                        </a>
                                     @endif
                                 @else
                                     <button type="button" class="btn btn-warning waves-effect waves-light" disabled>

@@ -44,8 +44,8 @@
                                 1. Pasfoto Latar Merah
                             </label>
                             @if (isset($docs['pasfoto']))
-                                <a href="{{ asset('storage/' . $docs['pasfoto']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -57,7 +57,7 @@
                                 2. Surat Keterangan Aktif Sekolah Asli
                             </label>
                             @if (isset($docs['suket_sekolah']))
-                                <a href="{{ asset('storage/' . $docs['suket_sekolah']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -70,8 +70,8 @@
                                 3. Kartu Keluarga (KK) Asli
                             </label>
                             @if (isset($docs['kk']))
-                                <a href="{{ asset('storage/' . $docs['kk']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kk']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -83,8 +83,8 @@
                                 4. KTP Kedua Orang Tua Asli
                             </label>
                             @if (isset($docs['ktp']))
-                                <a href="{{ asset('storage/' . $docs['ktp']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -96,8 +96,8 @@
                                 5. Akta Kelahiran Asli
                             </label>
                             @if (isset($docs['akta']))
-                                <a href="{{ asset('storage/' . $docs['akta']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['akta']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -109,8 +109,8 @@
                                 6. Kartu NISN Asli
                             </label>
                             @if (isset($docs['nisn']))
-                                <a href="{{ asset('storage/' . $docs['nisn']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -122,7 +122,7 @@
                                 7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                             </label>
                             @if (isset($docs['suket_ngaji']))
-                                <a href="{{ asset('storage/' . $docs['suket_ngaji']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -139,7 +139,7 @@
                                 1. Sertifikat Prestasi Akademik & Non Akademik Asli
                             </label>
                             @if (isset($docs['sertifikat']))
-                                <a href="{{ asset('storage/' . $docs['sertifikat']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -157,8 +157,8 @@
                                 2. Kartu KIP/PKH Asli
                             </label>
                             @if (isset($docs['kartu']))
-                                <a href="{{ asset('storage/' . $docs['kartu']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>

@@ -416,12 +416,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">1. Pasfoto Latar Merah</span>
                     @if (isset($docs['pasfoto']))
-                        <a href="{{ asset('storage/' . $docs['pasfoto']) }}" target="_blank"
+                        <a href="{{ route('student.file.show', $docs['pasfoto']) }}" target="_blank"
                             class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -429,12 +429,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">2. Surat Keterangan Aktif Sekolah Asli</span>
                     @if (isset($docs['suket_sekolah']))
-                        <a href="{{ asset('storage/' . $docs['suket_sekolah']) }}" target="_blank"
+                        <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" target="_blank"
                             class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -442,11 +442,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">3. Kartu Keluarga (KK) Asli</span>
                     @if (isset($docs['kk']))
-                        <a href="{{ asset('storage/' . $docs['kk']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['kk']) }}" target="_blank"
+                            class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -454,11 +455,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">4. KTP Kedua Orang Tua Asli</span>
                     @if (isset($docs['ktp']))
-                        <a href="{{ asset('storage/' . $docs['ktp']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['ktp']) }}" target="_blank"
+                            class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -466,11 +468,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">5. Akta Kelahiran Asli</span>
                     @if (isset($docs['akta']))
-                        <a href="{{ asset('storage/' . $docs['akta']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['akta']) }}" target="_blank"
+                            class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -478,11 +481,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">6. Kartu NISN Asli</span>
                     @if (isset($docs['nisn']))
-                        <a href="{{ asset('storage/' . $docs['nisn']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['nisn']) }}" target="_blank"
+                            class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -490,12 +494,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli</span>
                     @if (isset($docs['suket_ngaji']))
-                        <a href="{{ asset('storage/' . $docs['suket_ngaji']) }}" target="_blank"
+                        <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" target="_blank"
                             class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -503,12 +507,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">8. Sertifikat Prestasi Akademik & Non Akademik Asli</span>
                     @if (isset($docs['sertifikat']))
-                        <a href="{{ asset('storage/' . $docs['sertifikat']) }}" target="_blank"
+                        <a href="{{ route('student.file.show', $docs['sertifikat']) }}" target="_blank"
                             class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -516,11 +520,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">9. Kartu KIP/PKH Asli</span>
                     @if (isset($docs['kartu']))
-                        <a href="{{ asset('storage/' . $docs['kartu']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['kartu']) }}" target="_blank"
+                            class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif

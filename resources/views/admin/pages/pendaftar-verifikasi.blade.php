@@ -662,12 +662,20 @@
 
                         // Proses tombol dokumen
                         const docs = res.documents || [];
+                        const baseUrl = "{{ url('student/view') }}";
+
                         $('.btn-preview-doc').each(function() {
                             let btn = $(this);
                             let type = btn.data('type');
                             let foundDoc = docs.find(d => d.jenis_dokumen === type);
+
                             if (foundDoc && foundDoc.path) {
-                                btn.prop('disabled', false).data('src', foundDoc.path)
+                                // Gabungkan Base URL dengan path dari database
+                                // Hasilnya: domain.com/storage/view/document/pasfoto/file.png
+                                let fullUrl = baseUrl + '/' + foundDoc.path;
+
+                                btn.prop('disabled', false)
+                                    .data('src', fullUrl)
                                     .removeClass('btn-secondary')
                                     .addClass('btn-info');
                             } else {
@@ -690,7 +698,7 @@
 
                 $(document).on('click', '.btn-preview-doc', function() {
                     const path = $(this).data('src');
-                    if (path) window.open(`/storage/${path}`, '_blank');
+                    if (path) window.open(path, '_blank');
                 });
             }
         });
@@ -751,15 +759,20 @@
         });
 
         $('.refreshTable').on('click', function() {
-            let target = $(this).data('target');
-
-            if (target === 'confirm') {
-                tableConfirm.ajax.reload(null, false);
-            }
-
-            if (target === 'rejected') {
-                tableRejected.ajax.reload(null, false);
-            }
+            tableConfirm.ajax.reload(null, false);
+            tableRejected.ajax.reload(null, false);
         });
+
+        // $('.refreshTable').on('click', function() {
+        //     let target = $(this).data('target');
+
+        //     if (target === 'confirm') {
+        //         tableConfirm.ajax.reload(null, false);
+        //     }
+
+        //     if (target === 'rejected') {
+        //         tableRejected.ajax.reload(null, false);
+        //     }
+        // });
     </script>
 @endsection
