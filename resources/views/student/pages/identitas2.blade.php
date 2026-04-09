@@ -63,7 +63,7 @@
                 <div class="col-sm-6">
                     <label for="jarak_tempuh" class="form-label fw-bold">Jarak Tempuh Kesekolah</label>
                     <div class="input-group">
-                        <input type="text" id="jarak_tempuh" name="jarak_tempuh" class="form-control max-6 desimal"
+                        <input type="text" id="jarak_tempuh" name="jarak_tempuh" class="form-control max-3 desimal"
                             placeholder="Masukkan jarak tempuh"
                             value="{{ old('jarak_tempuh', $student->jarak_tempuh ?? '') }}" @disabled($student->registration->is_locked) />
                         <span class="input-group-text">Kilometer</span>
@@ -202,7 +202,7 @@
                 <div class="col-sm-6">
                     <label class="form-label fw-bold" for="penghasilan_ayah">Penghasilan Ayah</label>
                     <input type="text" name="penghasilan_ayah" id="penghasilan_ayah"
-                        class="form-control max-20 penghasilan" placeholder="Masukkan penghasilan perbulan"
+                        class="form-control max-11 penghasilan" placeholder="Masukkan penghasilan perbulan"
                         value="{{ old('penghasilan_ayah', $student->guardian->penghasilan_ayah ?? '') }}"
                         @disabled($student->registration->is_locked) />
                     @error('penghasilan_ayah')
@@ -324,7 +324,7 @@
                 <div class="col-sm-6">
                     <label class="form-label fw-bold" for="penghasilan_ibu">Penghasilan Ibu</label>
                     <input type="text" name="penghasilan_ibu" id="penghasilan_ibu"
-                        class="form-control max-20 penghasilan" placeholder="Masukkan penghasilan perbulan"
+                        class="form-control max-11 penghasilan" placeholder="Masukkan penghasilan perbulan"
                         value="{{ old('penghasilan_ibu', $student->guardian->penghasilan_ibu ?? '') }}"
                         @disabled($student->registration->is_locked) />
                     @error('penghasilan_ibu')
@@ -442,7 +442,7 @@
                     <label class="form-label fw-bold" for="penghasilan_wali">Penghasilan Wali <span
                             class="form-text text-primary fst-italic">*Opsional</span></label>
                     <input type="text" name="penghasilan_wali" id="penghasilan_wali"
-                        class="form-control max-20 penghasilan" placeholder="Masukkan penghasilan perbulan"
+                        class="form-control max-11 penghasilan" placeholder="Masukkan penghasilan perbulan"
                         value="{{ old('penghasilan_wali', $student->guardian->penghasilan_wali ?? '') }}"
                         @disabled($student->registration->is_locked) />
                     @error('penghasilan_wali')

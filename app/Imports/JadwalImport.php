@@ -5,12 +5,19 @@ namespace App\Imports;
 use App\Models\Student;
 use App\Models\TestPractice;
 use App\Models\TestWritten;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+use function Livewire\str;
 
 class JadwalImport implements ToCollection, WithHeadingRow
 {
     protected $type;
+    public $total = 0;
+    public $success = 0;
+    public $failed = 0;
+    public $errors = [];
 
     public function __construct($type)
     {
@@ -19,43 +26,58 @@ class JadwalImport implements ToCollection, WithHeadingRow
 
     public function collection($rows)
     {
-        foreach ($rows as $row) {
+        $this->total = count($rows);
 
-            if (empty($row['nisn'])) {
+        foreach ($rows as $index => $row) {
+            $nisn = (string) $row['nisn'];
+
+            if (empty($nisn)) {
+                $this->failed++;
+                $this->errors[] = "Baris " . ($index + 1) . " : NISN kosong";
                 continue;
             }
 
-            $student = Student::where('nisn', $row['nisn'])
+            $student = Student::where('nisn', $nisn)
                 ->whereHas('registration', function ($q) {
                     $q->where('status_verifikasi', 'Disetujui');
                 })->first();
 
             if (!$student) {
-                // Log::warning('Calon siswa tidak ditemukan saat import jadwal', [
-                //     'nisn' => $row['nisn']
-                // ]);
+                $this->failed++;
+                $this->errors[] = "Baris " . ($index + 1) . " : NISN $nisn tidak ditemukan";
                 continue;
             }
 
             if (!$row['tanggal'] || !$row['jam'] || !$row['lokasi']) {
-                // throw new \Exception("Data jadwal tidak lengkap di NISN: " . $row['nisn']);
+                $this->failed++;
+                $this->errors[] = "Baris " . ($index + 1) . " : Data tidak lengkap";
                 continue;
             }
 
-            $model = $this->type === 'praktik'
-                ? new TestPractice()
-                : new TestWritten();
+            try {
+                $model = $this->type === 'praktik'
+                    ? new TestPractice()
+                    : new TestWritten();
 
-            $model::updateOrCreate(
-                [
-                    'student_id' => $student->id,
-                ],
-                [
-                    'tanggal' => $row['tanggal'] ?? '-',
-                    'jam' => $row['jam'] ?? '-',
-                    'lokasi' => $row['lokasi'] ?? '-',
-                ]
-            );
+                $model::updateOrCreate(
+                    ['student_id' => $student->id],
+                    [
+                        'tanggal' => $row['tanggal'],
+                        'jam' => $row['jam'],
+                        'lokasi' => $row['lokasi'],
+                    ]
+                );
+
+                $this->success++;
+            } catch (\Exception $e) {
+                Log::error('Import gagal', [
+                    'row' => $row,
+                    'error' => $e->getMessage()
+                ]);
+
+                $this->failed++;
+                $this->errors[] = "Baris " . ($index + 1) . ": Gagal simpan";
+            }
         }
     }
 }

@@ -7,6 +7,70 @@
 
     <div class="row">
         <div class="col">
+            @if (session('import_summary'))
+                @php
+                    $total = session('import_summary.total');
+                    $success = session('import_summary.success');
+                    $failed = session('import_summary.failed');
+                    $percent = $total > 0 ? round(($success / $total) * 100) : 0;
+                @endphp
+
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body">
+
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0 fw-semibold">
+                                Hasil Import Jadwal
+                            </h6>
+                            <span class="badge bg-{{ $failed > 0 ? 'warning' : 'success' }}">
+                                {{ $percent }}% Berhasil
+                            </span>
+                        </div>
+
+                        <!-- Progress -->
+                        <div class="progress mb-3" style="height: 8px;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ $percent }}%">
+                            </div>
+                        </div>
+
+                        <!-- Statistik -->
+                        <div class="row text-center">
+                            <div class="col">
+                                <div class="fw-bold fs-5">{{ $total }}</div>
+                                <small class="text-muted">Total Data</small>
+                            </div>
+                            <div class="col">
+                                <div class="fw-bold fs-5 text-success">{{ $success }}</div>
+                                <small class="text-muted">Berhasil</small>
+                            </div>
+                            <div class="col">
+                                <div class="fw-bold fs-5 text-danger">{{ $failed }}</div>
+                                <small class="text-muted">Gagal</small>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            @endif
+
+            @if (session('import_errors'))
+                <div class="card border-danger shadow-sm mb-3">
+                    <div class="card-header bg-danger text-white py-2">
+                        <small class="fw-semibold">
+                            Detail Error ({{ count(session('import_errors')) }} data)
+                        </small>
+                    </div>
+
+                    <div class="card-body p-2" style="max-height: 200px; overflow-y: auto;">
+                        <ul class="mb-0 small">
+                            @foreach (session('import_errors') as $err)
+                                <li class="mb-1">{{ $err }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <!-- DataTable with Buttons -->
             <div class="card">
                 <div class="card-datatable table-responsive">

@@ -302,8 +302,17 @@ class AdminController extends Controller
             'type' => 'required|in:praktik,tertulis',
         ]);
 
-        Excel::import(new JadwalImport($request->type), $request->file('jadwal_tes'));
-        return back()->with('sukses', 'Jadwal berhasil diimport');
+        $import = new JadwalImport($request->type);
+        Excel::import($import, $request->file('jadwal_tes'));
+
+        return back()->with([
+            'import_summary' => [
+                'total' => $import->total,
+                'success' => $import->success,
+                'failed' => $import->failed,
+            ],
+            'import_errors' => array_slice($import->errors, 0, 10), // batasi 10 error
+        ]);
     }
 
     public function importNilai(Request $request)
