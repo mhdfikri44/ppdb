@@ -214,15 +214,47 @@
                         success: function(res) {
                             $('#modalUploadNilai').modal('hide');
                             $('#formUploadNilai')[0].reset();
-
                             table.ajax.reload(null, false);
 
+                            let s = res.summary;
+                            let percent = s.total > 0 ? Math.round((s.success / s.total) *
+                                100) : 0;
+
+                            let html = `
+                                <div class="text-start">
+                                    <div class="mb-2">
+                                        <strong>Hasil Import Nilai</strong>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <span class="badge bg-success">Berhasil: ${s.success}</span>
+                                        <span class="badge bg-danger">Gagal: ${s.failed}</span>
+                                        <span class="badge bg-secondary">Total: ${s.total}</span>
+                                    </div>
+
+                                    <div class="progress mb-3" style="height: 8px;">
+                                        <div class="progress-bar bg-success" style="width: ${percent}%"></div>
+                                    </div>
+                            `;
+
+                            if (res.errors && res.errors.length > 0) {
+                                html += `
+                                    <div style="max-height:150px;overflow:auto;">
+                                        <ul class="small text-danger mb-0">
+                                `;
+                                res.errors.forEach(e => {
+                                    html += `<li>${e}</li>`;
+                                });
+                                html += `</ul></div>`;
+                            }
+
+                            html += `</div>`;
+
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: res.message,
-                                timer: 2000,
-                                showConfirmButton: false
+                                icon: s.failed > 0 ? 'warning' : 'success',
+                                title: 'Import Selesai',
+                                html: html,
+                                width: 500
                             });
                         },
                         error: function(xhr) {

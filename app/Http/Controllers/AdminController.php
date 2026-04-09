@@ -321,8 +321,18 @@ class AdminController extends Controller
             'file' => 'required|mimes:xlsx,xls|max:1024',
         ]);
 
-        Excel::import(new NilaiImport, $request->file('file'));
-        return response()->json(['message' => 'Nilai berhasil diimport.']);
+        $import = new NilaiImport();
+        Excel::import($import, $request->file('file'));
+
+        return response()->json([
+            'message' => 'Import selesai',
+            'summary' => [
+                'total' => $import->total,
+                'success' => $import->success,
+                'failed' => $import->failed,
+            ],
+            'errors' => array_slice($import->errors, 0, 10)
+        ]);
     }
 
     public function clearJadwal(Request $request)
