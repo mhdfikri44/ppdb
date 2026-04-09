@@ -12,7 +12,7 @@
                     <h5 class="card-title mb-0">Konfigurasi PPDB</h5>
                 </div>
                 <div class="card-body pt-4">
-                    <form action="{{ route('admin.setting.update') }}" method="POST">
+                    <form id="formSetting">
                         @csrf @method('PUT')
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
@@ -68,4 +68,55 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('datatable-script')
+    <script>
+        $('#formSetting').on('submit', function(e) {
+            e.preventDefault();
+
+            let formData = {
+                _token: "{{ csrf_token() }}",
+                ppdb_open: $('#ppdb_open').is(':checked') ? 1 : 0,
+                final_result_published: $('#final_result_published').is(':checked') ? 1 : 0
+            };
+
+            Swal.fire({
+                title: 'Simpan perubahan?',
+                text: 'Pengaturan akan diperbarui',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Simpan'
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        url: "{{ route('admin.setting.update') }}",
+                        type: "PUT",
+                        data: formData,
+
+                        success: function(res) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: res.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        },
+
+                        error: function(xhr) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: xhr.responseJSON?.message || 'Terjadi kesalahan'
+                            });
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
 @endsection

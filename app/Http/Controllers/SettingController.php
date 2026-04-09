@@ -22,6 +22,8 @@ class SettingController extends Controller
         Setting::set('ppdb_open', $request->has('ppdb_open'));
         Setting::set('final_result_published', $request->has('final_result_published'));
 
-        return back()->with('sukses', 'Pengaturan berhasil diperbarui');
+        return response()->json([
+            'message' => 'Pengaturan berhasil diperbarui'
+        ]);
     }
 }
