@@ -14,7 +14,7 @@
             @endphp
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="#" data-bs-toggle="dropdown">
-                    <div class="avatar border rounded-circle" style="width: 50px; height: 50px; overflow: hidden;">
+                    <div class="avatar border rounded-circle" style="width: 40px; height: 40px; overflow: hidden;">
                         <img class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;"
                             src="{{ isset($pasfoto->path) ? route('student.file.show', $pasfoto->path) : asset('assets/img/mts/profile-default.jpg') }}" />
                     </div>

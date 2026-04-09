@@ -26,6 +26,12 @@ Route::middleware('guest:student')->group(function () {
     Route::post('/login', [StudentAuthController::class, 'login'])->name('student.login');
 });
 
+Route::middleware(['auth:admin,student'])->group(function () {
+    Route::get('student/view/{path}', [FileController::class, 'show'])
+        ->where('path', '.*')
+        ->name('student.file.show');
+});
+
 Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
     Route::controller(AdminController::class)->group(function () {
         Route::get('/', 'index')->name('index');
@@ -104,8 +110,4 @@ Route::prefix('student')->name('student.')->middleware('auth:student')->group(fu
         Route::put('lihat-hasil-kelulusan', 'seeResult')->name('lihat.hasil');
     });
     Route::post('logout', [StudentAuthController::class, 'logout'])->name('logout');
-
-    Route::get('view/{path}', [FileController::class, 'show'])
-        ->where('path', '.*')
-        ->name('file.show');
 });
