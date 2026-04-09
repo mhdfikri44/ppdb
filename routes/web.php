@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StudentAuthController;
 use App\Http\Controllers\StudentController;
@@ -103,4 +104,8 @@ Route::prefix('student')->name('student.')->middleware('auth:student')->group(fu
         Route::put('lihat-hasil-kelulusan', 'seeResult')->name('lihat.hasil');
     });
     Route::post('logout', [StudentAuthController::class, 'logout'])->name('logout');
+
+    Route::get('view/{path}', [FileController::class, 'show'])
+        ->where('path', '.*')
+        ->name('file.show');
 });

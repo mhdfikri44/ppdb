@@ -161,8 +161,7 @@
                             <div class="avatar-frame rounded border mb-3 mt-4"
                                 style="width: 108px; height: 158px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                                 <img class="img-fluid" alt="Foto profil"
-                                    style="width: 100%; height: 100%; object-fit: cover;"
-                                    src="{{ $pasfoto ? asset('storage/' . $pasfoto->path) : asset('assets/img/mts/profile-default.jpg') }}">
+                                    style="width: 100%; height: 100%; object-fit: cover;" src="{{ $pasfotoUrl }}">
                             </div>
                             <div class="user-info text-center">
                                 <h4 class="mb-0">{{ $student->nama_lengkap }}</h4>

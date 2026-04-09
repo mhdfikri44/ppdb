@@ -9,11 +9,14 @@
     <div class="navbar-nav-right d-flex align-items-center justify-content-between w-100" id="navbar-collapse">
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- User -->
+            @php
+                $pasfoto = auth('student')->user()->documents->where('jenis_dokumen', 'pasfoto')->first();
+            @endphp
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="#" data-bs-toggle="dropdown">
-                    <div class="avatar border rounded-circle">
-                        <img src="{{ asset('assets/img/mts/profile-default.jpg') }}" alt
-                            class="h-auto rounded-circle" />
+                    <div class="avatar border rounded-circle" style="width: 50px; height: 50px; overflow: hidden;">
+                        <img class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;"
+                            src="{{ isset($pasfoto->path) ? route('student.file.show', $pasfoto->path) : asset('assets/img/mts/profile-default.jpg') }}" />
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">

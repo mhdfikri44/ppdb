@@ -21,6 +21,9 @@ class StudentController extends Controller
     {
         $student = auth('student')->user();
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
+        $pasfotoUrl = $pasfoto
+            ? route('student.file.show', $pasfoto->path)
+            : asset('assets/img/mts/profile-default.jpg');
 
         $reg = $student->registration;
         $status = [
@@ -71,7 +74,7 @@ class StudentController extends Controller
             'verifikasi' => $reg->status_verifikasi
         ];
 
-        return view('student.pages.beranda', compact('student', 'pasfoto', 'status', 'alur'));
+        return view('student.pages.beranda', compact('student', 'pasfotoUrl', 'status', 'alur'));
     }
 
     /**
@@ -366,15 +369,14 @@ class StudentController extends Controller
         $existing = $student->documents()->where('jenis_dokumen', $jenis)->first();
         if ($existing) {
             // Hapus file lama dari storage
-            if (Storage::disk('public')->exists($existing->path)) {
-                Storage::disk('public')->delete($existing->path);
+            if (Storage::exists($existing->path)) {
+                Storage::delete($existing->path);
             }
         }
 
         $path = $file->storeAs(
             'document/' . str_replace('_', '-', $jenis),  // nama folder
-            $filename,  // nama file
-            'public'    // simpan di storage/app/public
+            $filename
         );
 
         $student->documents()->updateOrCreate(
