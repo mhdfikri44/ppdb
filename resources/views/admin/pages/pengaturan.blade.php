@@ -81,40 +81,27 @@
                 final_result_published: $('#final_result_published').is(':checked') ? 1 : 0
             };
 
-            Swal.fire({
-                title: 'Simpan perubahan?',
-                text: 'Pengaturan akan diperbarui',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Simpan'
-            }).then((result) => {
+            $.ajax({
+                url: "{{ route('admin.setting.update') }}",
+                type: "PUT",
+                data: formData,
 
-                if (result.isConfirmed) {
-
-                    $.ajax({
-                        url: "{{ route('admin.setting.update') }}",
-                        type: "PUT",
-                        data: formData,
-
-                        success: function(res) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: res.message,
-                                timer: 2000,
-                                showConfirmButton: false
-                            });
-                        },
-
-                        error: function(xhr) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Gagal',
-                                text: xhr.responseJSON?.message || 'Terjadi kesalahan'
-                            });
-                        }
+                success: function(res) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: res.message,
+                        timer: 2000,
+                        showConfirmButton: false
                     });
+                },
 
+                error: function(xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: xhr.responseJSON?.message || 'Terjadi kesalahan'
+                    });
                 }
             });
         });
