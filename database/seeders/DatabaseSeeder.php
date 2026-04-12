@@ -26,10 +26,5 @@ class DatabaseSeeder extends Seeder
             HobbySeeder::class,
             DreamSeeder::class,
         ]);
-
-        Student::factory(10)
-            ->has(Guardian::factory(), 'guardian')
-            ->has(Registration::factory(), 'registration')
-            ->create();
     }
 }
