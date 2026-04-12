@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dream;
 use App\Models\Education;
+use App\Models\Funder;
+use App\Models\Hobby;
+use App\Models\HouseStatus;
 use App\Models\Occupation;
 use App\Models\Religion;
 use App\Models\Setting;
+use App\Models\Status;
 use App\Models\TestPractice;
 use App\Models\TestWritten;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -86,7 +91,16 @@ class StudentController extends Controller
         $student = auth('student')->user();
         $student->load('registration');
         $religions = Religion::all();
-        return view('student.pages.identitas1', compact('student', 'religions'));
+        $hobbies = Hobby::all();
+        $dreams = Dream::all();
+        $funders = Funder::all();
+        return view('student.pages.identitas1', compact(
+            'student',
+            'religions',
+            'hobbies',
+            'dreams',
+            'funders'
+        ));
     }
 
     /**
@@ -111,7 +125,13 @@ class StudentController extends Controller
 
         $educations = Education::all();
         $occupations = Occupation::all();
-        return view('student.pages.identitas2', compact('student', 'occupations', 'educations'));
+        $statuses = Status::all();
+        return view('student.pages.identitas2', compact(
+            'student',
+            'occupations',
+            'educations',
+            'statuses'
+        ));
     }
 
     /**
@@ -122,16 +142,17 @@ class StudentController extends Controller
         /** @var \App\Models\Student $student */
         $student = auth('student')->user();
         $student->load('guardian', 'registration');
+        $houseStatuses = HouseStatus::all();
 
         if (!$student->registration->is_biodata_complete) {
             return back()->with('error', 'Lengkapi dahulu data pribadi.');
         }
 
         if (!$student->registration->is_family_complete) {
-            return back()->with('error', 'Lengkapi dahulu data keluarga.');
+            return back()->with('error', 'Lengkapi dahulu data orang tua.');
         }
 
-        return view('student.pages.identitas3', compact('student'));
+        return view('student.pages.identitas3', compact('student', 'houseStatuses'));
     }
 
     /**
@@ -149,13 +170,25 @@ class StudentController extends Controller
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
             'religion_id' => 'required|exists:religions,id',
-            'hobi' => 'required|string|max:100',
-            'cita_cita' => 'required|string|max:100',
+            'hobby_id' => 'required|exists:hobbies,id',
+            'dream_id' => 'required|exists:dreams,id',
+            'funder_id' => 'required|exists:funders,id',
+            'tahun_lulus' => 'required|digits:4',
+            'asal_sekolah' => 'required|string|max:255',
+            'alamat_asal_sekolah' => 'required|string|max:255',
+
             'prestasi' => 'nullable|string|max:255',
             'penyakit' => 'nullable|string|max:255',
+            'no_kip_pkh_kks_kps' => 'nullable|digits_between:1,30',
         ], [
             'religion_id.required' => 'Agama wajib dipilih.',
-            'religion_id.exists'   => 'Pilihan agama tidak valid.',
+            'hobby_id.required' => 'Hobi wajib dipilih.',
+            'dream_id.required' => 'Cita-cita wajib dipilih.',
+            'funder_id.required' => 'Yang Membiayai Sekolah wajib dipilih.',
+            'religion_id.exists' => 'Pilihan tidak valid.',
+            'hobby_id.exists' => 'Pilihan tidak valid.',
+            'dream_id.exists' => 'Pilihan tidak valid.',
+            'funder_id.exists' => 'Pilihan tidak valid.',
         ]);
 
         $student->update([
@@ -165,10 +198,16 @@ class StudentController extends Controller
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'religion_id' => $request->religion_id,
-            'hobi' => ucwords(strtolower($request->hobi)),
-            'cita_cita' => ucwords(strtolower($request->cita_cita)),
-            'prestasi' => ucfirst(strtolower($request->prestasi)),
-            'penyakit' => ucfirst(strtolower($request->penyakit)),
+            'hobby_id' => $request->hobby_id,
+            'dream_id' => $request->dream_id,
+            'funder_id' => $request->funder_id,
+            'tahun_lulus' => $request->tahun_lulus,
+            'asal_sekolah' => ucwords(strtolower($request->asal_sekolah)),
+            'alamat_asal_sekolah' => $request->alamat_asal_sekolah,
+
+            'prestasi' => $request->prestasi ? ucfirst(strtolower($request->prestasi)) : null,
+            'penyakit' => $request->penyakit ? ucfirst(strtolower($request->penyakit)) : null,
+            'no_kip_pkh_kks_kps' => $request->no_kip_pkh_kks_kps ? $request->no_kip_pkh_kks_kps : null,
         ]);
 
         $student->registration->update([
@@ -187,15 +226,6 @@ class StudentController extends Controller
         $student = auth('student')->user();
 
         $request->validate([
-            'anak_keberapa' => 'required|integer|min:1|max:999',
-            'jumlah_saudara' => 'required|integer|min:0|max:999',
-            'tempat_tinggal' => 'required|in:Bersama orang tua,Kos,Lainnya',
-            'transportasi' => 'required|string|max:50',
-            'jarak_tempuh' => 'required|numeric|min:0.1|max:100',
-            'waktu_tempuh' => 'required|integer|min:1|max:300',
-            'no_kk' => 'required|digits:16',
-            'no_kip_pkh_kks_kps' => 'nullable|digits_between:1,30',
-
             'nama_ayah' => 'required|string|max:255',
             'nik_ayah' => 'required|digits:16|unique:guardians,nik_ayah,' . ($student->guardian->id),
             'tempat_lahir_ayah' => 'required|string|max:50',
@@ -204,7 +234,7 @@ class StudentController extends Controller
             'father_occupation_id' => 'required|exists:occupations,id',
             'penghasilan_ayah' => 'required|string|max:20',
             'hp_ayah' => 'required|string|max:15',
-            'keterangan_ayah' => 'required|in:Masih Hidup,Meninggal,Cerai',
+            'father_status_id' => 'required|exists:statuses,id',
 
             'nama_ibu' => 'required|string|max:255',
             'nik_ibu' => 'required|digits:16|unique:guardians,nik_ibu,' . ($student->guardian->id),
@@ -214,9 +244,10 @@ class StudentController extends Controller
             'mother_occupation_id' => 'required|exists:occupations,id',
             'penghasilan_ibu' => 'required|string|max:20',
             'hp_ibu' => 'required|string|max:15',
-            'keterangan_ibu' => 'required|in:Masih Hidup,Meninggal,Cerai',
+            'mother_status_id' => 'required|exists:statuses,id',
 
             'nama_wali' => 'nullable|string|max:255',
+            'nik_wali' => 'nullable|digits:16|unique:guardians,nik_wali,' . ($student->guardian->id),
             'tempat_lahir_wali' => 'nullable|string|max:50',
             'tanggal_lahir_wali' => 'nullable|date',
             'wali_education_id' => 'nullable|exists:educations,id',
@@ -225,28 +256,19 @@ class StudentController extends Controller
             'hp_wali' => 'nullable|string|max:15',
         ], [
             'father_education_id.required' => 'Pendidikan ayah wajib dipilih.',
-            'father_education_id.exists'   => 'Pendidikan ayah tidak valid.',
+            'father_education_id.exists'   => 'Pilihan tidak valid.',
             'father_occupation_id.required' => 'Pekerjaan ayah wajib dipilih.',
-            'father_occupation_id.exists'   => 'Pekerjaan ayah tidak valid.',
-
+            'father_occupation_id.exists'   => 'Pilihan tidak valid.',
+            'father_status_id.required' => 'Status ayah wajib dipilih.',
+            'father_status_id.exists'   => 'Pilihan tidak valid.',
             'mother_education_id.required' => 'Pendidikan ibu wajib dipilih.',
-            'mother_education_id.exists'   => 'Pendidikan ibu tidak valid.',
+            'mother_education_id.exists'   => 'Pilihan tidak valid.',
             'mother_occupation_id.required' => 'Pekerjaan ibu wajib dipilih.',
-            'mother_occupation_id.exists'   => 'Pekerjaan ibu tidak valid.',
-
-            'wali_education_id.exists'   => 'Pendidikan wali tidak valid.',
-            'wali_occupation_id.exists'   => 'Pekerjaan wali tidak valid.',
-        ]);
-
-        $student->update([
-            'anak_keberapa' => $request->anak_keberapa,
-            'jumlah_saudara' => $request->jumlah_saudara,
-            'tempat_tinggal' => $request->tempat_tinggal,
-            'transportasi' => ucwords(strtolower($request->transportasi)),
-            'jarak_tempuh' => $request->jarak_tempuh,
-            'waktu_tempuh' => $request->waktu_tempuh,
-            'no_kk' => $request->no_kk,
-            'no_kip_pkh_kks_kps' => $request->no_kip_pkh_kks_kps ? $request->no_kip_pkh_kks_kps : null,
+            'mother_occupation_id.exists'   => 'Pilihan tidak valid.',
+            'mother_status_id.required' => 'Status ibu wajib dipilih.',
+            'mother_status_id.exists'   => 'Pilihan tidak valid.',
+            'wali_education_id.exists'   => 'Pilihan tidak valid.',
+            'wali_occupation_id.exists'   => 'Pilihan tidak valid.',
         ]);
 
         $student->guardian->update([
@@ -258,7 +280,7 @@ class StudentController extends Controller
             'father_occupation_id' => $request->father_occupation_id,
             'penghasilan_ayah' => str_replace('.', '', $request->penghasilan_ayah),
             'hp_ayah' => $request->hp_ayah,
-            'keterangan_ayah' => $request->keterangan_ayah,
+            'father_status_id' => $request->father_status_id,
 
             'nama_ibu' => ucwords(strtolower($request->nama_ibu)),
             'nik_ibu' => $request->nik_ibu,
@@ -268,9 +290,10 @@ class StudentController extends Controller
             'mother_occupation_id' => $request->mother_occupation_id,
             'penghasilan_ibu' => str_replace('.', '', $request->penghasilan_ibu),
             'hp_ibu' => $request->hp_ibu,
-            'keterangan_ibu' => $request->keterangan_ibu,
+            'mother_status_id' => $request->mother_status_id,
 
             'nama_wali' => $request->nama_wali ? ucwords(strtolower($request->nama_wali)) : null,
+            'nik_wali' => $request->nik_wali ? $request->nik_wali : null,
             'tempat_lahir_wali' => $request->tempat_lahir_wali ? ucwords(strtolower($request->tempat_lahir_wali)) : null,
             'tanggal_lahir_wali' => $request->tanggal_lahir_wali ? $request->tanggal_lahir_wali : null,
             'wali_education_id' => $request->wali_education_id ? $request->wali_education_id : null,
@@ -283,7 +306,7 @@ class StudentController extends Controller
             'is_family_complete' => true,
         ]);
 
-        return redirect()->route('student.edit3')->with('sukses', 'Berhasil menyimpan data keluarga!');
+        return redirect()->route('student.edit3')->with('sukses', 'Berhasil menyimpan data orang tua!');
     }
 
     /**
@@ -295,22 +318,36 @@ class StudentController extends Controller
         $student = auth('student')->user();
 
         $request->validate([
-            'tahun_lulus' => 'required|digits:4',
-            'asal_sekolah' => 'required|string|max:255',
-            'alamat_asal_sekolah' => 'required|string|max:255',
+            'no_kk' => 'required|digits:16',
+            'alamat' => 'required|string|max:255',
+            'house_status_id' => 'required|exists:house_statuses,id',
+            'anak_keberapa' => 'required|integer|min:1|lte:jumlah_saudara',
+            'jumlah_saudara' => 'required|integer|min:0|max:999',
+            'transportasi' => 'required|string|max:50',
+            'jarak_tempuh' => 'required|numeric|min:0.1|max:100',
+            'waktu_tempuh' => 'required|integer|min:1|max:300',
+        ], [
+            'house_status_id.required' => 'Status tempat tinggal wajib dipilih.',
+            'house_status_id.exists' => 'Status tidak valid.',
         ]);
 
         $student->update([
-            'tahun_lulus' => $request->tahun_lulus,
-            'asal_sekolah' => ucwords(strtolower($request->asal_sekolah)),
-            'alamat_asal_sekolah' => $request->alamat_asal_sekolah,
+            'no_kk' => $request->no_kk,
+            'alamat' => $request->alamat,
+            'house_status_id' => $request->house_status_id,
+            'anak_keberapa' => $request->anak_keberapa,
+            'jumlah_saudara' => $request->jumlah_saudara,
+            'tempat_tinggal' => $request->tempat_tinggal,
+            'transportasi' => ucwords(strtolower($request->transportasi)),
+            'jarak_tempuh' => $request->jarak_tempuh,
+            'waktu_tempuh' => $request->waktu_tempuh,
         ]);
 
         $student->registration->update([
             'status_data' => true,
         ]);
 
-        return redirect()->route('student.document')->with('sukses', 'Berhasil menyimpan data sekolah asal!');
+        return redirect()->route('student.document')->with('sukses', 'Berhasil menyimpan data rumah dan keluarga!');
     }
 
     /**
@@ -468,9 +505,9 @@ class StudentController extends Controller
     public function cetakFormulir()
     {
         /** @var \App\Models\Student $student */
-        $student = auth('student')->user();
+        $data = auth('student')->user();
 
-        $pdf = FacadePdf::loadView('pdf.formulir-penerimaan', compact('student'))
+        $pdf = FacadePdf::loadView('pdf.formulir-penerimaan', compact('data'))
             ->setPaper('A4', 'portrait');
 
         return $pdf->stream('formulir-penerimaan.pdf');

@@ -143,6 +143,10 @@
                             <td>Tempat, Tanggal Lahir</td>
                             <td>: {{ $student->tempat_tanggal_lahir }}</td>
                         </tr>
+                        <tr>
+                            <td>Alamat</td>
+                            <td>: {{ $student->alamat }}</td>
+                        </tr>
                     </table>
                 </td>
             </tr>

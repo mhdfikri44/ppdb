@@ -20,29 +20,16 @@ class DatabaseSeeder extends Seeder
             OccupationSeeder::class,
             ReligionSeeder::class,
             EducationSeeder::class,
+            FunderSeeder::class,
+            StatusSeeder::class,
+            HouseStatusSeeder::class,
+            HobbySeeder::class,
+            DreamSeeder::class,
         ]);
 
-        // $distributions = [
-        //     'draft' => 20,
-        //     'isiData' => 20,
-        //     'disetujui' => 20,
-        //     'ditolak' => 10,
-        // ];
-
-        // foreach ($distributions as $state => $count) {
-        //     Student::factory($count)
-        //         ->has(Guardian::factory(), 'guardian')
-        //         ->has(Registration::factory()->$state(), 'registration')
-        //         ->create();
-        // }
-
-        // $students = Student::factory(50)
-        //     ->has(Guardian::factory(), 'guardian')
-        //     ->has(Registration::factory()->disetujui(), 'registration')
-        //     ->create();
-
-        // $students->each(function ($student) {
-        //     $student->registration->generateNoPendaftaran();
-        // });
+        Student::factory(10)
+            ->has(Guardian::factory(), 'guardian')
+            ->has(Registration::factory(), 'registration')
+            ->create();
     }
 }

@@ -10,10 +10,10 @@
         </a>
     </div>
 
-    <!-- Data sekolah asal -->
+    <!-- Data pribadi -->
     <div class="card mb-4">
         <div class="card-header">
-            <h5 class="text-primary fw-bold mb-0">Data Sekolah Asal</h5>
+            <h5 class="text-primary fw-bold mb-0">Data Pribadi</h5>
         </div>
         <div class="card-body">
             <div class="row">
@@ -26,48 +26,6 @@
                                     <td class="fw-bold">:</td>
                                     <td>{{ $student->nisn }}</td>
                                 </tr>
-                                <tr>
-                                    <td class="fw-bold">Tahun lulus</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->tahun_lulus ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td td class="fw-bold">Asal sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->asal_sekolah ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Alamat asal sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->alamat_asal_sekolah ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Data pribadi -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="text-primary fw-bold mb-0">Data Pribadi</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
                                 <tr>
                                     <td class="fw-bold">Nama lengkap</td>
                                     <td class="fw-bold">:</td>
@@ -93,6 +51,16 @@
                                     <td td class="fw-bold">:</td>
                                     <td>{{ $student->religion->name ?? '-' }}</td>
                                 </tr>
+                                <tr>
+                                    <td td class="fw-bold">Hobi</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->hobby->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Cita-cita</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->dream->name ?? '-' }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -103,14 +71,19 @@
                         <table class="table table-hover">
                             <tbody class="table-border-bottom-0">
                                 <tr>
-                                    <td td class="fw-bold">Hobi</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->hobi ?? '-' }}</td>
+                                    <td class="fw-bold">Tahun lulus</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->tahun_lulus ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Cita-cita</td>
+                                    <td td class="fw-bold">Asal sekolah</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->cita_cita ?? '-' }}</td>
+                                    <td>{{ $student->asal_sekolah ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Alamat asal sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->alamat_asal_sekolah ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">Prestasi</td>
@@ -118,71 +91,14 @@
                                     <td>{{ $student->prestasi ?? '-' }}</td>
                                 </tr>
                                 <tr>
+                                    <td td class="fw-bold">Yang membiayai sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->funder->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
                                     <td td class="fw-bold">Penyakit</td>
                                     <td td class="fw-bold">:</td>
                                     <td>{{ $student->penyakit ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Data keluarga -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="text-primary fw-bold mb-0">Data Keluarga</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="fw-bold">Anak keberapa</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->anak_keberapa_label ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Jumlah saudara</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->jumlah_saudara ?? '-' }} Bersaudara</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Tempat tinggal</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->tempat_tinggal ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Transportasi ke sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->transportasi ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="fw-bold">Jarak ke sekolah</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->jarak_tempuh ?? '-' }} KM</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Waktu ke sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->waktu_tempuh ?? '-' }} Menit</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">No. Kartu Keluarga (KK)</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->no_kk ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">No. KIP/PKH/KKS/KPS</td>
@@ -194,9 +110,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- Data orang tua -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="text-primary fw-bold mb-0">Data Orang Tua</h5>
+        </div>
+        <div class="card-body">
             <!-- Data Ayah -->
-            <div class="row mt-4">
+            <div class="row">
                 <div class="col px-2">
                     <div class="table-responsive text-nowrap">
                         <table class="table">
@@ -258,9 +182,9 @@
                                     <td>{{ $student->guardian->hp_ayah ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Keterangan ayah</td>
+                                    <td td class="fw-bold">Status ayah</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->guardian->keterangan_ayah ?? '-' }}</td>
+                                    <td>{{ $student->guardian->fatherStatus->name ?? '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -331,9 +255,9 @@
                                     <td>{{ $student->guardian->hp_ibu ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Keterangan ibu</td>
+                                    <td td class="fw-bold">Status ibu</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->guardian->keterangan_ibu ?? '-' }}</td>
+                                    <td>{{ $student->guardian->motherStatus->name ?? '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -364,6 +288,11 @@
                                     <td class="fw-bold">Nama wali</td>
                                     <td class="fw-bold">:</td>
                                     <td>{{ $student->guardian->nama_wali ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">NIK wali</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->guardian->nik_wali ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">Tempat, tgl lahir wali</td>
@@ -397,6 +326,75 @@
                                     <td td class="fw-bold">HP/WA wali</td>
                                     <td td class="fw-bold">:</td>
                                     <td>{{ $student->guardian->hp_wali ?? '-' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data rumah & keluarga -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="text-primary fw-bold mb-0">Data Rumah & Keluarga</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 px-2">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td td class="fw-bold">No. Kartu Keluarga (KK)</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->no_kk ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Alamat rumah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->alamat ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Status kepemilikan rumah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->houseStatus->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Anak keberapa</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->anak_keberapa_label ?? '-' }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-6 px-2">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td td class="fw-bold">Jumlah saudara</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->jumlah_saudara ?? '-' }} Bersaudara</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Transportasi ke sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->transportasi ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Jarak ke sekolah</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->jarak_tempuh ?? '-' }} KM</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Waktu ke sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->waktu_tempuh ?? '-' }} Menit</td>
                                 </tr>
                             </tbody>
                         </table>

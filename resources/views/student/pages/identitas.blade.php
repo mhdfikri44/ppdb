@@ -19,15 +19,15 @@
                         <li class="nav-item">
                             <a href="{{ route('student.edit2') }}" type="button"
                                 class="{{ Route::is('student.edit2') ? 'active' : '' }} nav-link gap-1">
-                                <i class="ti ti-home-2 d-none d-sm-inline"></i>
-                                <span>Keluarga</span>
+                                <i class="ti ti-users d-none d-sm-inline"></i>
+                                <span>Orang Tua</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('student.edit3') }}" type="button"
                                 class="{{ Route::is('student.edit3') ? 'active' : '' }} nav-link gap-1">
-                                <i class="ti ti-school d-none d-sm-inline"></i>
-                                <span>Sekolah Asal</span>
+                                <i class="ti ti-home d-none d-sm-inline"></i>
+                                <span>Rumah & Keluarga</span>
                             </a>
                         </li>
                     </ul>

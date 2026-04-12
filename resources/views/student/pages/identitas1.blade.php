@@ -10,6 +10,11 @@
             @csrf @method('PUT')
             <div class="row g-3">
                 <div class="col-sm-6">
+                    <label for="nisn" class="form-label fw-bold">NISN</label>
+                    <input type="text" id="nisn" class="form-control max-10 angka" placeholder="Masukkan nisn"
+                        value="{{ old('nisn', $student->nisn ?? '') }}" disabled />
+                </div>
+                <div class="col-sm-6">
                     <label for="nama_lengkap" class="form-label fw-bold">Nama Lengkap</label>
                     <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control max-255"
                         placeholder="Masukkan nama lengkap" value="{{ old('nama_lengkap', $student->nama_lengkap ?? '') }}"
@@ -82,33 +87,95 @@
                     @enderror
                 </div>
                 <div class="col-sm-6">
-                    <label for="hobi" class="form-label fw-bold">Hobi</label>
-                    <input type="text" id="hobi" name="hobi" class="form-control max-100"
-                        placeholder="Masukkan hobi" value="{{ old('hobi', $student->hobi ?? '') }}"
-                        @disabled($student->registration->is_locked) />
-                    @error('hobi')
-                        <div id="hobi" class="form-text text-danger">
+                    <label for="hobby_id" class="form-label fw-bold">Hobi</label>
+                    <select id="hobby_id" name="hobby_id" class="select2" @disabled($student->registration->is_locked)>
+                        <option label="" selected disabled>Pilih salah satu</option>
+                        @foreach ($hobbies as $hobby)
+                            <option value="{{ $hobby->id }}" @selected(old('hobby_id', $student->hobby_id) == $hobby->id)>
+                                {{ $hobby->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('hobby_id')
+                        <div id="hobby_id" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
                 <div class="col-sm-6">
-                    <label for="cita_cita" class="form-label fw-bold">Cita-cita</label>
-                    <input type="text" id="cita_cita" name="cita_cita" class="form-control max-100"
-                        placeholder="Masukkan cita-cita" value="{{ old('cita_cita', $student->cita_cita ?? '') }}"
-                        @disabled($student->registration->is_locked) />
-                    @error('cita_cita')
-                        <div id="cita_cita" class="form-text text-danger">
+                    <label for="dream_id" class="form-label fw-bold">Cita-cita</label>
+                    <select id="dream_id" name="dream_id" class="select2" @disabled($student->registration->is_locked)>
+                        <option label="" selected disabled>Pilih salah satu</option>
+                        @foreach ($dreams as $dream)
+                            <option value="{{ $dream->id }}" @selected(old('dream_id', $student->dream_id) == $dream->id)>
+                                {{ $dream->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('dream_id')
+                        <div id="dream_id" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
+                <div class="col-sm-6">
+                    <label for="tahun_lulus" class="form-label fw-bold">Tahun Lulus</label>
+                    <input type="text" id="tahun_lulus" name="tahun_lulus" class="form-control max-4 angka"
+                        placeholder="Masukkan tahun lulus" value="{{ old('tahun_lulus', $student->tahun_lulus ?? '') }}"
+                        @disabled($student->registration->is_locked) />
+                    @error('tahun_lulus')
+                        <div id="tahun_lulus" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-sm-6">
+                    <label for="asal_sekolah" class="form-label fw-bold">Asal Sekolah</label>
+                    <input type="text" id="asal_sekolah" name="asal_sekolah" class="form-control max-255"
+                        placeholder="Masukkan sekolah sebelumnya"
+                        value="{{ old('asal_sekolah', $student->asal_sekolah ?? '') }}" @disabled($student->registration->is_locked) />
+                    @error('asal_sekolah')
+                        <div id="asal_sekolah" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-sm-6">
+                    <label for="alamat_asal_sekolah" class="form-label fw-bold">Alamat Asal Sekolah</label>
+                    <input type="text" id="alamat_asal_sekolah" name="alamat_asal_sekolah"
+                        class="form-control max-255" placeholder="Masukkan alamat sekolah sebelumnya"
+                        value="{{ old('alamat_asal_sekolah', $student->alamat_asal_sekolah ?? '') }}"
+                        @disabled($student->registration->is_locked) />
+                    @error('alamat_asal_sekolah')
+                        <div id="alamat_asal_sekolah" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-sm-6">
+                    <label for="funder_id" class="form-label fw-bold">Yang Membiayai Sekolah</label>
+                    <select id="funder_id" name="funder_id" class="select2" @disabled($student->registration->is_locked)>
+                        <option label="" selected disabled>Pilih salah satu</option>
+                        @foreach ($funders as $funder)
+                            <option value="{{ $funder->id }}" @selected(old('funder_id', $student->funder_id) == $funder->id)>
+                                {{ $funder->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('funder_id')
+                        <div id="funder_id" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+
                 <div class="col-sm-6">
                     <label for="prestasi" class="form-label fw-bold">
                         Prestasi <span class="form-text text-primary fst-italic">*Jika ada</span>
                     </label>
-                    <textarea id="prestasi" name="prestasi" class="form-control max-255" rows="3" style="resize: none;"
-                        placeholder="Masukkan Prestasi yang pernah diraih" @disabled($student->registration->is_locked)>{{ old('prestasi', $student->prestasi ?? '') }}</textarea>
+                    <input type="text" id="prestasi" name="prestasi" class="form-control max-255"
+                        placeholder="Masukkan prestasi yang pernah diraih"
+                        value="{{ old('prestasi', $student->prestasi ?? '') }}" @disabled($student->registration->is_locked) />
                     @error('prestasi')
                         <div id="prestasi" class="form-text text-danger">
                             {{ $message }}
@@ -119,10 +186,25 @@
                     <label for="penyakit" class="form-label fw-bold">
                         Penyakit <span class="form-text text-primary fst-italic">*Jika ada</span>
                     </label>
-                    <textarea id="penyakit" name="penyakit" class="form-control max-255" rows="3" style="resize: none;"
-                        placeholder="Masukkan penyakit yang pernah diderita" @disabled($student->registration->is_locked)>{{ old('penyakit', $student->penyakit ?? '') }}</textarea>
+                    <input type="text" id="penyakit" name="penyakit" class="form-control max-255"
+                        placeholder="Masukkan penyakit yang pernah diderita"
+                        value="{{ old('penyakit', $student->penyakit ?? '') }}" @disabled($student->registration->is_locked) />
                     @error('penyakit')
                         <div id="penyakit" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-sm-6 mb-5">
+                    <label for="no_kip_pkh_kks_kps" class="form-label fw-bold">
+                        No. KIP/PKH/KKS/KPS <span class="form-text text-primary fst-italic">*Jika ada</span>
+                    </label>
+                    <input type="text" id="no_kip_pkh_kks_kps" name="no_kip_pkh_kks_kps"
+                        class="form-control max-30 angka" placeholder="Masukkan nomor kartu yang dimiliki"
+                        value="{{ old('no_kip_pkh_kks_kps', $student->no_kip_pkh_kks_kps ?? '') }}"
+                        @disabled($student->registration->is_locked) />
+                    @error('no_kip_pkh_kks_kps')
+                        <div id="no_kip_pkh_kks_kps" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror

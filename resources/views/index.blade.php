@@ -202,16 +202,21 @@
     <footer class="bg-slate-900 text-slate-400 py-12 px-6">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
-                    <i class="fas fa-graduation-cap text-xs"></i>
-                </div>
-                <span class="font-bold text-white uppercase tracking-tighter">PPDB</span>
             </div>
             <p class="text-sm">© 2026 MTsN 1 Kota Dumai. All rights reserved.</p>
             <div class="flex gap-4">
-                <a href="#" class="hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-facebook text-xl"></i></a>
-                <a href="#" class="hover:text-white transition"><i class="fab fa-youtube text-xl"></i></a>
+                <a href="https://www.instagram.com/mtsn1kotadumai/" class="hover:text-white transition"
+                    target="_blank">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=100077751991640" class="hover:text-white transition"
+                    target="_blank">
+                    <i class="fab fa-facebook text-xl"></i>
+                </a>
+                <a href="https://www.youtube.com/@mtsnegeri1kotadumai317" class="hover:text-white transition"
+                    target="_blank">
+                    <i class="fab fa-youtube text-xl"></i>
+                </a>
             </div>
         </div>
     </footer>

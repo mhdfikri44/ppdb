@@ -4,126 +4,19 @@
     <!-- Data Keluarga -->
     <div class="tab-pane fade active show" id="data-keluarga" role="tabpanel">
         <div class="content-header my-3">
-            <h5 class="mb-0 text-primary">Data Keluarga</h5>
+            <h5 class="mb-0 text-primary">Data Orang Tua</h5>
         </div>
         <form action="{{ route('student.update2', $student->id) }}" method="POST">
             @csrf @method('PUT')
             <div class="row g-3">
-                <div class="col-sm-6">
-                    <label for="anak_keberapa" class="form-label fw-bold">Anak Keberapa</label>
-                    <input type="text" id="anak_keberapa" name="anak_keberapa" class="form-control max-3 angka"
-                        placeholder="Masukkan anak keberapa"
-                        value="{{ old('anak_keberapa', $student->anak_keberapa ?? '') }}" @disabled($student->registration->is_locked) />
-                    @error('anak_keberapa')
-                        <div id="anak_keberapa" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="jumlah_saudara" class="form-label fw-bold">Jumlah Saudara</label>
-                    <div class="input-group">
-                        <input type="text" id="jumlah_saudara" name="jumlah_saudara" class="form-control max-3 angka"
-                            placeholder="Masukkan jumlah saudara"
-                            value="{{ old('jumlah_saudara', $student->jumlah_saudara ?? '') }}"
-                            @disabled($student->registration->is_locked) />
-                        <span class="input-group-text">Saudara</span>
-                    </div>
-                    @error('jumlah_saudara')
-                        <div id="jumlah_saudara" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="tempat_tinggal" class="form-label fw-bold">Tempat Tinggal</label>
-                    <select id="tempat_tinggal" name="tempat_tinggal" class="select2" @disabled($student->registration->is_locked)>
-                        <option label="" selected disabled>Pilih salah satu</option>
-                        <option value="Bersama orang tua" @selected(old('tempat_tinggal', $student->tempat_tinggal ?? '') == 'Bersama orang tua')>Bersama orang tua</option>
-                        <option value="Kos" @selected(old('tempat_tinggal', $student->tempat_tinggal ?? '') == 'Kos')>Kos</option>
-                        <option value="Lainnya" @selected(old('tempat_tinggal', $student->tempat_tinggal ?? '') == 'Lainnya')>Lainnya</option>
-                    </select>
-                    @error('tempat_tinggal')
-                        <div id="tempat_tinggal" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="transportasi" class="form-label fw-bold">Transportasi Kesekolah</label>
-                    <input type="text" id="transportasi" name="transportasi" class="form-control max-50"
-                        placeholder="Masukkan transportasi yang digunakan"
-                        value="{{ old('transportasi', $student->transportasi ?? '') }}" @disabled($student->registration->is_locked) />
-                    @error('transportasi')
-                        <div id="transportasi" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="jarak_tempuh" class="form-label fw-bold">Jarak Tempuh Kesekolah</label>
-                    <div class="input-group">
-                        <input type="text" id="jarak_tempuh" name="jarak_tempuh" class="form-control max-3 desimal"
-                            placeholder="Masukkan jarak tempuh"
-                            value="{{ old('jarak_tempuh', $student->jarak_tempuh ?? '') }}" @disabled($student->registration->is_locked) />
-                        <span class="input-group-text">Kilometer</span>
-                    </div>
-                    @error('jarak_tempuh')
-                        <div id="jarak_tempuh" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="waktu_tempuh" class="form-label fw-bold">Waktu Tempuh Kesekolah</label>
-                    <div class="input-group">
-                        <input type="text" id="waktu_tempuh" name="waktu_tempuh" class="form-control max-3 angka"
-                            placeholder="Masukkan waktu tempuh"
-                            value="{{ old('waktu_tempuh', $student->waktu_tempuh ?? '') }}" @disabled($student->registration->is_locked) />
-                        <span class="input-group-text">Menit</span>
-                    </div>
-                    @error('waktu_tempuh')
-                        <div id="waktu_tempuh" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6">
-                    <label for="no_kk" class="form-label fw-bold">No. Kartu Keluarga</label>
-                    <input type="text" id="no_kk" name="no_kk" class="form-control max-16 angka"
-                        placeholder="Masukkan nomor kartu keluarga" value="{{ old('no_kk', $student->no_kk ?? '') }}"
-                        @disabled($student->registration->is_locked) />
-                    @error('no_kk')
-                        <div id="no_kk" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-                <div class="col-sm-6 mb-5">
-                    <label for="no_kip_pkh_kks_kps" class="form-label fw-bold">
-                        No. KIP/PKH/KKS/KPS <span class="form-text text-primary fst-italic">*Opsional</span>
-                    </label>
-                    <input type="text" id="no_kip_pkh_kks_kps" name="no_kip_pkh_kks_kps"
-                        class="form-control max-30 angka" placeholder="Masukkan nomor kartu yang dimiliki"
-                        value="{{ old('no_kip_pkh_kks_kps', $student->no_kip_pkh_kks_kps ?? '') }}"
-                        @disabled($student->registration->is_locked) />
-                    @error('no_kip_pkh_kks_kps')
-                        <div id="no_kip_pkh_kks_kps" class="form-text text-danger">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
                 {{-- =================================== DATA AYAH =================================== --}}
                 <div class="divider divider-primary mb-0">
-                    <div class="divider-text">Data Ayah</div>
+                    <div class="divider-text">Data Ayah Kandung</div>
                 </div>
-
                 <div class="col-sm-6">
                     <label for="nama_ayah" class="form-label fw-bold">Nama Ayah</label>
                     <input type="text" id="nama_ayah" name="nama_ayah" class="form-control max-255"
-                        placeholder="Masukkan nama ayah"
-                        value="{{ old('nama_ayah', $student->guardian->nama_ayah ?? '') }}"
+                        placeholder="Masukkan nama ayah" value="{{ old('nama_ayah', $student->guardian->nama_ayah ?? '') }}"
                         @disabled($student->registration->is_locked) />
                     @error('nama_ayah')
                         <div id="nama_ayah" class="form-text text-danger">
@@ -214,24 +107,26 @@
                 <div class="col-sm-6">
                     <label for="hp_ayah" class="form-label fw-bold">HP/WA Ayah</label>
                     <input type="text" class="form-control phone" id="hp_ayah" name="hp_ayah"
-                        placeholder="Masukkan nomor hp/wa"
-                        value="{{ old('hp_ayah', $student->guardian->hp_ayah ?? '') }}" @disabled($student->registration->is_locked) />
+                        placeholder="Masukkan nomor hp/wa" value="{{ old('hp_ayah', $student->guardian->hp_ayah ?? '') }}"
+                        @disabled($student->registration->is_locked) />
                     @error('hp_ayah')
                         <div id="hp_ayah" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror
                 </div>
-                <div class="col-sm-6 mb-5">
-                    <label class="form-label fw-bold" for="keterangan_ayah">Keterangan Ayah</label>
-                    <select class="select2" name="keterangan_ayah" id="keterangan_ayah" @disabled($student->registration->is_locked)>
+                <div class="col-sm-6">
+                    <label for="father_status_id" class="form-label fw-bold">Status Ayah</label>
+                    <select id="father_status_id" name="father_status_id" class="select2" @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
-                        <option value="Masih Hidup" @selected(old('keterangan_ayah', $student->guardian->keterangan_ayah ?? '') == 'Masih Hidup')>Masih Hidup</option>
-                        <option value="Meninggal" @selected(old('keterangan_ayah', $student->guardian->keterangan_ayah ?? '') == 'Meninggal')>Meninggal</option>
-                        <option value="Cerai" @selected(old('keterangan_ayah', $student->guardian->keterangan_ayah ?? '') == 'Cerai')>Cerai</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}" @selected(old('father_status_id', $student->guardian->father_status_id) == $status->id)>
+                                {{ $status->name }}
+                            </option>
+                        @endforeach
                     </select>
-                    @error('keterangan_ayah')
-                        <div id="keterangan_ayah" class="form-text text-danger">
+                    @error('father_status_id')
+                        <div id="father_status_id" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror
@@ -239,9 +134,8 @@
 
                 {{-- =================================== DATA IBU =================================== --}}
                 <div class="divider divider-primary mb-0">
-                    <div class="divider-text">Data Ibu</div>
+                    <div class="divider-text">Data Ibu Kandung</div>
                 </div>
-
                 <div class="col-sm-6">
                     <label for="nama_ibu" class="form-label fw-bold">Nama Ibu</label>
                     <input type="text" id="nama_ibu" name="nama_ibu" class="form-control max-255"
@@ -344,16 +238,18 @@
                         </div>
                     @enderror
                 </div>
-                <div class="col-sm-6 mb-5">
-                    <label class="form-label fw-bold" for="keterangan_ibu">Keterangan Ibu</label>
-                    <select class="select2" name="keterangan_ibu" id="keterangan_ibu" @disabled($student->registration->is_locked)>
+                <div class="col-sm-6">
+                    <label for="mother_status_id" class="form-label fw-bold">Status Ibu</label>
+                    <select id="mother_status_id" name="mother_status_id" class="select2" @disabled($student->registration->is_locked)>
                         <option label="" selected disabled>Pilih salah satu</option>
-                        <option value="Masih Hidup" @selected(old('keterangan_ibu', $student->guardian->keterangan_ibu ?? '') == 'Masih Hidup')>Masih Hidup</option>
-                        <option value="Meninggal" @selected(old('keterangan_ibu', $student->guardian->keterangan_ibu ?? '') == 'Meninggal')>Meninggal</option>
-                        <option value="Cerai" @selected(old('keterangan_ibu', $student->guardian->keterangan_ibu ?? '') == 'Cerai')>Cerai</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}" @selected(old('mother_status_id', $student->guardian->mother_status_id) == $status->id)>
+                                {{ $status->name }}
+                            </option>
+                        @endforeach
                     </select>
-                    @error('keterangan_ibu')
-                        <div id="keterangan_ibu" class="form-text text-danger">
+                    @error('mother_status_id')
+                        <div id="mother_status_id" class="form-text text-danger">
                             {{ $message }}
                         </div>
                     @enderror
@@ -363,7 +259,6 @@
                 <div class="divider divider-primary mb-0">
                     <h5 class="divider-text">Data Wali (Opsional)</h5>
                 </div>
-
                 <div class="col-sm-6">
                     <label for="nama_wali" class="form-label fw-bold">Nama Wali <span
                             class="form-text text-primary fst-italic">*Opsional</span></label>
@@ -378,8 +273,22 @@
                     @enderror
                 </div>
                 <div class="col-sm-6">
-                    <label for="tempat_lahir_wali" class="form-label fw-bold">Tempat Lahir Wali <span
-                            class="form-text text-primary fst-italic">*Opsional</span></label>
+                    <label for="nik_wali" class="form-label fw-bold">
+                        NIK Wali <span class="form-text text-primary fst-italic">*Opsional</span>
+                    </label>
+                    <input type="text" id="nik_wali" name="nik_wali" class="form-control max-16 angka"
+                        placeholder="Masukkan nomor induk kependudukan"
+                        value="{{ old('nik_wali', $student->guardian->nik_wali ?? '') }}" @disabled($student->registration->is_locked) />
+                    @error('nik_wali')
+                        <div id="nik_wali" class="form-text text-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="col-sm-6">
+                    <label for="tempat_lahir_wali" class="form-label fw-bold">
+                        Tempat Lahir Wali <span class="form-text text-primary fst-italic">*Opsional</span>
+                    </label>
                     <input type="text" id="tempat_lahir_wali" name="tempat_lahir_wali" class="form-control max-255"
                         placeholder="Masukkan tempat lahir wali"
                         value="{{ old('tempat_lahir_wali', $student->guardian->tempat_lahir_wali ?? '') }}"

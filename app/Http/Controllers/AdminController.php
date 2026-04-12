@@ -164,6 +164,10 @@ class AdminController extends Controller
     {
         $student->load([
             'religion',
+            'hobby',
+            'dream',
+            'funder',
+            'houseStatus',
             'registration',
             'documents',
             'guardian.fatherJob',
@@ -172,6 +176,8 @@ class AdminController extends Controller
             'guardian.fatherEducation',
             'guardian.motherEducation',
             'guardian.waliEducation',
+            'guardian.fatherStatus',
+            'guardian.motherStatus',
         ]);
         return response()->json($student);
     }

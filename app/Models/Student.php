@@ -21,6 +21,41 @@ class Student extends Authenticatable
         'anak_keberapa_label',
     ];
 
+    protected $fillable = [
+        'nisn',
+        'nama_lengkap',
+        'password',
+        'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+
+        'religion_id',
+        'hobby_id',
+        'dream_id',
+        'funder_id',
+        'house_status_id',
+
+        'tahun_lulus',
+        'asal_sekolah',
+        'alamat_asal_sekolah',
+        'prestasi',
+        'penyakit',
+        'no_kip_pkh_kks_kps',
+
+        'no_kk',
+        'alamat',
+        'anak_keberapa',
+        'jumlah_saudara',
+        'transportasi',
+        'jarak_tempuh',
+        'waktu_tempuh',
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
+
     public function registration(): HasOne
     {
         return $this->hasOne(Registration::class);
@@ -41,6 +76,26 @@ class Student extends Authenticatable
         return $this->belongsTo(Religion::class);
     }
 
+    public function hobby(): BelongsTo
+    {
+        return $this->belongsTo(Hobby::class);
+    }
+
+    public function dream(): BelongsTo
+    {
+        return $this->belongsTo(Dream::class);
+    }
+
+    public function funder(): BelongsTo
+    {
+        return $this->belongsTo(Funder::class);
+    }
+
+    public function houseStatus(): BelongsTo
+    {
+        return $this->belongsTo(HouseStatus::class);
+    }
+
     public function testPractice(): HasOne
     {
         return $this->hasOne(TestPractice::class);
@@ -51,37 +106,6 @@ class Student extends Authenticatable
         return $this->hasOne(TestWritten::class);
     }
 
-    protected $fillable = [
-        'nisn',
-        'nama_lengkap',
-        'password',
-        'nik',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'jenis_kelamin',
-        'religion_id',
-        'hobi',
-        'cita_cita',
-        'prestasi',
-        'penyakit',
-
-        'anak_keberapa',
-        'jumlah_saudara',
-        'tempat_tinggal',
-        'transportasi',
-        'jarak_tempuh',
-        'waktu_tempuh',
-        'no_kk',
-        'no_kip_pkh_kks_kps',
-
-        'tahun_lulus',
-        'asal_sekolah',
-        'alamat_asal_sekolah',
-    ];
-
-    protected $hidden = [
-        'password',
-    ];
 
     public function getTempatTanggalLahirAttribute()
     {
