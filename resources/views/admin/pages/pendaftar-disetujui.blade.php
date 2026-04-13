@@ -69,7 +69,7 @@
                 },
                 {
                     data: "tempat_tanggal_lahir",
-                    name: "tempat_tanggal_lahir"
+                    name: "tanggal_lahir"
                 },
                 {
                     data: "aksi",
