@@ -86,6 +86,7 @@
     @include('student.components.loading')
     @include('student.components.alert')
     @include('student.components.script')
+    <script src="{{ asset('assets/js/my.js') }}"></script>
 </body>
 
 </html>

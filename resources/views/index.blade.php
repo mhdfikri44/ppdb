@@ -29,7 +29,7 @@
                 <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight">PPDB - MTsN 1 Kota Dumai</span>
+                <span class="font-bold text-xl tracking-tight">PMBM - MTsN 1 Kota Dumai</span>
             </div>
             <div class="hidden md:flex gap-8 font-medium text-slate-600">
                 <a href="#alur" class="hover:text-indigo-600 transition">Alur</a>
@@ -47,11 +47,10 @@
     <section class="pt-32 pb-20 px-6">
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div>
-                <span
-                    class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold uppercase tracking-wider">Pendaftaran
+                <span class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold uppercase tracking-wider">Pendaftaran
                     TA 2026/2027</span>
-                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mt-6">Gerbang Untuk <span
-                        class="text-indigo-600">Masa Depan</span> Cemerlang.</h1>
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mt-6">Gerbang Untuk <span class="text-indigo-600">Masa Depan</span>
+                    Cemerlang.</h1>
                 <p class="text-lg text-slate-500 mt-6 leading-relaxed">Selamat datang di portal pendaftaran siswa baru.
                     Proses mudah, transparan, dan terintegrasi secara online.</p>
                 <div class="mt-10 flex flex-wrap gap-4">
@@ -74,8 +73,7 @@
             </div>
             <div class="relative">
                 <div class="absolute -z-10 w-72 h-72 bg-indigo-400/20 blur-3xl rounded-full top-0 right-0"></div>
-                <img src="{{ asset('assets/img/mts/hero2.jpg') }}" alt="siswa mengamati"
-                    class="rounded-[2rem] shadow-2xl border-8 border-white">
+                <img src="{{ asset('assets/img/mts/hero2.jpg') }}" alt="siswa mengamati" class="rounded-[2rem] shadow-2xl border-8 border-white">
             </div>
         </div>
     </section>
@@ -100,8 +98,7 @@
                 {{-- kondisi aktif --}}
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">01</div>
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-user-plus text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Pendaftaran Online</h3>
@@ -110,8 +107,7 @@
 
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">02</div>
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-file-invoice text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Pengumuman Administrasi</h3>
@@ -120,8 +116,7 @@
 
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">03</div>
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-upload text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Tes Praktik & Wawancara</h3>
@@ -131,8 +126,7 @@
 
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">04</div>
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-tasks text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Tes Akademik</h3>
@@ -141,8 +135,7 @@
 
                 <div class="p-6 rounded-3xl bg-slate-50 relative border-2 border-indigo-600 ring-4 ring-indigo-50">
                     <div class="text-4xl font-black text-indigo-200 absolute top-4 right-6">05</div>
-                    <div
-                        class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-sm text-white mb-4">
                         <i class="fas fa-bullhorn text-xl"></i>
                     </div>
                     <h3 class="font-bold text-left">Pengumuman Hasil</h3>
@@ -160,36 +153,28 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-12">
                 <div class="bento-card col-span-2 md:col-span-3">
                     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-slate-600">
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Umur maksimal pendaftar 15 tahun
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Pasfoto Latar Merah
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Surat Keterangan Aktif Sekolah Asal
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Kartu Keluarga
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> KTP Kedua Orang Tua
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Akta Kelahiran
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest">
                             <i class="fas fa-check-circle text-green-500"></i> Kartu NISN
                         </div>
-                        <div
-                            class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest md:col-span-2">
+                        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl uppercase text-sm font-bold tracking-widest md:col-span-2">
                             <i class="fas fa-check-circle text-green-500"></i> Surat Keterangan Mengaji/Ijazah MDA Atau
                             TPA
                         </div>
@@ -205,16 +190,13 @@
             </div>
             <p class="text-sm">© 2026 MTsN 1 Kota Dumai. All rights reserved.</p>
             <div class="flex gap-4">
-                <a href="https://www.instagram.com/mtsn1kotadumai/" class="hover:text-white transition"
-                    target="_blank">
+                <a href="https://www.instagram.com/mtsn1kotadumai/" class="hover:text-white transition" target="_blank">
                     <i class="fab fa-instagram text-xl"></i>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=100077751991640" class="hover:text-white transition"
-                    target="_blank">
+                <a href="https://www.facebook.com/profile.php?id=100077751991640" class="hover:text-white transition" target="_blank">
                     <i class="fab fa-facebook text-xl"></i>
                 </a>
-                <a href="https://www.youtube.com/@mtsnegeri1kotadumai317" class="hover:text-white transition"
-                    target="_blank">
+                <a href="https://www.youtube.com/@mtsnegeri1kotadumai317" class="hover:text-white transition" target="_blank">
                     <i class="fab fa-youtube text-xl"></i>
                 </a>
             </div>
