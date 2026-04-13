@@ -394,9 +394,15 @@ class StudentController extends Controller
         /** @var \App\Models\Student $student */
         $student = auth('student')->user();
 
-        $request->validate([
-            $jenis => 'required|mimes:png,jpg,jpeg,pdf|max:2048'
-        ]);
+        if ($jenis === 'pasfoto') {
+            $request->validate([
+                $jenis => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            ]);
+        } else {
+            $request->validate([
+                $jenis => 'required|mimes:jpg,jpeg,png,pdf|max:2048'
+            ]);
+        }
 
         $file = $request->file($jenis); // ambil file yang diupload
         $extension = $file->getClientOriginalExtension(); // ambil extensi/format file asli

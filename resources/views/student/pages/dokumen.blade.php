@@ -44,7 +44,8 @@
                                 1. Pasfoto Latar Merah
                             </label>
                             @if (isset($docs['pasfoto']))
-                                <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -56,8 +57,8 @@
                                 2. Surat Keterangan Aktif Sekolah Asli
                             </label>
                             @if (isset($docs['suket_sekolah']))
-                                <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -69,7 +70,8 @@
                                 3. Kartu Keluarga (KK) Asli
                             </label>
                             @if (isset($docs['kk']))
-                                <a href="{{ route('student.file.show', $docs['kk']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kk']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -81,7 +83,8 @@
                                 4. KTP Kedua Orang Tua Asli
                             </label>
                             @if (isset($docs['ktp']))
-                                <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -93,7 +96,8 @@
                                 5. Akta Kelahiran Asli
                             </label>
                             @if (isset($docs['akta']))
-                                <a href="{{ route('student.file.show', $docs['akta']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['akta']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -105,7 +109,8 @@
                                 6. Kartu NISN Asli
                             </label>
                             @if (isset($docs['nisn']))
-                                <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -117,7 +122,8 @@
                                 7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                             </label>
                             @if (isset($docs['suket_ngaji']))
-                                <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -133,7 +139,8 @@
                                 1. Sertifikat Prestasi Akademik & Non Akademik Asli
                             </label>
                             @if (isset($docs['sertifikat']))
-                                <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -150,7 +157,8 @@
                                 2. Kartu KIP/PKH Asli
                             </label>
                             @if (isset($docs['kartu']))
-                                <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button" class="btn btn-info p-1" target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -165,9 +173,11 @@
 
                     @if (!$student->registration->is_locked)
                         <div class="p-4">
-                            <form id="form-batal-kunci" action="{{ route('student.document.unlock', $student->id) }}" method="POST">
+                            <form id="form-batal-kunci" action="{{ route('student.document.unlock', $student->id) }}"
+                                method="POST">
                                 @csrf @method('PUT')
-                                <button class="btn btn-danger w-100 waves-effect waves-light btn-batal-kunci" type="button">
+                                <button class="btn btn-danger w-100 waves-effect waves-light btn-batal-kunci"
+                                    type="button">
                                     <span class="ti-xs ti ti-lock-open me-1"></span>Buka Kunci
                                 </button>
                             </form>
@@ -185,10 +195,10 @@
                         <i class="ti ti-info-circle ti-sm text-info"></i>
                     </span>
                     <div class="d-flex flex-column ps-1 text-dark">
-                        {{-- <h5 class="alert-heading mb-2">Informasi Unggah Dokumen!</h5> --}}
                         <p class="mb-0">1. Tipe file yang dapat diunggah <strong>.pdf .png .jpg .jpeg</strong>.</p>
-                        <p class="mb-0">2. Ukuran maksimal file <strong>2 mb</strong>.</p>
-                        <p class="mb-0">3. Jika sudah unggah semua dokumen, <strong>kunci dokumen</strong>.</p>
+                        <p class="mb-0">2. Pasfoto wajib <strong>gambar (.png .jpg .jpeg)</strong>.</p>
+                        <p class="mb-0">3. Ukuran maksimal file <strong>2 mb</strong>.</p>
+                        <p class="mb-0">4. Jika sudah unggah semua dokumen, <strong>kunci dokumen</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -199,8 +209,8 @@
                     <h5 class="card-header text-dark d-flex pb-0">Dokumen Utama</h5>
                     <div class="card-body">
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'pasfoto']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'pasfoto']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -212,8 +222,8 @@
                                     <input type="file" class="d-none" id="pasfoto" name="pasfoto">
 
                                     @if (isset($docs['pasfoto']))
-                                        <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -240,8 +250,9 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'suket_sekolah']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form
+                            action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'suket_sekolah']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -254,8 +265,8 @@
                                     <input type="file" class="d-none" id="suket_sekolah" name="suket_sekolah">
 
                                     @if (isset($docs['suket_sekolah']))
-                                        <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -282,8 +293,8 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'kk']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'kk']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -296,8 +307,8 @@
                                     <input type="file" class="d-none" id="kk" name="kk">
 
                                     @if (isset($docs['kk']))
-                                        <a href="{{ route('student.file.show', $docs['kk']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kk']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -324,8 +335,8 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'ktp']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'ktp']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -338,8 +349,8 @@
                                     <input type="file" class="d-none" id="ktp" name="ktp">
 
                                     @if (isset($docs['ktp']))
-                                        <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -366,8 +377,8 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'akta']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'akta']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -380,8 +391,8 @@
                                     <input type="file" class="d-none" id="akta" name="akta">
 
                                     @if (isset($docs['akta']))
-                                        <a href="{{ route('student.file.show', $docs['akta']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['akta']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -408,14 +419,15 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'nisn']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'nisn']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
                                     6. Kartu NISN Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
-                                    <a href="https://nisn.data.kemendikdasmen.go.id/" target="_blank" class="form-text text-primary d-block mt-0">
+                                    <a href="https://nisn.data.kemendikdasmen.go.id/" target="_blank"
+                                        class="form-text text-primary d-block mt-0">
                                         Download Kartu Disini
                                     </a>
                                 </label>
@@ -426,8 +438,8 @@
                                     <input type="file" class="d-none" id="nisn" name="nisn">
 
                                     @if (isset($docs['nisn']))
-                                        <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -454,14 +466,16 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'suket_ngaji']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form
+                            action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'suket_ngaji']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
                                     7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
-                                    <a href="{{ route('student.cetak.surat.mengaji') }}" target="_blank" class="form-text text-primary d-block mt-0">
+                                    <a href="{{ route('student.cetak.surat.mengaji') }}" target="_blank"
+                                        class="form-text text-primary d-block mt-0">
                                         Download Format
                                     </a>
                                 </label>
@@ -471,8 +485,8 @@
                                     <input type="file" class="d-none" id="suket_ngaji" name="suket_ngaji">
 
                                     @if (isset($docs['suket_ngaji']))
-                                        <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -509,12 +523,13 @@
                     <h5 class="card-header text-dark pb-0">Dokumen Pendukung</h5>
                     <div class="card-body">
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'sertifikat']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'sertifikat']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
-                                    1. Sertifikat Prestasi Akademik & Non Akademik Asli <span class="form-text text-primary fst-italic">*Jika ada</span>
+                                    1. Sertifikat Prestasi Akademik & Non Akademik Asli <span
+                                        class="form-text text-primary fst-italic">*Jika ada</span>
                                 </label>
                                 <div class="input-group">
                                     <!-- input file diganti dengan label (custom) -->
@@ -522,8 +537,8 @@
                                     <input type="file" class="d-none" id="sertifikat" name="sertifikat">
 
                                     @if (isset($docs['sertifikat']))
-                                        <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -550,8 +565,8 @@
                             </div>
                         </form>
 
-                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'kartu']) }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('student.upload', ['student' => $student->id, 'jenis' => 'kartu']) }}"
+                            method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mt-3">
                                 <label class="form-label fw-bold">
@@ -563,8 +578,8 @@
                                     <input type="file" class="d-none" id="kartu" name="kartu">
 
                                     @if (isset($docs['kartu']))
-                                        <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button" class="btn btn-info p-2"
-                                            target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button"
+                                            class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -615,7 +630,8 @@
                                 ⚠️ Pastikan semua dokumen sudah benar dan sesuai.
                                 Kunci dokumen untuk <strong>menyelesaikan unggah dokumen</strong>.
                             </span>
-                            <form id="form-kunci" action="{{ route('student.document.lock', $student->id) }}" method="POST">
+                            <form id="form-kunci" action="{{ route('student.document.lock', $student->id) }}"
+                                method="POST">
                                 @csrf @method('PUT')
                                 <button class="btn btn-primary waves-effect waves-light btn-kunci" type="button">
                                     <span class="ti-xs ti ti-lock me-1"></span>Kunci Dokumen
