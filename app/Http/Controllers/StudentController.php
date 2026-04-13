@@ -179,7 +179,7 @@ class StudentController extends Controller
 
             'prestasi' => 'nullable|string|max:255',
             'penyakit' => 'nullable|string|max:255',
-            'no_kip_pkh_kks_kps' => 'nullable|digits_between:1,30',
+            'no_kip_pkh_kks_kps' => 'nullable|string|max:30',
         ], [
             'religion_id.required' => 'Agama wajib dipilih.',
             'hobby_id.required' => 'Hobi wajib dipilih.',
