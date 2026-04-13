@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
-    data-assets-path="{{ asset('assets/') }}" data-template="vertical-menu-template-no-customizer">
+<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('assets/') }}"
+    data-template="vertical-menu-template-no-customizer">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>PPDB | Admin</title>
+    <title>PMBM | Admin</title>
 
     <meta name="description" content="" />
 
@@ -52,8 +51,8 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="Masukkan email" value="{{ old('email') }}" autofocus />
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email"
+                                    value="{{ old('email') }}" autofocus />
                                 @error('email')
                                     <div id="email" class="form-text text-danger">
                                         {{ $message }}
@@ -63,8 +62,8 @@
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Masukkan password" aria-describedby="password" />
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Masukkan password"
+                                        aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                                 </div>
                                 @error('password')

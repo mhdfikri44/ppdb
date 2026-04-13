@@ -227,7 +227,7 @@ class StudentController extends Controller
 
         $request->validate([
             'nama_ayah' => 'required|string|max:255',
-            'nik_ayah' => 'required|digits:16|unique:guardians,nik_ayah,' . ($student->guardian->id),
+            'nik_ayah' => 'required|digits:16',
             'tempat_lahir_ayah' => 'required|string|max:50',
             'tanggal_lahir_ayah' => 'required|date',
             'father_education_id' => 'required|exists:educations,id',
@@ -237,7 +237,7 @@ class StudentController extends Controller
             'father_status_id' => 'required|exists:statuses,id',
 
             'nama_ibu' => 'required|string|max:255',
-            'nik_ibu' => 'required|digits:16|unique:guardians,nik_ibu,' . ($student->guardian->id),
+            'nik_ibu' => 'required|digits:16',
             'tempat_lahir_ibu' => 'required|string|max:50',
             'tanggal_lahir_ibu' => 'required|date',
             'mother_education_id' => 'required|exists:educations,id',
@@ -247,7 +247,7 @@ class StudentController extends Controller
             'mother_status_id' => 'required|exists:statuses,id',
 
             'nama_wali' => 'nullable|string|max:255',
-            'nik_wali' => 'nullable|digits:16|unique:guardians,nik_wali,' . ($student->guardian->id),
+            'nik_wali' => 'nullable|digits:16',
             'tempat_lahir_wali' => 'nullable|string|max:50',
             'tanggal_lahir_wali' => 'nullable|date',
             'wali_education_id' => 'nullable|exists:educations,id',

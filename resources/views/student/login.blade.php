@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default"
-    data-assets-path="{{ asset('assets/') }}" data-template="vertical-menu-template-no-customizer">
+<html lang="en" class="light-style customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="{{ asset('assets/') }}"
+    data-template="vertical-menu-template-no-customizer">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>PPDB | Masuk</title>
+    <title>PMBM | Masuk</title>
 
     <meta name="description" content="" />
 
@@ -37,11 +36,9 @@
                         <div class="app-brand justify-content-center mb-4 mt-2">
                             <a href="{{ route('landingPage') }}" class="app-brand-link gap-2">
                                 <span class="app-brand-logo">
-                                    <img src="{{ asset('assets/img/mts/logo-mts.png') }}" alt="" srcset=""
-                                        width="50">
+                                    <img src="{{ asset('assets/img/mts/logo-mts.png') }}" alt="" srcset="" width="50">
                                 </span>
-                                <img src="{{ asset('assets/img/mts/logo.png') }}" alt="" srcset=""
-                                    width="100">
+                                <img src="{{ asset('assets/img/mts/logo.png') }}" alt="" srcset="" width="100">
                             </a>
                         </div>
                         <!-- /Logo -->
@@ -52,9 +49,8 @@
                             @csrf
                             <div class="mb-3">
                                 <label for="nisn" class="form-label">NISN</label>
-                                <input type="text" class="form-control max-10 angka" id="nisn" name="nisn"
-                                    placeholder="Masukkan nisn" value="{{ old('nisn') }}" inputmode="numeric"
-                                    autofocus />
+                                <input type="text" class="form-control max-10 angka" id="nisn" name="nisn" placeholder="Masukkan nisn"
+                                    value="{{ old('nisn') }}" inputmode="numeric" autofocus />
                                 @error('nisn')
                                     <div id="nisn" class="form-text text-danger">
                                         {{ $message }}
@@ -64,8 +60,8 @@
                             <div class="mb-3 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="Masukkan password" aria-describedby="password" />
+                                    <input type="password" id="password" class="form-control" name="password" placeholder="Masukkan password"
+                                        aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
                                 </div>
                                 @error('password')
