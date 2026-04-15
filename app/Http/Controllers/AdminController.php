@@ -102,7 +102,7 @@ class AdminController extends Controller
     public function studentDetail(Student $student)
     {
         $student->load('guardian', 'documents');
-        $docs = $student->documents->pluck('path', 'jenis_dokumen')->toArray();
+        $docs = $student->documents->keyBy('jenis_dokumen');
         return view('admin.pages.pendaftar-detail', compact('student', 'docs'));
     }
 

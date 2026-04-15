@@ -222,8 +222,8 @@
                                     <input type="file" class="d-none" id="pasfoto" name="pasfoto">
 
                                     @if (isset($docs['pasfoto']))
-                                        <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['pasfoto']->path) . '?v=' . $docs['pasfoto']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -265,8 +265,8 @@
                                     <input type="file" class="d-none" id="suket_sekolah" name="suket_sekolah">
 
                                     @if (isset($docs['suket_sekolah']))
-                                        <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_sekolah']->path) . '?v=' . $docs['suket_sekolah']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -307,8 +307,8 @@
                                     <input type="file" class="d-none" id="kk" name="kk">
 
                                     @if (isset($docs['kk']))
-                                        <a href="{{ route('student.file.show', $docs['kk']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kk']->path) . '?v=' . $docs['kk']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -349,8 +349,8 @@
                                     <input type="file" class="d-none" id="ktp" name="ktp">
 
                                     @if (isset($docs['ktp']))
-                                        <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['ktp']->path) . '?v=' . $docs['ktp']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -391,8 +391,8 @@
                                     <input type="file" class="d-none" id="akta" name="akta">
 
                                     @if (isset($docs['akta']))
-                                        <a href="{{ route('student.file.show', $docs['akta']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['akta']->path) . '?v=' . $docs['akta']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -438,8 +438,8 @@
                                     <input type="file" class="d-none" id="nisn" name="nisn">
 
                                     @if (isset($docs['nisn']))
-                                        <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['nisn']->path) . '?v=' . $docs['nisn']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -485,8 +485,8 @@
                                     <input type="file" class="d-none" id="suket_ngaji" name="suket_ngaji">
 
                                     @if (isset($docs['suket_ngaji']))
-                                        <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_ngaji']->path) . '?v=' . $docs['suket_ngaji']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -537,8 +537,8 @@
                                     <input type="file" class="d-none" id="sertifikat" name="sertifikat">
 
                                     @if (isset($docs['sertifikat']))
-                                        <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['sertifikat']->path) . '?v=' . $docs['sertifikat']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -578,8 +578,8 @@
                                     <input type="file" class="d-none" id="kartu" name="kartu">
 
                                     @if (isset($docs['kartu']))
-                                        <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kartu']->path) . '?v=' . $docs['kartu']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>

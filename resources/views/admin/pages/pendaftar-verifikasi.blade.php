@@ -81,12 +81,14 @@
                             <div class="nav-align-top">
                                 <ul class="nav nav-tabs nav-fill" role="tablist">
                                     <li class="nav-item">
-                                        <button class="nav-link active" id="tab-siswa-tab" data-bs-toggle="tab" data-bs-target="#tab-siswa">
+                                        <button class="nav-link active" id="tab-siswa-tab" data-bs-toggle="tab"
+                                            data-bs-target="#tab-siswa">
                                             <i class="ti ti-user me-1"></i> Data Pendaftar
                                         </button>
                                     </li>
                                     <li class="nav-item">
-                                        <button class="nav-link" id="tab-dokumen-tab" data-bs-toggle="tab" data-bs-target="#tab-dokumen">
+                                        <button class="nav-link" id="tab-dokumen-tab" data-bs-toggle="tab"
+                                            data-bs-target="#tab-dokumen">
                                             <i class="ti ti-file-text me-1"></i> Dokumen
                                         </button>
                                     </li>
@@ -347,7 +349,8 @@
                                                     <i class="ti ti-photo me-2"></i>
                                                     <span>Pas Foto</span>
                                                 </div>
-                                                <button data-type="pasfoto" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="pasfoto" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -370,7 +373,8 @@
                                                     <i class="ti ti-file-text me-2"></i>
                                                     <span>Kartu Keluarga</span>
                                                 </div>
-                                                <button data-type="kk" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="kk" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -381,7 +385,8 @@
                                                     <i class="ti ti-id me-2"></i>
                                                     <span>KTP Kedua Orang Tua</span>
                                                 </div>
-                                                <button data-type="ktp" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="ktp" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -392,7 +397,8 @@
                                                     <i class="ti ti-certificate me-2"></i>
                                                     <span>Akta Kelahiran</span>
                                                 </div>
-                                                <button data-type="akta" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="akta" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -403,7 +409,8 @@
                                                     <i class="ti ti-credit-card me-2"></i>
                                                     <span>Kartu NISN</span>
                                                 </div>
-                                                <button data-type="nisn" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="nisn" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -438,7 +445,8 @@
                                                     <i class="ti ti-wallet me-2"></i>
                                                     <span>Kartu KIP / PKH</span>
                                                 </div>
-                                                <button data-type="kartu" data-src="" type="button" class="btn btn-sm btn-info btn-preview-doc">
+                                                <button data-type="kartu" data-src="" type="button"
+                                                    class="btn btn-sm btn-info btn-preview-doc">
                                                     Lihat
                                                 </button>
                                             </div>
@@ -453,20 +461,24 @@
                             <div class="bg-lighter p-3 rounded shadow-none border">
                                 <h5 class="mb-3"><i class="ti ti-gavel me-1"></i>Keputusan Admin</h5>
 
-                                <form id="form-verifikasi" data-url="{{ route('admin.student.verify', ':id') }}" action="" method="POST">
+                                <form id="form-verifikasi" data-url="{{ route('admin.student.verify', ':id') }}"
+                                    action="" method="POST">
                                     @csrf @method('PUT')
                                     <div class="mb-3">
                                         <div class="btn-group w-100 mb-3" role="group">
-                                            <input type="radio" class="btn-check" name="status_verifikasi" id="terima" value="Disetujui" />
+                                            <input type="radio" class="btn-check" name="status_verifikasi"
+                                                id="terima" value="Disetujui" />
                                             <label class="btn btn-outline-success" for="terima">Terima</label>
 
-                                            <input type="radio" class="btn-check" name="status_verifikasi" id="tolak" value="Ditolak" />
+                                            <input type="radio" class="btn-check" name="status_verifikasi"
+                                                id="tolak" value="Ditolak" />
                                             <label class="btn btn-outline-danger" for="tolak">Tolak</label>
                                         </div>
 
                                         <div class="mb-3" id="kotak-pesan" style="display: none;">
                                             <label class="form-label fw-bold" for="pesan_ditolak">Alasan ditolak</label>
-                                            <textarea class="form-control max-255" id="pesan_ditolak" name="pesan_ditolak" rows="3" placeholder="Tulis alasan ..."></textarea>
+                                            <textarea class="form-control max-255" id="pesan_ditolak" name="pesan_ditolak" rows="3"
+                                                placeholder="Tulis alasan ..."></textarea>
                                             <div class="invalid-feedback">
                                                 Alasan penolakan wajib diisi.
                                             </div>
@@ -657,7 +669,8 @@
                             if (foundDoc && foundDoc.path) {
                                 // Gabungkan Base URL dengan path dari database
                                 // Hasilnya: domain.com/storage/view/document/pasfoto/file.png
-                                let fullUrl = baseUrl + '/' + foundDoc.path;
+                                let fullUrl = baseUrl + '/' + foundDoc.path + '?v=' +
+                                    new Date(foundDoc.updated_at).getTime();
 
                                 btn.prop('disabled', false)
                                     .data('src', fullUrl)

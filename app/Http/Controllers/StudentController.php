@@ -27,7 +27,7 @@ class StudentController extends Controller
         $student = auth('student')->user();
         $pasfoto = $student->documents->where('jenis_dokumen', 'pasfoto')->first();
         $pasfotoUrl = $pasfoto
-            ? route('student.file.show', $pasfoto->path)
+            ? route('student.file.show', $pasfoto->path) . '?v=' . $pasfoto->updated_at->timestamp
             : asset('assets/img/mts/profile-default.jpg');
 
         $reg = $student->registration;
@@ -373,7 +373,7 @@ class StudentController extends Controller
             'suket_ngaji'
         ];
 
-        $docs = $student->documents->pluck('path', 'jenis_dokumen')->toArray();
+        $docs = $student->documents->keyBy('jenis_dokumen');
 
         $uploadedDocs = $student->documents
             ->pluck('path', 'jenis_dokumen') // ambil dokumen yang sudah diupload
