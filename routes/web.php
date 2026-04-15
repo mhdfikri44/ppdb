@@ -50,7 +50,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
             Route::get('{student:nisn}/detail', 'studentDetail')->name('detail');
             Route::get('{student:nisn}/detail/json', 'getStudentDetail');
 
-            Route::delete('{student}', 'studentDelete')->name('delete');
+            Route::put('{student}/reset-password', 'resetPassword')->name('reset.password');
+            Route::delete('{student}/hapus', 'studentDelete')->name('delete');
             Route::put('{student}/verifikasi', 'verify')->name('verify');
             Route::put('{student}/verifikasi/cancel', 'cancelApproved')->name('cancel.approved');
         });

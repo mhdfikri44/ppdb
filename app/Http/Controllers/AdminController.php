@@ -11,6 +11,7 @@ use App\Models\Student;
 use App\Models\TestPractice;
 use App\Models\TestWritten;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
@@ -74,13 +75,23 @@ class AdminController extends Controller
                 $deleteButton = '';
                 if (auth('admin')->user()->role === 'superadmin') {
                     $deleteButton = '
-                    <form action="' . route('admin.student.delete', $data->id) . '" method="post">
-                        ' . csrf_field() . '
-                        ' . method_field("DELETE") . '
-                        <button type="button" class="btn btn-icon btn-danger waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
-                            <span class="ti ti-trash"></span>
-                        </button>
-                    </form>';
+                        <form action="' . route('admin.student.delete', $data->id) . '" method="post">
+                            ' . csrf_field() . '
+                            ' . method_field("DELETE") . '
+                            <button type="button" class="btn btn-icon btn-danger waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                                <span class="ti ti-trash"></span>
+                            </button>
+                        </form>';
+
+                    $resetPassButton = '
+                        <button type="button"
+                            class="btn btn-icon btn-warning btn-reset-password"
+                            data-id="' . $data->id . '"
+                            data-nama="' . $data->nama_lengkap . '"
+                            data-bs-toggle="tooltip"
+                            title="Reset Password">
+                            <span class="ti ti-key"></span>
+                        </button>';
                 }
 
                 return '
@@ -88,6 +99,7 @@ class AdminController extends Controller
                     <a href="' . route('admin.student.detail', $data->nisn) . '" class="btn btn-icon btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
                         <span class="ti ti-eye"></span>
                     </a>
+                    ' . $resetPassButton . '
                     ' . $deleteButton . '
                 </div>
                 ';
@@ -216,9 +228,18 @@ class AdminController extends Controller
             ->toJson();
     }
 
-    /**
-     * Hapus calon siswa.
-     */
+    public function resetPassword(Request $request, Student $student)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|max:100',
+            'konfirmasi_password' => 'required|same:password',
+        ]);
+
+        $student->password = Hash::make($request->password);
+        $student->save();
+        return back()->with('sukses', 'Password berhasil direset!');
+    }
+
     public function studentDelete(Student $student)
     {
         if (auth('admin')->user()->role !== 'superadmin') {
