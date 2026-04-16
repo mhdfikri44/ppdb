@@ -82,8 +82,9 @@ class AdminController extends Controller
                                 <span class="ti ti-trash"></span>
                             </button>
                         </form>';
+                }
 
-                    $resetPassButton = '
+                $resetPassButton = '
                         <button type="button"
                             class="btn btn-icon btn-warning btn-reset-password"
                             data-id="' . $data->id . '"
@@ -92,7 +93,6 @@ class AdminController extends Controller
                             title="Reset Password">
                             <span class="ti ti-key"></span>
                         </button>';
-                }
 
                 return '
                 <div class="d-inline-flex align-items-center gap-1">
