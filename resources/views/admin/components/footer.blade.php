@@ -6,7 +6,7 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , made with ❤️ by <a href="https://pixinvent.com" target="_blank" class="fw-semibold">Pixinvent</a>
+                MTsN 1 Kota Dumai. All rights reserved.
             </div>
         </div>
     </div>

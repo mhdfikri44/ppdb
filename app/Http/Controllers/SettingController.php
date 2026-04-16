@@ -11,6 +11,7 @@ class SettingController extends Controller
     {
         $settings = (object) [
             'ppdb_open' => Setting::get('ppdb_open'),
+            'print_test_card' => Setting::get('print_test_card'),
             'final_result_published' => Setting::get('final_result_published'),
         ];
 
@@ -20,6 +21,7 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         Setting::set('ppdb_open', (bool) $request->input('ppdb_open', 0));
+        Setting::set('print_test_card', (bool) $request->input('print_test_card', 0));
         Setting::set('final_result_published', (bool) $request->input('final_result_published', 0));
 
         return response()->json([

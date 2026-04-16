@@ -223,10 +223,19 @@
                                 @endif
                             @else
                                 @if ($student->registration->status_verifikasi == 'Disetujui')
-                                    <a href="{{ route('student.cetak.kartu.tes') }}"
-                                        class="btn btn-warning waves-effect waves-light" target="_blank">
-                                        <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
-                                    </a>
+                                    @if ($status['is_print_test_card'])
+                                        <a href="{{ route('student.cetak.kartu.tes') }}"
+                                            class="btn btn-warning waves-effect waves-light" target="_blank">
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
+                                        </a>
+                                    @else
+                                        <button class="btn btn-warning waves-effect waves-light" disabled>
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
+                                        </button>
+                                        <p class="text-muted mb-0 mt-2 small text-center">
+                                            Jadwal tes belum diatur.
+                                        </p>
+                                    @endif
 
                                     @if ($status['is_result_publish'] && $student->registration->has_seen_result && $student->registration->lulus)
                                         <a href="{{ route('student.cetak.formulir') }}"
@@ -235,7 +244,7 @@
                                         </a>
                                     @endif
                                 @else
-                                    <button type="button" class="btn btn-warning waves-effect waves-light" disabled>
+                                    <button class="btn btn-warning waves-effect waves-light" disabled>
                                         <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
                                     </button>
                                 @endif

@@ -16,8 +16,8 @@
                         @csrf @method('PUT')
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
-                                <h6 class="mb-0">Status Pendaftaran (PPDB)</h6>
-                                <small class="text-muted">Aktifkan untuk mengizinkan calon siswa mendaftar.</small>
+                                <h6 class="mb-0">Status Pendaftaran</h6>
+                                <small class="text-muted">Aktifkan untuk membuka pendaftaran.</small>
                             </div>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="ppdb_open" name="ppdb_open"
@@ -25,7 +25,18 @@
                             </div>
                         </div>
                         <hr class="my-3">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h6 class="mb-0">Cetak Kartu Tes</h6>
+                                <small class="text-muted">Aktifkan untuk memungkinkan calon siswa cetak kartu tes.</small>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="print_test_card" name="print_test_card"
+                                    {{ $settings->print_test_card ? 'checked' : '' }}>
+                            </div>
+                        </div>
+                        <hr class="my-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
                                 <h6 class="mb-0">Pengumuman Hasil Akhir</h6>
                                 <small class="text-muted">Tampilkan status kelulusan pada halaman siswa.</small>
@@ -78,6 +89,7 @@
             let formData = {
                 _token: "{{ csrf_token() }}",
                 ppdb_open: $('#ppdb_open').is(':checked') ? 1 : 0,
+                print_test_card: $('#print_test_card').is(':checked') ? 1 : 0,
                 final_result_published: $('#final_result_published').is(':checked') ? 1 : 0
             };
 

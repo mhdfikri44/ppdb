@@ -15,8 +15,9 @@ class Setting extends Model
 
     public static function set($key, $value)
     {
-        return static::where('key', $key)->update([
-            'value' => $value
-        ]);
+        return static::where('key', $key)->updateOrCreate(
+            ['key' => $key],
+            ['value' => $value]
+        );
     }
 }

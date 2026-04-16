@@ -33,6 +33,7 @@ class StudentController extends Controller
         $reg = $student->registration;
         $status = [
             'is_result_publish' => Setting::get('final_result_published'),
+            'is_print_test_card' => Setting::get('print_test_card'),
             'is_open' => Setting::get('ppdb_open'),
             'data'        => $reg->status_data ? 'Lengkap' : 'Belum lengkap',
             'dokumen'     => $reg->status_dokumen ? 'Lengkap' : 'Belum lengkap',
