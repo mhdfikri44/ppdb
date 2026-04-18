@@ -50,6 +50,8 @@
                                 <th>No. Pendaftaran</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
+                                <th>Hp Ayah</th>
+                                <th>Hp Ibu</th>
                                 <th>Alasan Penolakan</th>
                             </tr>
                         </thead>
@@ -732,6 +734,14 @@
                 {
                     data: "nisn",
                     name: "nisn"
+                },
+                {
+                    data: "guardian.hp_ayah",
+                    name: "guardian.hp_ayah"
+                },
+                {
+                    data: "guardian.hp_ibu",
+                    name: "guardian.hp_ibu"
                 },
                 {
                     data: "registration.rejected_message",

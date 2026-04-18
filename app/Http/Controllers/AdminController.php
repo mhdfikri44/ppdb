@@ -162,7 +162,7 @@ class AdminController extends Controller
     {
         $data = Student::query()->whereHas('registration', function ($q) {
             $q->where('status_verifikasi', 'Ditolak');
-        })->with(['registration']);
+        })->with(['registration', 'guardian']);
 
         return DataTables::of($data)
             ->addIndexColumn()
