@@ -50,8 +50,8 @@
                                 <th>No. Pendaftaran</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
-                                <th>Hp Ayah</th>
-                                <th>Hp Ibu</th>
+                                <th style="width: 130px;">Hp Ayah</th>
+                                <th style="width: 130px;">Hp Ibu</th>
                                 <th>Alasan Penolakan</th>
                             </tr>
                         </thead>
