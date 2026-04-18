@@ -17,9 +17,6 @@ use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
 {
-    /**
-     * Menampilkan halaman beranda admin.
-     */
     public function index()
     {
         $admin = auth('admin')->user();
@@ -35,16 +32,11 @@ class AdminController extends Controller
         return view('admin.pages.beranda', compact('admin', 'stat'));
     }
 
-    /**
-     * Menampilkan halaman daftar siswa.
-     */
     public function studentList()
     {
         return view('admin.pages.pendaftar-daftar');
     }
-    /**
-     * Datatable daftar siswa.
-     */
+
     public function studentData()
     {
         $data = Student::query()->with(['registration']);
@@ -68,6 +60,8 @@ class AdminController extends Controller
                     return '<span class="badge rounded-pill bg-success">Disetujui</span>';
                 } elseif ($data->registration->status_verifikasi === 'Ditolak') {
                     return '<span class="badge rounded-pill bg-danger">Ditolak</span>';
+                } elseif ($data->registration->is_locked) {
+                    return '<span class="badge rounded-pill bg-info">Menunggu</span>';
                 }
                 return '<span class="badge rounded-pill bg-secondary">Pending</span>';
             })
@@ -108,9 +102,6 @@ class AdminController extends Controller
             ->toJson();
     }
 
-    /**
-     * Menampilkan halaman detail siswa.
-     */
     public function studentDetail(Student $student)
     {
         $student->load('guardian', 'documents');
@@ -118,10 +109,6 @@ class AdminController extends Controller
         return view('admin.pages.pendaftar-detail', compact('student', 'docs'));
     }
 
-
-    /**
-     * Menampilkan halaman daftar & datatable siswa yang perlu verifikasi.
-     */
     public function studentConfirmList()
     {
         return view('admin.pages.pendaftar-verifikasi');
@@ -155,9 +142,6 @@ class AdminController extends Controller
             ->toJson();
     }
 
-    /**
-     * datatable siswa yang ditolak.
-     */
     public function studentRejectedData()
     {
         $data = Student::query()->whereHas('registration', function ($q) {
@@ -170,7 +154,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Menghasilkan data detail siswa dalam format JSON.
+     * Menghasilkan data detail siswa dalam format JSON (untuk verifikasi).
      */
     public function getStudentDetail(Student $student)
     {
@@ -194,10 +178,6 @@ class AdminController extends Controller
         return response()->json($student);
     }
 
-
-    /**
-     * Menampilkan halaman daftar & datatable siswa yang disetujui.
-     */
     public function studentApprovedList()
     {
         return view('admin.pages.pendaftar-disetujui');
