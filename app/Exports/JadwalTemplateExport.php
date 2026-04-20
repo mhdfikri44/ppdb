@@ -33,6 +33,7 @@ class JadwalTemplateExport implements
             ->get()
             ->map(function ($item) {
                 return [
+                    'no_pendaftaran' => $item->registration->no_pendaftaran,
                     'nisn' => $item->nisn,
                     'nama_lengkap' => $item->nama_lengkap,
                     'tanggal' => '',
@@ -48,6 +49,7 @@ class JadwalTemplateExport implements
     public function headings(): array
     {
         return [
+            'no_pendaftaran',
             'nisn',
             'nama_lengkap',
             'tanggal',
@@ -65,6 +67,7 @@ class JadwalTemplateExport implements
             'C' => NumberFormat::FORMAT_TEXT,
             'D' => NumberFormat::FORMAT_TEXT,
             'E' => NumberFormat::FORMAT_TEXT,
+            'F' => NumberFormat::FORMAT_TEXT,
         ];
     }
 
@@ -72,11 +75,12 @@ class JadwalTemplateExport implements
     public function columnWidths(): array
     {
         return [
-            'A' => 20, // nisn
-            'B' => 40, // nama_lengkap
-            'C' => 20, // tanggal
-            'D' => 20, // jam
-            'E' => 20, // lokasi
+            'A' => 20, // no_pendaftaran
+            'B' => 20, // nisn
+            'C' => 40, // nama_lengkap
+            'D' => 20, // tanggal
+            'E' => 20, // jam
+            'F' => 20, // lokasi
         ];
     }
 
@@ -86,7 +90,7 @@ class JadwalTemplateExport implements
         $sheet->getRowDimension(1)->setRowHeight(30);
 
         // Header
-        $sheet->getStyle('A1:E1')->applyFromArray([
+        $sheet->getStyle('A1:F1')->applyFromArray([
             'font' => ['bold' => true],
             'alignment' => [
                 'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -99,7 +103,7 @@ class JadwalTemplateExport implements
         ]);
 
         // Border hanya sampai data terakhir
-        $sheet->getStyle('A1:E' . $this->rowCount)
+        $sheet->getStyle('A1:F' . $this->rowCount)
             ->applyFromArray([
                 'borders' => [
                     'allBorders' => [
@@ -108,19 +112,19 @@ class JadwalTemplateExport implements
                 ],
             ]);
 
-        // Align center kolom A - E
-        $sheet->getStyle('A1:E' . $this->rowCount)
+        // Align center kolom A - F
+        $sheet->getStyle('A1:F' . $this->rowCount)
             ->getAlignment()
             ->setHorizontal(Alignment::HORIZONTAL_CENTER)
             ->setVertical(Alignment::VERTICAL_CENTER);
 
-        // Override kolom B jadi rata kiri
-        $sheet->getStyle('B2:B' . $this->rowCount)
+        // Override kolom nama_lengkap jadi rata kiri
+        $sheet->getStyle('C2:C' . $this->rowCount)
             ->getAlignment()
             ->setHorizontal(Alignment::HORIZONTAL_LEFT);
 
-        // Warna untuk kolom protected (A & B, tanpa header)
-        $sheet->getStyle('A2:B' . $this->rowCount)
+        // Warna untuk kolom protected (no_pendaftaran, nisn, nama_lengkap, tanpa header)
+        $sheet->getStyle('A2:C' . $this->rowCount)
             ->applyFromArray([
                 'fill' => [
                     'fillType' => 'solid',
@@ -140,12 +144,12 @@ class JadwalTemplateExport implements
                 $sheet->freezePane('A2');
 
                 // Lock semua cell
-                $sheet->getStyle('A1:E' . $this->rowCount)
+                $sheet->getStyle('A1:F' . $this->rowCount)
                     ->getProtection()
                     ->setLocked(true);
 
                 // Unlock kolom input
-                $sheet->getStyle('C2:E' . $this->rowCount)
+                $sheet->getStyle('D2:F' . $this->rowCount)
                     ->getProtection()
                     ->setLocked(false);
 
