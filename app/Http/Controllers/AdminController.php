@@ -384,7 +384,8 @@ class AdminController extends Controller
                 if ($practiceScore === null && $writtenScore === null) {
                     return 0;
                 }
-                return ($practiceScore * 0.6) + ($writtenScore * 0.4);
+                $final = ($practiceScore * 0.6) + ($writtenScore * 0.4);
+                return round($final, 2);
             })
             ->addColumn('keterangan', function ($data) {
                 if ($data->testPractice->score === null && $data->testWritten->score === null) {
