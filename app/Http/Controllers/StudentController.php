@@ -513,11 +513,29 @@ class StudentController extends Controller
     {
         /** @var \App\Models\Student $student */
         $data = auth('student')->user();
+        $pasfoto = $data->documents->where('jenis_dokumen', 'pasfoto')->first();
 
-        $pdf = FacadePdf::loadView('pdf.formulir-penerimaan', compact('data'))
+        $fotoBase64 = null;
+        if ($pasfoto && $pasfoto->path) {
+            $pathFile = storage_path('app/private/' . $pasfoto->path);
+
+            if (file_exists($pathFile)) {
+                $type = pathinfo($pathFile, PATHINFO_EXTENSION);
+                $dataImg = file_get_contents($pathFile);
+                $fotoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($dataImg);
+            }
+        }
+
+        $pdf = FacadePdf::loadView('pdf.formulir-penerimaan', compact('data', 'fotoBase64'))
             ->setPaper('A4', 'portrait');
 
-        return $pdf->stream('formulir-penerimaan.pdf');
+        $namaFile = 'formulir-pmbm-' . $data->nisn . '-' . now()->timestamp . '.pdf';
+
+        return $pdf->stream($namaFile, [
+            'Cache-Control' => 'no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
     }
 
     public function seeResult()
