@@ -97,7 +97,11 @@
                                     <div class="me-3"> <i class="ti ti-confetti fs-1"></i> </div>
                                     <div>
                                         <h4 class="text-white mb-1">Selamat! Anda Dinyatakan LULUS</h4>
-                                        <p class="mb-0">Tunggu informasi daftar ulang digrup WA.</p>
+                                        <p class="mb-0">Bagi yang lulus, harap hadir pada hari <strong>Rabu, 29 April
+                                                2026</strong>
+                                            jam <strong>08:30 WIB</strong> di <strong>MTsN 1 Kota Dumai</strong> dengan
+                                            agenda rapat bersama komite dan calon wali murid.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
