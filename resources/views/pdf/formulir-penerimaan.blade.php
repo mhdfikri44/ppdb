@@ -428,7 +428,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->nama_wali }}
+                    {{ $data->guardian->nama_wali ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -437,7 +437,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->nik_wali }}
+                    {{ $data->guardian->nik_wali ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -446,7 +446,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->tempat_tanggal_lahir_wali }}
+                    {{ $data->guardian->tempat_tanggal_lahir_wali ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -455,7 +455,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->waliEducation->name }}
+                    {{ $data->guardian->waliEducation->name ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -464,7 +464,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->waliJob->name }}
+                    {{ $data->guardian->waliJob->name ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -473,7 +473,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->penghasilan_wali_label }}
+                    {{ $data->guardian->penghasilan_wali_label ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -482,7 +482,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->hp_wali }}
+                    {{ $data->guardian->hp_wali ?? '-' }}
                 </span>
             </td>
         </tr>
