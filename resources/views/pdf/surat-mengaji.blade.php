@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Surat Keterangan Mengaji</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
     <style>
         body {
             font-family: "Times New Roman", serif;

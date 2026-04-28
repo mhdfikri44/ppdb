@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Cetak Formulir PPDB</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
     <style>
         @page {
             margin-top: 8mm;
