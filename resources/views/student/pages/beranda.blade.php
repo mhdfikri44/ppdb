@@ -100,7 +100,7 @@
                                         <p class="mb-0">Bagi yang lulus, harap hadir pada hari <strong>Rabu, 29 April
                                                 2026</strong>
                                             jam <strong>08:30 WIB</strong> di <strong>MTsN 1 Kota Dumai</strong> dengan
-                                            agenda rapat bersama komite dan calon wali murid.
+                                            agenda rapat bersama komite dan calon orangtua/wali murid.
                                         </p>
                                     </div>
                                 </div>
