@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waduh, Lagi Rehat Dulu! - {{ config('app.name') }}</title>
+    <title>Lagi Maintenis! - {{ config('app.name') }}</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -15,23 +15,37 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .maintenance-card {
+        .bento-card {
             @apply bg-white p-8 md:p-12 rounded-[2.5rem] border border-gray-100 shadow-2xl transition-all duration-300;
         }
 
-        .float-animation {
-            animation: floating 3s ease-in-out infinite;
+        .tennis-ball {
+            animation: bounce-ball 0.6s ease-in infinite alternate;
         }
 
-        @keyframes floating {
-
-            0%,
-            100% {
-                transform: translateY(0px);
+        @keyframes bounce-ball {
+            from {
+                transform: translateY(0) scaleX(1);
             }
 
-            50% {
-                transform: translateY(-10px);
+            to {
+                transform: translateY(-40px) scaleX(0.9);
+            }
+        }
+
+        .shadow-ball {
+            animation: shadow-size 0.6s ease-in infinite alternate;
+        }
+
+        @keyframes shadow-size {
+            from {
+                transform: scale(1);
+                opacity: 0.2;
+            }
+
+            to {
+                transform: scale(0.5);
+                opacity: 0.05;
             }
         }
     </style>
@@ -40,57 +54,58 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex items-center justify-center p-6">
 
     <div class="max-w-2xl w-full text-center">
-        <div class="flex justify-center mb-8">
-            <div class="relative float-animation">
+        <!-- Visual Maintenis -->
+        <div class="flex justify-center mt-10 mb-10">
+            <div class="relative">
+                <!-- Raket Icon -->
                 <div
-                    class="w-24 h-24 bg-indigo-600 rounded-3xl flex items-center justify-center text-white text-4xl shadow-xl shadow-indigo-200">
-                    <i class="fas fa-mug-hot"></i>
+                    class="w-24 h-24 bg-indigo-600 rounded-3xl flex items-center justify-center text-white text-4xl shadow-xl rotate-12">
+                    <i class="fas fa-table-tennis"></i>
                 </div>
-                <div
-                    class="absolute -bottom-2 -right-2 w-10 h-10 bg-amber-400 rounded-2xl border-4 border-white flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-wrench text-xs"></i>
+                <!-- Bola Tenis (Yellow-Green) -->
+                <div class="absolute -top-8 -right-6">
+                    <div
+                        class="tennis-ball w-10 h-10 bg-[#ccff00] rounded-full border-2 border-white shadow-lg flex items-center justify-center">
+                        <div class="w-8 h-8 border-2 border-white/30 rounded-full"></div>
+                    </div>
+                    <div class="shadow-ball w-8 h-2 bg-black/20 rounded-[100%] mx-auto mt-10 blur-sm"></div>
                 </div>
             </div>
         </div>
 
-        <div class="maintenance-card relative overflow-hidden">
+        <div class="bento-card relative overflow-hidden">
+            <!-- Dekorasi Latar -->
             <div class="absolute -z-10 w-48 h-48 bg-indigo-50 blur-3xl rounded-full -top-10 -right-10"></div>
 
             <span
-                class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold uppercase tracking-wider">
-                Status: Server Lagi Ngopi ☕
+                class="px-4 py-2 bg-indigo-50 text-indigo-600 rounded-full text-sm font-bold uppercase tracking-widest">
+                Status: Sedang "Maintenis" 🎾
             </span>
 
-            <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mt-6">
-                Sistem Kami <span class="text-indigo-600">Lagi Istirahat</span> Biar Gak Tanteum.
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mt-6">
+                Server Lagi <span class="text-indigo-600">Izin Tanding</span> Sebentar.
             </h1>
 
             <div class="space-y-4 mt-6">
                 <p class="text-lg text-slate-600 leading-relaxed">
-                    Sama seperti kamu yang butuh libur sekolah, server kami juga lagi butuh "me-time" sebentar buat
-                    mandi keringat dan ganti oli.
+                    Mohon maaf, sistem kami sedang melakukan <b>Maintenis</b> (Maintenance rasa Tenis) agar performanya
+                    tetap <i>smash</i> dan nggak gampang capek.
                 </p>
-                <p class="text-slate-500 italic">
-                    "Admin lagi beresin kabel yang kusut kayak hubungan kamu sama si dia. Sabar ya!"
-                </p>
+                <div class="p-4 bg-amber-50 rounded-2xl border-l-4 border-amber-400 text-left">
+                    <p class="text-sm text-amber-800">
+                        <b>Pesan Admin:</b> "Skor sementara lagi 40-40 (Deuce), dikit lagi selesai kok. Mending kamu
+                        ambil minum dulu atau cek perlengkapan sekolah lainnya."
+                    </p>
+                </div>
             </div>
 
-            <div class="mt-8 p-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                <p class="text-sm text-slate-500">
-                    <span class="font-bold text-indigo-600 text-xs uppercase block mb-1">Tips Gabut:</span>
-                    Coba tarik napas dalam-dalam, minum air putih, atau cek lagi berkas pendaftaran di map. Jangan
-                    sampai ada yang ketinggalan!
-                </p>
-            </div>
-
-            <div class="mt-10 flex flex-col md:flex-row items-center justify-center gap-4">
+            <div class="mt-10">
                 <a href="javascript:location.reload()"
-                    class="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 hover:scale-105 transition-transform flex items-center justify-center gap-2">
-                    <i class="fas fa-sync-alt"></i> Coba Klik Siapa Tau Berhasil
+                    class="inline-flex items-center gap-3 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl shadow-indigo-200 hover:scale-105 active:scale-95 transition-all">
+                    <i class="fas fa-redo-alt"></i> Cek Skor (Refresh)
                 </a>
             </div>
         </div>
-    </div>
 
 </body>
 

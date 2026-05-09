@@ -10,7 +10,12 @@
             <!-- DataTable with Buttons -->
             <div class="card">
                 <div class="card-datatable table-responsive">
-                    <div class="card-header d-flex justify-content-end align-items-center">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div class="">
+                            <button class="btn btn-secondary" id="exportDataLulus">
+                                <i class="ti ti-file-export me-1"></i> Export Lulus
+                            </button>
+                        </div>
 
                         <div class="fungsi-tabel ms-4 d-flex align-items-center gap-1">
                             <button class="btn btn-success" id="btn-lulus">
@@ -163,6 +168,10 @@
 
         $('#downloadTemplate').on('click', function() {
             window.location.href = "{{ route('admin.scoring.template') }}";
+        });
+
+        $('#exportDataLulus').on('click', function() {
+            window.location.href = "{{ route('admin.scoring.export.lulus') }}";
         });
 
         $('#btn-upload').on('click', function() {

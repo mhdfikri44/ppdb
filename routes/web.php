@@ -72,6 +72,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
 
         Route::get('penilaian/template', 'downloadTemplateNilai')->name('scoring.template');
         Route::post('penilaian/import/nilai', 'importNilai')->name('scoring.import.nilai');
+        Route::get('penilaian/export/lulus', 'downloadSiswaLulus')->name('scoring.export.lulus');
 
         Route::post('penilaian/passed', 'passed')->name('scoring.passed');
         Route::post('penilaian/failed', 'failed')->name('scoring.failed');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exports\JadwalTemplateExport;
 use App\Exports\NilaiTemplateExport;
+use App\Exports\SiswaLulusExport;
+use App\Exports\SiswaYatimExport;
 use App\Imports\JadwalImport;
 use App\Imports\NilaiImport;
 use App\Models\Registration;
@@ -340,6 +342,11 @@ class AdminController extends Controller
             ],
             'errors' => array_slice($import->errors, 0, 10)
         ]);
+    }
+
+    public function downloadSiswaLulus()
+    {
+        return Excel::download(new SiswaYatimExport, 'data-siswa-lulus' . '-' . now()->timestamp . '.xlsx');
     }
 
     public function clearJadwal(Request $request)
