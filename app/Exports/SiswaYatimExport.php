@@ -39,7 +39,7 @@ class SiswaYatimExport implements FromCollection, WithHeadings, WithMapping
             $this->no++,
             $student->registration->no_pendaftaran,
             $student->nama_lengkap,
-            $student->guardian->fatherStatus->name = "Sudah Meninggal" ? "Yatim" : "-"
+            $student->guardian?->fatherStatus?->name == "Sudah Meninggal" ? "Yatim" : "-"
         ];
     }
 }
