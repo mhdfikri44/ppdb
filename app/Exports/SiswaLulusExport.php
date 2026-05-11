@@ -6,6 +6,7 @@ use App\Models\Student;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -17,7 +18,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SiswaLulusExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithColumnFormatting, WithCustomValueBinder
+class SiswaLulusExport extends DefaultValueBinder implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithColumnFormatting, WithCustomValueBinder, WithColumnWidths
 {
     protected $no = 1;
 
@@ -206,11 +207,11 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
     public function columnWidths(): array
     {
         return [
-            'N' => 100, // Asal Sekolah
-            'O' => 100, // Alamat Sekolah
-            'P' => 100, // Prestasi
-            'Q' => 50, // Penyakit
-            'T' => 100, // Alamat
+            'N' => 30, // Asal Sekolah
+            'O' => 40, // Alamat Sekolah
+            'P' => 35, // Prestasi
+            'Q' => 20, // Penyakit
+            'T' => 45, // Alamat
         ];
     }
 
