@@ -125,8 +125,8 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
             $student->tahun_lulus,
             $student->asal_sekolah,
             $student->alamat_asal_sekolah,
-            $student->prestasi,
-            $student->penyakit,
+            $student->prestasi ?? '-',
+            $student->penyakit ?? '-',
             $student->no_kip_pkh_kks_kps,
             $student->no_kk,
             $student->alamat,
@@ -135,7 +135,7 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
             $student->transportasi,
             $student->jarak_tempuh . ' km',
             $student->waktu_tempuh . ' menit',
-            $student->guardian?->fatherStatus?->name == "Sudah Meninggal" ? 'Yatim' : '',
+            $student->guardian?->fatherStatus?->name == "Sudah Meninggal" ? 'Yatim' : '-',
 
             $student->guardian?->nama_ayah,
             $student->guardian?->nik_ayah,
@@ -157,14 +157,14 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
             $student->guardian?->hp_ibu,
             $student->guardian?->motherStatus?->name,
 
-            $student->guardian?->nama_wali,
-            $student->guardian?->nik_wali,
-            $student->guardian?->tempat_lahir_wali,
-            Date::stringToExcel($student->guardian?->tanggal_lahir_wali),
-            $student->guardian?->waliEducation?->name,
-            $student->guardian?->waliJob?->name,
-            $student->guardian?->penghasilan_wali,
-            $student->guardian?->hp_wali,
+            $student->guardian?->nama_wali ?? '-',
+            $student->guardian?->nik_wali ?? '-',
+            $student->guardian?->tempat_lahir_wali ?? '-',
+            Date::stringToExcel($student->guardian?->tanggal_lahir_wali) ?? '-',
+            $student->guardian?->waliEducation?->name ?? '-',
+            $student->guardian?->waliJob?->name ?? '-',
+            $student->guardian?->penghasilan_wali ?? '-',
+            $student->guardian?->hp_wali ?? '-',
         ];
     }
 
@@ -203,6 +203,17 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
         ];
     }
 
+    public function columnWidths(): array
+    {
+        return [
+            'N' => 100, // Asal Sekolah
+            'O' => 100, // Alamat Sekolah
+            'P' => 100, // Prestasi
+            'Q' => 50, // Penyakit
+            'T' => 100, // Alamat
+        ];
+    }
+
     public function styles(Worksheet $sheet)
     {
         $lastRow = $sheet->getHighestRow();
@@ -227,7 +238,9 @@ class SiswaLulusExport extends DefaultValueBinder implements FromCollection, Wit
         $sheet->getStyle("A1:AZ{$lastRow}")->getAlignment()->setHorizontal('center')->setVertical('center');
         $sheet->getStyle("C2:C{$lastRow}")->getAlignment()->setHorizontal('left');
         $sheet->getStyle("O2:O{$lastRow}")->getAlignment()->setHorizontal('left');
+        $sheet->getStyle("N2:N{$lastRow}")->getAlignment()->setHorizontal('left');
         $sheet->getStyle("T2:T{$lastRow}")->getAlignment()->setHorizontal('left');
+        $sheet->getStyle("P2:P{$lastRow}")->getAlignment()->setHorizontal('left');
         $sheet->getStyle("AA2:AA{$lastRow}")->getAlignment()->setHorizontal('left');
         $sheet->getStyle("AJ2:AJ{$lastRow}")->getAlignment()->setHorizontal('left');
 
