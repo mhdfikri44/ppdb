@@ -508,7 +508,7 @@
     </div>
 
     {{-- ================= CATATAN / INSTRUKSI ================= --}}
-    <div style="margin-top: 400px; font-size: 11px; border: 1px solid #ccc; padding: 10px;">
+    <div style="margin-top: 200px; font-size: 11px; border: 1px solid #ccc; padding: 10px;">
         <div class="fw-bold" style="text-decoration: underline; margin-bottom: 5px;">PENTING:</div>
         <ul style="margin: 0; padding-left: 20px;">
             <li>Cetak formulir ini menggunakan kertas <strong>A4</strong>.</li>
