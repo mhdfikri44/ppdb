@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
     <style>
         @page {
-            margin-top: 8mm;
+            margin-top: 7mm;
             margin-bottom: 4mm;
         }
 
