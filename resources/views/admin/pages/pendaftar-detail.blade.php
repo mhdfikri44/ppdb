@@ -5,9 +5,16 @@
         <h4 class="fw-bold mb-4">
             <span class="text-muted fw-light">Admin / Data Pendaftar /</span> Detail
         </h4>
-        <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">
-            <i class="ti ti-arrow-left"></i> Kembali
-        </a>
+
+        <div class="">
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">
+                <i class="ti ti-arrow-left"></i> Kembali
+            </a>
+            <a href="{{ route('admin.cetak.formulir.siswa', $student->nisn) }}"
+                class="btn btn-sm btn-info waves-effect waves-light" target="_blank">
+                <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
+            </a>
+        </div>
     </div>
 
     <!-- Data pribadi -->

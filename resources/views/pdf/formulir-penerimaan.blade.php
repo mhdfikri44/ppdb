@@ -178,17 +178,17 @@
         <tr>
             <td class="col-label">7. Agama</td>
             <td class="col-separator">:</td>
-            <td class="col-value"><span class="dots-container">{{ $data->religion->name }}</span></td>
+            <td class="col-value"><span class="dots-container">{{ $data->religion?->name }}</span></td>
         </tr>
         <tr>
             <td class="col-label">8. Hobi</td>
             <td class="col-separator">:</td>
-            <td class="col-value"><span class="dots-container">{{ $data->hobby->name }}</span></td>
+            <td class="col-value"><span class="dots-container">{{ $data->hobby?->name }}</span></td>
         </tr>
         <tr>
             <td class="col-label">9. Cita-cita</td>
             <td class="col-separator">:</td>
-            <td class="col-value"><span class="dots-container">{{ $data->dream->name }}</span></td>
+            <td class="col-value"><span class="dots-container">{{ $data->dream?->name }}</span></td>
         </tr>
         <tr>
             <td class="col-label">10. Tahun lulus</td>
@@ -208,7 +208,7 @@
         <tr>
             <td class="col-label">13. Yang membiayai sekolah</td>
             <td class="col-separator">:</td>
-            <td class="col-value"><span class="dots-container">{{ $data->funder->name }}</span></td>
+            <td class="col-value"><span class="dots-container">{{ $data->funder?->name }}</span></td>
         </tr>
         <tr>
             <td class="col-label">14. Prestasi</td>
@@ -238,7 +238,7 @@
         <tr>
             <td class="col-label">3. Status kepemilikan rumah</td>
             <td class="col-separator">:</td>
-            <td class="col-value"><span class="dots-container">{{ $data->houseStatus->name }}</span></td>
+            <td class="col-value"><span class="dots-container">{{ $data->houseStatus?->name }}</span></td>
         </tr>
         <tr>
             <td class="col-label">4. Anak ke-</td>
@@ -304,7 +304,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->fatherEducation->name }}
+                    {{ $data->guardian->fatherEducation?->name }}
                 </span>
             </td>
         </tr>
@@ -313,7 +313,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->fatherJob->name }}
+                    {{ $data->guardian->fatherJob?->name }}
                 </span>
             </td>
         </tr>
@@ -340,7 +340,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->fatherStatus->name }}
+                    {{ $data->guardian->fatherStatus?->name }}
                 </span>
             </td>
         </tr>
@@ -380,7 +380,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->motherEducation->name }}
+                    {{ $data->guardian->motherEducation?->name }}
                 </span>
             </td>
         </tr>
@@ -389,7 +389,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->motherJob->name }}
+                    {{ $data->guardian->motherJob?->name }}
                 </span>
             </td>
         </tr>
@@ -416,7 +416,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->motherStatus->name }}
+                    {{ $data->guardian->motherStatus?->name }}
                 </span>
             </td>
         </tr>
@@ -456,7 +456,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->waliEducation->name ?? '-' }}
+                    {{ $data->guardian->waliEducation?->name ?? '-' }}
                 </span>
             </td>
         </tr>
@@ -465,7 +465,7 @@
             <td class="col-separator">:</td>
             <td class="col-value">
                 <span class="dots-container">
-                    {{ $data->guardian->waliJob->name ?? '-' }}
+                    {{ $data->guardian->waliJob?->name ?? '-' }}
                 </span>
             </td>
         </tr>

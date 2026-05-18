@@ -33,6 +33,7 @@ Route::middleware(['auth:admin,student'])->group(function () {
 });
 
 Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+    Route::get('/siswa/formulir/{student:nisn}', [StudentController::class, 'cetakFormulirAdmin'])->name('cetak.formulir.siswa');
     Route::controller(AdminController::class)->group(function () {
         Route::get('/', 'index')->name('index');
 
@@ -108,7 +109,7 @@ Route::prefix('student')->name('student.')->middleware('auth:student')->group(fu
 
         Route::get('cetak/kartu-tes', 'cetakKartuTes')->name('cetak.kartu.tes');
         Route::get('cetak/surat-mengaji', 'cetakSuratNgaji')->name('cetak.surat.mengaji');
-        Route::get('cetak/formulir-penerimaan', 'cetakFormulir')->name('cetak.formulir');
+        Route::get('cetak/formulir-penerimaan', 'cetakFormulirSiswa')->name('cetak.formulir');
         Route::put('lihat-hasil-kelulusan', 'seeResult')->name('lihat.hasil');
     });
     Route::post('logout', [StudentAuthController::class, 'logout'])->name('logout');

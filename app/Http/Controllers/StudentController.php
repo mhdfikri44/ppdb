@@ -11,6 +11,7 @@ use App\Models\Occupation;
 use App\Models\Religion;
 use App\Models\Setting;
 use App\Models\Status;
+use App\Models\Student;
 use App\Models\TestPractice;
 use App\Models\TestWritten;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -509,10 +510,8 @@ class StudentController extends Controller
         return $pdf->stream('format-surat-mengaji.pdf');
     }
 
-    public function cetakFormulir()
+    public function cetakFormulir(Student $data)
     {
-        /** @var \App\Models\Student $student */
-        $data = auth('student')->user();
         $pasfoto = $data->documents->where('jenis_dokumen', 'pasfoto')->first();
 
         $fotoBase64 = null;
@@ -536,6 +535,16 @@ class StudentController extends Controller
             'Pragma' => 'no-cache',
             'Expires' => '0',
         ]);
+    }
+
+    public function cetakFormulirSiswa()
+    {
+        return $this->cetakFormulir(auth('student')->user());
+    }
+
+    public function cetakFormulirAdmin(Student $student)
+    {
+        return $this->cetakFormulir($student);
     }
 
     public function seeResult()
