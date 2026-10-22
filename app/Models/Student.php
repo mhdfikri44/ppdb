@@ -4,19 +4,56 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use HasFactory;
+
+    protected $guard = 'student';
 
     protected $appends = [
         'jenis_kelamin_label',
         'tempat_tanggal_lahir',
         'anak_keberapa_label',
+    ];
+
+    protected $fillable = [
+        'nisn',
+        'nama_lengkap',
+        'password',
+        'nik',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+
+        'religion_id',
+        'hobby_id',
+        'dream_id',
+        'funder_id',
+        'house_status_id',
+
+        'tahun_lulus',
+        'asal_sekolah',
+        'alamat_asal_sekolah',
+        'prestasi',
+        'penyakit',
+        'no_kip_pkh_kks_kps',
+
+        'no_kk',
+        'alamat',
+        'anak_keberapa',
+        'jumlah_saudara',
+        'transportasi',
+        'jarak_tempuh',
+        'waktu_tempuh',
+    ];
+
+    protected $hidden = [
+        'password',
     ];
 
     public function registration(): HasOne
@@ -39,37 +76,36 @@ class Student extends Model
         return $this->belongsTo(Religion::class);
     }
 
-    protected $fillable = [
-        'nisn',
-        'nama_lengkap',
-        'password',
-        'nik',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'jenis_kelamin',
-        'religion_id',
-        'hobi',
-        'cita_cita',
-        'prestasi',
-        'penyakit',
+    public function hobby(): BelongsTo
+    {
+        return $this->belongsTo(Hobby::class);
+    }
 
-        'anak_keberapa',
-        'jumlah_saudara',
-        'tempat_tinggal',
-        'transportasi',
-        'jarak_tempuh',
-        'waktu_tempuh',
-        'no_kk',
-        'no_kip_pkh_kks_kps',
+    public function dream(): BelongsTo
+    {
+        return $this->belongsTo(Dream::class);
+    }
 
-        'tahun_lulus',
-        'asal_sekolah',
-        'alamat_asal_sekolah',
-    ];
+    public function funder(): BelongsTo
+    {
+        return $this->belongsTo(Funder::class);
+    }
 
-    protected $hidden = [
-        'password',
-    ];
+    public function houseStatus(): BelongsTo
+    {
+        return $this->belongsTo(HouseStatus::class);
+    }
+
+    public function testPractice(): HasOne
+    {
+        return $this->hasOne(TestPractice::class);
+    }
+
+    public function testWritten(): HasOne
+    {
+        return $this->hasOne(TestWritten::class);
+    }
+
 
     public function getTempatTanggalLahirAttribute()
     {

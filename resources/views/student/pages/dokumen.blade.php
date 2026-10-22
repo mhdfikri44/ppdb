@@ -8,7 +8,6 @@
         <div class="item item1">
             {{-- Ilustrasi --}}
             <img src="{{ asset('assets/img/mts/Documents.png') }}" alt="ilustrasi dokumen" width="90%">
-            {{-- <a href="https://storyset.com/work">Work illustrations by Storyset</a> --}}
         </div>
 
         {{-- Dokumen sudah lengkap? --}}
@@ -45,8 +44,8 @@
                                 1. Pasfoto Latar Merah
                             </label>
                             @if (isset($docs['pasfoto']))
-                                <a href="{{ asset('storage/' . $docs['pasfoto']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['pasfoto']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -58,7 +57,7 @@
                                 2. Surat Keterangan Aktif Sekolah Asli
                             </label>
                             @if (isset($docs['suket_sekolah']))
-                                <a href="{{ asset('storage/' . $docs['suket_sekolah']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['suket_sekolah']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -71,8 +70,8 @@
                                 3. Kartu Keluarga (KK) Asli
                             </label>
                             @if (isset($docs['kk']))
-                                <a href="{{ asset('storage/' . $docs['kk']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kk']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -84,8 +83,8 @@
                                 4. KTP Kedua Orang Tua Asli
                             </label>
                             @if (isset($docs['ktp']))
-                                <a href="{{ asset('storage/' . $docs['ktp']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['ktp']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -97,8 +96,8 @@
                                 5. Akta Kelahiran Asli
                             </label>
                             @if (isset($docs['akta']))
-                                <a href="{{ asset('storage/' . $docs['akta']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['akta']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -110,8 +109,8 @@
                                 6. Kartu NISN Asli
                             </label>
                             @if (isset($docs['nisn']))
-                                <a href="{{ asset('storage/' . $docs['nisn']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['nisn']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -123,7 +122,7 @@
                                 7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                             </label>
                             @if (isset($docs['suket_ngaji']))
-                                <a href="{{ asset('storage/' . $docs['suket_ngaji']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['suket_ngaji']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -140,7 +139,7 @@
                                 1. Sertifikat Prestasi Akademik & Non Akademik Asli
                             </label>
                             @if (isset($docs['sertifikat']))
-                                <a href="{{ asset('storage/' . $docs['sertifikat']) }}" type="button"
+                                <a href="{{ route('student.file.show', $docs['sertifikat']) }}" type="button"
                                     class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
@@ -158,8 +157,8 @@
                                 2. Kartu KIP/PKH Asli
                             </label>
                             @if (isset($docs['kartu']))
-                                <a href="{{ asset('storage/' . $docs['kartu']) }}" type="button" class="btn btn-info p-1"
-                                    target="_blank">
+                                <a href="{{ route('student.file.show', $docs['kartu']) }}" type="button"
+                                    class="btn btn-info p-1" target="_blank">
                                     <i class="ti-xs ti ti-eye"></i>
                                     <span class="ms-1">Lihat</span>
                                 </a>
@@ -196,10 +195,10 @@
                         <i class="ti ti-info-circle ti-sm text-info"></i>
                     </span>
                     <div class="d-flex flex-column ps-1 text-dark">
-                        {{-- <h5 class="alert-heading mb-2">Informasi Unggah Dokumen!</h5> --}}
                         <p class="mb-0">1. Tipe file yang dapat diunggah <strong>.pdf .png .jpg .jpeg</strong>.</p>
-                        <p class="mb-0">2. Ukuran maksimal file <strong>2 mb</strong>.</p>
-                        <p class="mb-0">3. Jika sudah unggah semua dokumen, <strong>kunci dokumen</strong>.</p>
+                        <p class="mb-0">2. Pasfoto wajib <strong>gambar (.png .jpg .jpeg)</strong>.</p>
+                        <p class="mb-0">3. Ukuran maksimal file <strong>2 mb</strong>.</p>
+                        <p class="mb-0">4. Jika sudah unggah semua dokumen, <strong>kunci dokumen</strong>.</p>
                     </div>
                 </div>
             </div>
@@ -223,8 +222,8 @@
                                     <input type="file" class="d-none" id="pasfoto" name="pasfoto">
 
                                     @if (isset($docs['pasfoto']))
-                                        <a href="{{ asset('storage/' . $docs['pasfoto']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['pasfoto']->path) . '?v=' . $docs['pasfoto']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -266,8 +265,8 @@
                                     <input type="file" class="d-none" id="suket_sekolah" name="suket_sekolah">
 
                                     @if (isset($docs['suket_sekolah']))
-                                        <a href="{{ asset('storage/' . $docs['suket_sekolah']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_sekolah']->path) . '?v=' . $docs['suket_sekolah']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -308,8 +307,8 @@
                                     <input type="file" class="d-none" id="kk" name="kk">
 
                                     @if (isset($docs['kk']))
-                                        <a href="{{ asset('storage/' . $docs['kk']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kk']->path) . '?v=' . $docs['kk']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -350,8 +349,8 @@
                                     <input type="file" class="d-none" id="ktp" name="ktp">
 
                                     @if (isset($docs['ktp']))
-                                        <a href="{{ asset('storage/' . $docs['ktp']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['ktp']->path) . '?v=' . $docs['ktp']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -392,8 +391,8 @@
                                     <input type="file" class="d-none" id="akta" name="akta">
 
                                     @if (isset($docs['akta']))
-                                        <a href="{{ asset('storage/' . $docs['akta']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['akta']->path) . '?v=' . $docs['akta']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -427,7 +426,7 @@
                                 <label class="form-label fw-bold">
                                     6. Kartu NISN Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
-                                    <a href="https://nisn.data.kemdikbud.go.id/" target="_blank"
+                                    <a href="https://nisn.data.kemendikdasmen.go.id/" target="_blank"
                                         class="form-text text-primary d-block mt-0">
                                         Download Kartu Disini
                                     </a>
@@ -439,8 +438,8 @@
                                     <input type="file" class="d-none" id="nisn" name="nisn">
 
                                     @if (isset($docs['nisn']))
-                                        <a href="{{ asset('storage/' . $docs['nisn']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['nisn']->path) . '?v=' . $docs['nisn']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -475,6 +474,10 @@
                                 <label class="form-label fw-bold">
                                     7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli
                                     <span class="form-text text-danger fst-italic">*Wajib</span>
+                                    <a href="{{ route('student.cetak.surat.mengaji') }}" target="_blank"
+                                        class="form-text text-primary d-block mt-0">
+                                        Download Format
+                                    </a>
                                 </label>
                                 <div class="input-group">
                                     <!-- input file diganti dengan label (custom) -->
@@ -482,8 +485,8 @@
                                     <input type="file" class="d-none" id="suket_ngaji" name="suket_ngaji">
 
                                     @if (isset($docs['suket_ngaji']))
-                                        <a href="{{ asset('storage/' . $docs['suket_ngaji']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['suket_ngaji']->path) . '?v=' . $docs['suket_ngaji']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -534,8 +537,8 @@
                                     <input type="file" class="d-none" id="sertifikat" name="sertifikat">
 
                                     @if (isset($docs['sertifikat']))
-                                        <a href="{{ asset('storage/' . $docs['sertifikat']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['sertifikat']->path) . '?v=' . $docs['sertifikat']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>
@@ -575,8 +578,8 @@
                                     <input type="file" class="d-none" id="kartu" name="kartu">
 
                                     @if (isset($docs['kartu']))
-                                        <a href="{{ asset('storage/' . $docs['kartu']) }}" type="button"
-                                            class="btn btn-info p-2" target="_blank">
+                                        <a href="{{ route('student.file.show', $docs['kartu']->path) . '?v=' . $docs['kartu']->updated_at->timestamp }}"
+                                            type="button" class="btn btn-info p-2" target="_blank">
                                             <i class="ti-xs ti ti-eye"></i>
                                             <span class="d-none d-sm-inline ms-1">Lihat</span>
                                         </a>

@@ -21,6 +21,37 @@ class Guardian extends Model
         'penghasilan_wali_label',
     ];
 
+    protected $fillable = [
+        'nama_ayah',
+        'nik_ayah',
+        'tempat_lahir_ayah',
+        'tanggal_lahir_ayah',
+        'father_education_id',
+        'father_occupation_id',
+        'penghasilan_ayah',
+        'hp_ayah',
+        'father_status_id',
+
+        'nama_ibu',
+        'nik_ibu',
+        'tempat_lahir_ibu',
+        'tanggal_lahir_ibu',
+        'mother_education_id',
+        'mother_occupation_id',
+        'penghasilan_ibu',
+        'hp_ibu',
+        'mother_status_id',
+
+        'nama_wali',
+        'nik_wali',
+        'tempat_lahir_wali',
+        'tanggal_lahir_wali',
+        'wali_education_id',
+        'wali_occupation_id',
+        'penghasilan_wali',
+        'hp_wali',
+    ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class);
@@ -52,35 +83,15 @@ class Guardian extends Model
         return $this->belongsTo(Education::class, 'wali_education_id');
     }
 
-    protected $fillable = [
-        'nama_ayah',
-        'nik_ayah',
-        'tempat_lahir_ayah',
-        'tanggal_lahir_ayah',
-        'father_education_id',
-        'father_occupation_id',
-        'penghasilan_ayah',
-        'hp_ayah',
-        'keterangan_ayah',
+    public function fatherStatus(): BelongsTo
+    {
+        return $this->belongsTo(Status::class, 'father_status_id');
+    }
+    public function motherStatus(): BelongsTo
+    {
+        return $this->belongsTo(Status::class, 'mother_status_id');
+    }
 
-        'nama_ibu',
-        'nik_ibu',
-        'tempat_lahir_ibu',
-        'tanggal_lahir_ibu',
-        'mother_education_id',
-        'mother_occupation_id',
-        'penghasilan_ibu',
-        'hp_ibu',
-        'keterangan_ibu',
-
-        'nama_wali',
-        'tempat_lahir_wali',
-        'tanggal_lahir_wali',
-        'wali_education_id',
-        'wali_occupation_id',
-        'penghasilan_wali',
-        'hp_wali',
-    ];
 
     public function getTempatTanggalLahirAyahAttribute()
     {

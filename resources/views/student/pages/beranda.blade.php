@@ -8,6 +8,120 @@
 
     <div class="row">
         <div class="col-xl-4 col-lg-5 col-md-6">
+
+            <!-- Hasil Akhir -->
+            @if ($status['is_result_publish'] && $student->registration->status_verifikasi == 'Disetujui')
+                @if (!$student->registration->has_seen_result)
+                    <style>
+                        .btn-highlight {
+                            position: relative;
+                            animation: pulse 1.8s infinite;
+                            box-shadow: 0 0 0 rgba(13, 110, 253, 0.7);
+                            transition: all 0.3s ease;
+                        }
+
+                        /* efek pulse */
+                        @keyframes pulse {
+                            0% {
+                                box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.7);
+                            }
+
+                            70% {
+                                box-shadow: 0 0 0 12px rgba(13, 110, 253, 0);
+                            }
+
+                            100% {
+                                box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+                            }
+                        }
+
+                        /* hover biar lebih hidup */
+                        .btn-highlight:hover {
+                            transform: scale(1.05);
+                            box-shadow: 0 0 15px rgba(13, 110, 253, 0.8);
+                        }
+                    </style>
+                    <div class="text-center mb-4">
+                        <form id="formResult" action="{{ route('student.lihat.hasil') }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-primary btn-highlight">
+                                Lihat Hasil Kelulusan
+                            </button>
+                        </form>
+                    </div>
+
+                    <script>
+                        document.getElementById('formResult').addEventListener('submit', function(e) {
+                            e.preventDefault();
+
+                            Swal.fire({
+                                title: 'Memproses Hasil...',
+                                text: 'Mohon tunggu sebentar',
+                                allowOutsideClick: false,
+                                didOpen: () => Swal.showLoading()
+                            });
+
+                            setTimeout(() => {
+                                @if ($student->registration->lulus == 1)
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Selamat! Anda LULUS 🎉',
+                                        text: 'Selamat bergabung di keluarga besar MTsN 1 Kota Dumai.',
+                                        confirmButtonText: 'Lanjut',
+                                        confirmButtonColor: '#198754'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            e.target.submit();
+                                        }
+                                    });
+                                @else
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Mohon Maaf',
+                                        text: 'Anda dinyatakan belum lulus. Tetap semangat!',
+                                        confirmButtonText: 'Tutup',
+                                        confirmButtonColor: '#dc3545'
+                                    }).then(() => {
+                                        e.target.submit();
+                                    });
+                                @endif
+                            }, 3000);
+                        });
+                    </script>
+                @else
+                    @if ($student->registration->lulus == 1)
+                        <div class="col-12 mb-4">
+                            <div class="card bg-success text-white shadow">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="me-3"> <i class="ti ti-confetti fs-1"></i> </div>
+                                    <div>
+                                        <h4 class="text-white mb-1">Selamat! Anda Dinyatakan LULUS</h4>
+                                        <p class="mb-0">Bagi yang lulus, harap hadir pada hari <strong>Rabu, 29 April
+                                                2026</strong>
+                                            jam <strong>08:30 WIB</strong> di <strong>MTsN 1 Kota Dumai</strong> dengan
+                                            agenda rapat bersama komite dan calon orangtua/wali murid.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @elseif ($student->registration->lulus == 0)
+                        <div class="col-12 mb-4">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body d-flex align-items-center">
+                                    <div class="me-3"> <i class="ti ti-mood-sad fs-1"></i> </div>
+                                    <div>
+                                        <h4 class="text-white mb-1">Mohon Maaf...</h4>
+                                        <p class="mb-0">Anda dinyatakan belum lulus. Tetap semangat!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endif
+            @endif
+
             <!-- Status Pendaftaran -->
             <div
                 class="card bg-label-{{ $status['pendaftaran']['warna'] }} border-{{ $status['pendaftaran']['warna'] }} border shadow mb-4 animate__animated animate__headShake">
@@ -18,6 +132,27 @@
                 <div class="card-body" id="konfirmasi">
                     <p class="fs-5 fw-bold mb-0">{{ $status['pendaftaran']['status'] }}</p>
                     <p class="card-text">{{ $status['pendaftaran']['ket'] }}</p>
+
+                    @if ($alur['verifikasi'] == 'Disetujui')
+                        <hr class="my-3 border-{{ $status['pendaftaran']['warna'] }}">
+                        <div class="row align-items-center">
+                            <div class="col-12 col-sm-4 text-center mb-3 mb-sm-0">
+                                <div class="bg-white p-2 d-inline-block rounded shadow-sm border">
+                                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://chat.whatsapp.com/KE4drgvDKBL0HU9fuG3uTO"
+                                        alt="QR WhatsApp" class="img-fluid" style="width: 100px;">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-8">
+                                <p class="card-text">Scan <strong>barcode atau klik tombol di bawah</strong>
+                                    untuk bergabung ke grup calon peserta didik baru.</p>
+                                <a href="https://chat.whatsapp.com/KE4drgvDKBL0HU9fuG3uTO" target="_blank"
+                                    class="btn btn-sm btn-success w-100 w-sm-auto">
+                                    <i class="ti ti-brand-whatsapp me-1"></i> Gabung Sekarang
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
                 </div>
             </div>
             <!-- /Status Pendaftaran -->
@@ -30,8 +165,7 @@
                             <div class="avatar-frame rounded border mb-3 mt-4"
                                 style="width: 108px; height: 158px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                                 <img class="img-fluid" alt="Foto profil"
-                                    style="width: 100%; height: 100%; object-fit: cover;"
-                                    src="{{ $pasfoto ? asset('storage/' . $pasfoto->path) : asset('assets/img/mts/profile-default.jpg') }}">
+                                    style="width: 100%; height: 100%; object-fit: cover;" src="{{ $pasfotoUrl }}">
                             </div>
                             <div class="user-info text-center">
                                 <h4 class="mb-0">{{ $student->nama_lengkap }}</h4>
@@ -72,26 +206,52 @@
 
                             @if (!$status['konfirmasi'])
                                 @if ($status['data'] == 'Belum lengkap' || $status['dokumen'] == 'Belum lengkap')
-                                    <button class="btn btn-success waves-effect waves-light" type="button" disabled>
+                                    <button type="button" class="btn btn-success waves-effect waves-light" disabled>
                                         <span class="ti-xs ti ti-checkbox me-1"></span>Belum lengkap
                                     </button>
                                 @else
-                                    <form id="form-konfirmasi" action="{{ route('student.confirm', $student->id) }}"
-                                        method="POST">
-                                        @csrf @method('PUT')
-                                        <button type="button" id="btn-konfirmasi"
-                                            class="btn btn-success waves-effect waves-light w-100">
-                                            <span class="ti-xs ti ti-checkbox me-1"></span>Konfirmasi
+                                    @if ($status['is_open'])
+                                        <form id="form-konfirmasi" action="{{ route('student.confirm', $student->id) }}"
+                                            method="POST">
+                                            @csrf @method('PUT')
+                                            <button type="button" id="btn-konfirmasi"
+                                                class="btn btn-success waves-effect waves-light w-100">
+                                                <span class="ti-xs ti ti-checkbox me-1"></span>Konfirmasi
+                                            </button>
+                                        </form>
+                                    @else
+                                        <button type="button" class="btn btn-success w-100" disabled>
+                                            Pendaftaran Ditutup
                                         </button>
-                                    </form>
+                                    @endif
                                 @endif
                             @else
-                                <button class="btn btn-warning waves-effect waves-light" type="button" disabled>
-                                    <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu
-                                </button>
-                                <button class="btn btn-info waves-effect waves-light" type="button" disabled>
-                                    <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
-                                </button>
+                                @if ($student->registration->status_verifikasi == 'Disetujui')
+                                    @if ($status['is_print_test_card'])
+                                        <a href="{{ route('student.cetak.kartu.tes') }}"
+                                            class="btn btn-warning waves-effect waves-light" target="_blank">
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
+                                        </a>
+                                    @else
+                                        <button class="btn btn-warning waves-effect waves-light" disabled>
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
+                                        </button>
+                                        <p class="text-muted mb-0 mt-2 small text-center">
+                                            Jadwal tes belum diatur.
+                                        </p>
+                                    @endif
+
+                                    @if ($status['is_result_publish'] && $student->registration->has_seen_result && $student->registration->lulus)
+                                        <a href="{{ route('student.cetak.formulir') }}"
+                                            class="btn btn-info waves-effect waves-light" target="_blank">
+                                            <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
+                                        </a>
+                                    @endif
+                                @else
+                                    <button class="btn btn-warning waves-effect waves-light" disabled>
+                                        <span class="ti-xs ti ti-printer me-1"></span>Cetak Kartu Tes
+                                    </button>
+                                @endif
                             @endif
 
                         </div>
@@ -135,7 +295,7 @@
                                     </span>
                                 </div>
                                 <span>Lengkapi data identitas dengan benar sebelum lanjut ke tahap berikutnya.</span>
-                                <a href="{{ route('student.edit1', $student->nisn) }}">Lengkapi sekarang.</a>
+                                <a href="{{ route('student.edit1') }}">Lengkapi sekarang.</a>
                             </div>
                         </li>
 
@@ -153,7 +313,7 @@
                                     </span>
                                 </div>
                                 <span>Unggah dokumen pendukung sesuai ketentuan. Pastikan file jelas dan tidak kabur.</span>
-                                <a href="{{ route('student.document', $student->nisn) }}">Unggah sekarang.</a>
+                                <a href="{{ route('student.document') }}">Unggah sekarang.</a>
                             </div>
                         </li>
 

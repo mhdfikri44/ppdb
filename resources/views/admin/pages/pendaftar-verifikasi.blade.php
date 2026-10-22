@@ -50,6 +50,8 @@
                                 <th>No. Pendaftaran</th>
                                 <th>Nama</th>
                                 <th>NISN</th>
+                                <th style="width: 130px;">Hp Ayah</th>
+                                <th style="width: 130px;">Hp Ibu</th>
                                 <th>Alasan Penolakan</th>
                             </tr>
                         </thead>
@@ -99,28 +101,11 @@
                                     <div class="tab-pane fade show active" id="tab-siswa" role="tabpanel">
                                         <div class="row g-3">
                                             <div class="col-12">
-                                                <div class="d-flex align-items-center mb-2">
-                                                    <h6 class="mb-0 text-primary"><i class="ti ti-id-badge me-2"></i>Status
-                                                        Pendaftaran</h6>
-                                                    <div class="flex-grow-1 border-bottom ms-2"></div>
-                                                </div>
                                                 <div class="bg-lighter p-2 rounded">
                                                     <small class="text-muted d-block small fw-bold">Nomor
                                                         Pendaftaran</small>
                                                     <span id="v-no-pendaftaran" class="fw-bold text-primary fs-5">-</span>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Tahun Lulus</small>
-                                                <span id="v-tahun-lulus" class="fw-medium text-dark">-</span>
-                                            </div>
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Asal Sekolah</small>
-                                                <span id="v-asal-sekolah" class="fw-medium text-dark">-</span>
-                                            </div>
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Alamat Asal Sekolah</small>
-                                                <span id="v-alamat-asal-sekolah" class="fw-medium text-dark">-</span>
                                             </div>
 
                                             <div class="col-12 mt-4">
@@ -138,7 +123,6 @@
                                                 <small class="text-muted d-block small fw-bold">Nama</small>
                                                 <span id="v-nama" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">NIK</small>
                                                 <span id="v-nik" class="fw-medium text-dark">-</span>
@@ -148,7 +132,6 @@
                                                     lahir</small>
                                                 <span id="v-ttl" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Jenis kelamin</small>
                                                 <span id="v-jenis-kelamin" class="fw-medium text-dark">-</span>
@@ -157,7 +140,6 @@
                                                 <small class="text-muted d-block small fw-bold">Agama</small>
                                                 <span id="v-agama" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Hobi</small>
                                                 <span id="v-hobi" class="fw-medium text-dark">-</span>
@@ -166,7 +148,23 @@
                                                 <small class="text-muted d-block small fw-bold">Cita-cita</small>
                                                 <span id="v-cita2" class="fw-medium text-dark">-</span>
                                             </div>
-
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Tahun Lulus</small>
+                                                <span id="v-tahun-lulus" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Asal Sekolah</small>
+                                                <span id="v-asal-sekolah" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Alamat Asal Sekolah</small>
+                                                <span id="v-alamat-asal-sekolah" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Yang Membiayai
+                                                    Sekolah</small>
+                                                <span id="v-funder" class="fw-medium text-dark">-</span>
+                                            </div>
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Prestasi</small>
                                                 <span id="v-prestasi" class="fw-medium text-dark">-</span>
@@ -175,13 +173,30 @@
                                                 <small class="text-muted d-block small fw-bold">Penyakit</small>
                                                 <span id="v-penyakit" class="fw-medium text-dark">-</span>
                                             </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">No. KIP/PKH/KKS/KPS</small>
+                                                <span id="v-no-kip-dll" class="fw-medium text-dark">-</span>
+                                            </div>
 
                                             <div class="col-12 mt-4">
                                                 <div class="d-flex align-items-center mb-2">
-                                                    <h6 class="mb-0 text-primary"><i class="ti ti-user me-2"></i>Data
-                                                        Keluarga</h6>
+                                                    <h6 class="mb-0 text-primary"><i class="ti ti-home me-2"></i>Data
+                                                        Rumah & Keluarga</h6>
                                                     <div class="flex-grow-1 border-bottom ms-2"></div>
                                                 </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">No. Kartu Keluarga</small>
+                                                <span id="v-no-kk" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Alamat Rumah</small>
+                                                <span id="v-alamat" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">Status Kepemilikan
+                                                    Rumah</small>
+                                                <span id="v-status-rumah" class="fw-medium text-dark">-</span>
                                             </div>
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Anak Keberapa</small>
@@ -191,35 +206,20 @@
                                                 <small class="text-muted d-block small fw-bold">Jumlah Saudara</small>
                                                 <span id="v-jumlah-saudara" class="fw-medium text-dark">-</span>
                                             </div>
-
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Tempat Tinggal</small>
-                                                <span id="v-tempat-tinggal" class="fw-medium text-dark">-</span>
-                                            </div>
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Transportasi
-                                                    Kesekolah</small>
+                                                    Ke Sekolah</small>
                                                 <span id="v-transportasi" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Jarak Tempuh
-                                                    Kesekolah</small>
+                                                    Ke Sekolah</small>
                                                 <span id="v-jarak" class="fw-medium text-dark">-</span>
                                             </div>
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Waktu Tempuh
-                                                    Kesekolah</small>
+                                                    Ke Sekolah</small>
                                                 <span id="v-waktu" class="fw-medium text-dark">-</span>
-                                            </div>
-
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">No. Kartu Keluarga</small>
-                                                <span id="v-no-kk" class="fw-medium text-dark">-</span>
-                                            </div>
-                                            <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">No. KIP/PKH/KKS/KPS</small>
-                                                <span id="v-no-kip-dll" class="fw-medium text-dark">-</span>
                                             </div>
 
                                             <div class="col-12 mt-4">
@@ -237,7 +237,6 @@
                                                 <small class="text-muted d-block small fw-bold">NIK Ayah</small>
                                                 <span id="v-nik-ayah" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Tempat, tanggal lahir
                                                     Ayah</small>
@@ -247,7 +246,6 @@
                                                 <small class="text-muted d-block small fw-bold">Pendidikan Ayah</small>
                                                 <span id="v-pendidikan-ayah" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Pekerjaan Ayah</small>
                                                 <span id="v-pekerjaan-ayah" class="fw-medium text-dark">-</span>
@@ -256,13 +254,12 @@
                                                 <small class="text-muted d-block small fw-bold">Penghasilan Ayah</small>
                                                 <span id="v-penghasilan-ayah" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">No. HP/WA Ayah</small>
                                                 <span id="v-hp-ayah" class="fw-medium text-dark">-</span>
                                             </div>
                                             <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Keterangan Ayah</small>
+                                                <small class="text-muted d-block small fw-bold">Status Ayah</small>
                                                 <span id="v-keterangan-ayah" class="fw-medium text-dark">-</span>
                                             </div>
 
@@ -281,7 +278,6 @@
                                                 <small class="text-muted d-block small fw-bold">NIK Ibu</small>
                                                 <span id="v-nik-ibu" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Tempat, tanggal lahir
                                                     Ibu</small>
@@ -291,7 +287,6 @@
                                                 <small class="text-muted d-block small fw-bold">Pendidikan Ibu</small>
                                                 <span id="v-pendidikan-ibu" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Pekerjaan Ibu</small>
                                                 <span id="v-pekerjaan-ibu" class="fw-medium text-dark">-</span>
@@ -300,13 +295,12 @@
                                                 <small class="text-muted d-block small fw-bold">Penghasilan Ibu</small>
                                                 <span id="v-penghasilan-ibu" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">No. HP/WA Ibu</small>
                                                 <span id="v-hp-ibu" class="fw-medium text-dark">-</span>
                                             </div>
                                             <div class="col-6">
-                                                <small class="text-muted d-block small fw-bold">Keterangan Ibu</small>
+                                                <small class="text-muted d-block small fw-bold">Status Ibu</small>
                                                 <span id="v-keterangan-ibu" class="fw-medium text-dark">-</span>
                                             </div>
 
@@ -322,11 +316,14 @@
                                                 <span id="v-nama-wali" class="fw-medium text-dark">-</span>
                                             </div>
                                             <div class="col-6">
+                                                <small class="text-muted d-block small fw-bold">NIK Wali</small>
+                                                <span id="v-nik-wali" class="fw-medium text-dark">-</span>
+                                            </div>
+                                            <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Tempat, tanggal lahir
                                                     Wali</small>
                                                 <span id="v-ttl-wali" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Pendidikan Wali</small>
                                                 <span id="v-pendidikan-wali" class="fw-medium text-dark">-</span>
@@ -335,7 +332,6 @@
                                                 <small class="text-muted d-block small fw-bold">Pekerjaan Wali</small>
                                                 <span id="v-pekerjaan-wali" class="fw-medium text-dark">-</span>
                                             </div>
-
                                             <div class="col-6">
                                                 <small class="text-muted d-block small fw-bold">Penghasilan Wali</small>
                                                 <span id="v-penghasilan-wali" class="fw-medium text-dark">-</span>
@@ -609,9 +605,6 @@
                     $.get('/admin/student/' + nisn + '/detail/json', function(res) {
                         // 1. Data Pribadi
                         $('#v-no-pendaftaran').text(res.registration.no_pendaftaran);
-                        $('#v-tahun-lulus').text(res.tahun_lulus);
-                        $('#v-asal-sekolah').text(res.asal_sekolah);
-                        $('#v-alamat-asal-sekolah').text(res.alamat_asal_sekolah);
 
                         $('#v-nisn').text(res.nisn);
                         $('#v-nama').text(res.nama_lengkap);
@@ -619,20 +612,25 @@
                         $('#v-ttl').text(res.tempat_tanggal_lahir);
                         $('#v-jenis-kelamin').text(res.jenis_kelamin_label);
                         $('#v-agama').text(res.religion?.name);
-                        $('#v-hobi').text(res.hobi);
-                        $('#v-cita2').text(res.cita_cita);
+                        $('#v-hobi').text(res.hobby?.name);
+                        $('#v-cita2').text(res.dream?.name);
+                        $('#v-tahun-lulus').text(res.tahun_lulus);
+                        $('#v-asal-sekolah').text(res.asal_sekolah);
+                        $('#v-alamat-asal-sekolah').text(res.alamat_asal_sekolah);
+                        $('#v-funder').text(res.funder?.name);
                         $('#v-prestasi').text(res.prestasi ?? '-');
                         $('#v-penyakit').text(res.penyakit ?? '-');
+                        $('#v-no-kip-dll').text(res.no_kip_pkh_kks_kps ?? '-');
 
-                        // 2. Data Keluarga
+                        // 2. Data Rumah & Keluarga
+                        $('#v-no-kk').text(res.no_kk);
+                        $('#v-alamat').text(res.alamat);
+                        $('#v-status-rumah').text(res.house_status?.name);
                         $('#v-anak-keberapa').text(res.anak_keberapa_label);
                         $('#v-jumlah-saudara').text(res.jumlah_saudara + ' Bersaudara');
-                        $('#v-tempat-tinggal').text(res.tempat_tinggal);
                         $('#v-transportasi').text(res.transportasi);
                         $('#v-jarak').text(res.jarak_tempuh + ' KM');
                         $('#v-waktu').text(res.waktu_tempuh + ' Menit');
-                        $('#v-no-kk').text(res.no_kk);
-                        $('#v-no-kip-dll').text(res.no_kip_pkh_kks_kps);
 
                         // 3. Data Orang Tua
                         $('#v-nama-ayah').text(res.guardian.nama_ayah);
@@ -642,7 +640,7 @@
                         $('#v-pekerjaan-ayah').text(res.guardian.father_job?.name);
                         $('#v-penghasilan-ayah').text(res.guardian.penghasilan_ayah_label);
                         $('#v-hp-ayah').text(res.guardian.hp_ayah);
-                        $('#v-keterangan-ayah').text(res.guardian.keterangan_ayah);
+                        $('#v-keterangan-ayah').text(res.guardian.father_status?.name);
 
                         $('#v-nama-ibu').text(res.guardian.nama_ibu);
                         $('#v-nik-ibu').text(res.guardian.nik_ibu);
@@ -651,9 +649,10 @@
                         $('#v-pekerjaan-ibu').text(res.guardian.mother_job?.name);
                         $('#v-penghasilan-ibu').text(res.guardian.penghasilan_ibu_label);
                         $('#v-hp-ibu').text(res.guardian.hp_ibu);
-                        $('#v-keterangan-ibu').text(res.guardian.keterangan_ibu);
+                        $('#v-keterangan-ibu').text(res.guardian.mother_status?.name);
 
                         $('#v-nama-wali').text(res.guardian?.nama_wali ?? '-');
+                        $('#v-nik-wali').text(res.guardian?.nik_wali ?? '-');
                         $('#v-ttl-wali').text(res.guardian?.tempat_tanggal_lahir_wali);
                         $('#v-pendidikan-wali').text(res.guardian?.wali_education?.name);
                         $('#v-pekerjaan-wali').text(res.guardian?.wali_job?.name);
@@ -662,12 +661,21 @@
 
                         // Proses tombol dokumen
                         const docs = res.documents || [];
+                        const baseUrl = "{{ url('student/view') }}";
+
                         $('.btn-preview-doc').each(function() {
                             let btn = $(this);
                             let type = btn.data('type');
                             let foundDoc = docs.find(d => d.jenis_dokumen === type);
+
                             if (foundDoc && foundDoc.path) {
-                                btn.prop('disabled', false).data('src', foundDoc.path)
+                                // Gabungkan Base URL dengan path dari database
+                                // Hasilnya: domain.com/storage/view/document/pasfoto/file.png
+                                let fullUrl = baseUrl + '/' + foundDoc.path + '?v=' +
+                                    new Date(foundDoc.updated_at).getTime();
+
+                                btn.prop('disabled', false)
+                                    .data('src', fullUrl)
                                     .removeClass('btn-secondary')
                                     .addClass('btn-info');
                             } else {
@@ -690,7 +698,7 @@
 
                 $(document).on('click', '.btn-preview-doc', function() {
                     const path = $(this).data('src');
-                    if (path) window.open(`/storage/${path}`, '_blank');
+                    if (path) window.open(path, '_blank');
                 });
             }
         });
@@ -728,6 +736,14 @@
                     name: "nisn"
                 },
                 {
+                    data: "guardian.hp_ayah",
+                    name: "guardian.hp_ayah"
+                },
+                {
+                    data: "guardian.hp_ibu",
+                    name: "guardian.hp_ibu"
+                },
+                {
                     data: "registration.rejected_message",
                     name: "registration.rejected_message"
                 },
@@ -751,15 +767,8 @@
         });
 
         $('.refreshTable').on('click', function() {
-            let target = $(this).data('target');
-
-            if (target === 'confirm') {
-                tableConfirm.ajax.reload(null, false);
-            }
-
-            if (target === 'rejected') {
-                tableRejected.ajax.reload(null, false);
-            }
+            tableConfirm.ajax.reload(null, false);
+            tableRejected.ajax.reload(null, false);
         });
     </script>
 @endsection

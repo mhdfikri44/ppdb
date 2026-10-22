@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="{{ route('admin.index') }}" class="app-brand-link gap-2">
+        <a href="{{ route('landingPage') }}" class="app-brand-link gap-2">
             <span class="app-brand-logo">
                 <img src="{{ asset('assets/img/mts/logo-mts.png') }}" alt="logo app" width="50">
             </span>
@@ -19,39 +19,65 @@
         <li class="menu-item {{ Route::is('admin.index') ? 'active' : '' }}">
             <a href="{{ route('admin.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-smart-home"></i>
-                <div data-i18n="Beranda">Beranda</div>
+                <div>Beranda</div>
             </a>
         </li>
 
         <li class="menu-item {{ Route::is('admin.student.*') ? 'active open' : '' }}">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-users"></i>
-                <div data-i18n="Data Pendaftar">Data Pendaftar</div>
+                <div>Data Pendaftar</div>
             </a>
             <ul class="menu-sub">
                 <li class="menu-item {{ Route::is('admin.student.list', 'admin.student.detail') ? 'active' : '' }}">
                     <a href="{{ route('admin.student.list') }}" class="menu-link">
-                        <div data-i18n="Daftar">Daftar</div>
+                        <div>Daftar</div>
                     </a>
                 </li>
                 <li class="menu-item {{ Route::is('admin.student.confirm.list') ? 'active' : '' }}">
                     <a href="{{ route('admin.student.confirm.list') }}" class="menu-link">
-                        <div data-i18n="Verifikasi">Verifikasi & Revisi</div>
+                        <div>Verifikasi & Revisi</div>
                     </a>
                 </li>
                 <li class="menu-item {{ Route::is('admin.student.approved.list') ? 'active' : '' }}">
                     <a href="{{ route('admin.student.approved.list') }}" class="menu-link">
-                        <div data-i18n="Disetujui">Disetujui</div>
+                        <div>Disetujui</div>
                     </a>
                 </li>
             </ul>
         </li>
 
-        {{-- <li class="menu-item {{ Route::is('admin.test.*') ? 'active' : '' }}">
-            <a href="{{ route('admin.test.index') }}" class="menu-link">
+        <li class="menu-item {{ Route::is('admin.test.*') ? 'active open' : '' }}">
+            <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons ti ti-calendar"></i>
-                <div data-i18n="Penjadwalan Tes">Penjadwalan Tes</div>
+                <div>Penjadwalan Tes</div>
             </a>
-        </li> --}}
+            <ul class="menu-sub">
+                <li class="menu-item {{ Route::is('admin.test.praktik') ? 'active' : '' }}">
+                    <a href="{{ route('admin.test.praktik') }}" class="menu-link">
+                        <div>Tes Praktik</div>
+                    </a>
+                </li>
+                <li class="menu-item {{ Route::is('admin.test.tertulis') ? 'active' : '' }}">
+                    <a href="{{ route('admin.test.tertulis') }}" class="menu-link">
+                        <div>Tes Tertulis</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item {{ Route::is('admin.scoring') ? 'active' : '' }}">
+            <a href="{{ route('admin.scoring') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-school"></i>
+                <div>Nilai & Hasil</div>
+            </a>
+        </li>
+
+        <li class="menu-item {{ Route::is('admin.setting*') ? 'active' : '' }}"">
+            <a href="{{ route('admin.setting.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-settings"></i>
+                <div>Pengaturan</div>
+            </a>
+        </li>
     </ul>
 </aside>

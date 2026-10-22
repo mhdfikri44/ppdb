@@ -24,11 +24,14 @@ class Registration extends Model
         'no_pendaftaran',
         'status_data',
         'status_dokumen',
+        'is_biodata_complete',
+        'is_family_complete',
         'is_locked',
         'locked_at',
         'status_verifikasi',
         'rejected_message',
         'lulus',
+        'has_seen_result',
     ];
 
     public function generateNoPendaftaran()

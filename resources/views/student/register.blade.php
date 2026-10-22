@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>PPDB | Daftar</title>
+    <title>PMBM | Daftar</title>
 
     <meta name="description" content="" />
 
@@ -34,18 +34,18 @@
                     <div class="card-body">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-4 mt-2">
-                            <a href="" class="app-brand-link gap-2">
+                            <a href="{{ route('landingPage') }}" class="app-brand-link gap-2">
                                 <span class="app-brand-logo">
-                                    <img src="{{ asset('assets/img/logo-mts.png') }}" alt="" srcset="" width="50">
+                                    <img src="{{ asset('assets/img/mts/logo-mts.png') }}" alt="" srcset="" width="50">
                                 </span>
-                                <img src="{{ asset('assets/img/logo.png') }}" alt="" srcset="" width="100">
+                                <img src="{{ asset('assets/img/mts/logo.png') }}" alt="" srcset="" width="100">
                             </a>
                         </div>
                         <!-- /Logo -->
                         <h4 class="text-center mb-1 pt-2">Daftar Akun Baru</h4>
                         {{-- <p class="mb-4">Buat akun baru</p> --}}
 
-                        <form id="" class="mb-3" action="{{ route('student.store') }}" method="POST">
+                        <form id="" class="mb-3" action="{{ route('student.register') }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="nisn" class="form-label">NISN</label>
@@ -94,21 +94,12 @@
                                 @enderror
                             </div>
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
-                                    <label class="" for="terms-conditions">
-                                        Saya setuju dengan
-                                        <a href="#">syarat dan ketentuan</a>
-                                    </label>
-                                </div>
-                            </div>
                             <button type="submit" class="btn btn-primary d-grid w-100">Daftar</button>
                         </form>
 
                         <p class="text-center">
                             <span>Sudah memiliki akun?</span>
-                            <a href="">
+                            <a href="{{ route('student.login.form') }}">
                                 <span>Masuk disini</span>
                             </a>
                         </p>
@@ -121,8 +112,9 @@
     <!-- / Content -->
 
     @include('student.components.loading')
-
+    @include('student.components.alert')
     @include('student.components.script')
+    <script src="{{ asset('assets/js/my.js') }}"></script>
 </body>
 
 </html>

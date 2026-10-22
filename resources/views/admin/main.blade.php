@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PPDB | Admin</title>
+    <title>PMBM | Admin</title>
 
     <meta name="description" content="" />
 

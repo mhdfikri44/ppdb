@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('father_occupation_id')->nullable()->constrained('occupations');
             $table->integer('penghasilan_ayah')->nullable();
             $table->string('hp_ayah', 20)->nullable();
-            $table->string('keterangan_ayah', 50)->nullable();
+            $table->foreignId('father_status_id')->nullable()->constrained('statuses');
 
             $table->string('nama_ibu')->nullable();
             $table->string('nik_ibu', 16)->unique()->nullable();
@@ -33,9 +33,10 @@ return new class extends Migration
             $table->foreignId('mother_occupation_id')->nullable()->constrained('occupations');
             $table->integer('penghasilan_ibu')->nullable();
             $table->string('hp_ibu', 20)->nullable();
-            $table->string('keterangan_ibu', 50)->nullable();
+            $table->foreignId('mother_status_id')->nullable()->constrained('statuses');
 
             $table->string('nama_wali')->nullable();
+            $table->string('nik_wali', 16)->unique()->nullable();
             $table->string('tempat_lahir_wali', 100)->nullable();
             $table->date('tanggal_lahir_wali')->nullable();
             $table->foreignId('wali_education_id')->nullable()->constrained('educations');

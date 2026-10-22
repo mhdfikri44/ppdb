@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Exports\JadwalTemplateExport;
+use App\Exports\NilaiTemplateExport;
+use App\Exports\SiswaLulusExport;
+use App\Imports\JadwalImport;
+use App\Imports\NilaiImport;
 use App\Models\Registration;
 use App\Models\Student;
+use App\Models\TestPractice;
+use App\Models\TestWritten;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
 {
-    /**
-     * Menampilkan halaman beranda admin.
-     */
     public function index()
     {
-        $admin = Admin::findOrFail(1);
-
+        $admin = auth('admin')->user();
         $stat = [
             'total'     => Registration::count(),
             'belum'     => Registration::where('status_verifikasi', 'Pending')->where('is_locked', false)->count(),
@@ -29,69 +33,14 @@ class AdminController extends Controller
         return view('admin.pages.beranda', compact('admin', 'stat'));
     }
 
-    /**
-     * Display the form for creating new admin.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Storing new created admin.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
-
-    /**
-     * Remove admin from list.
-     */
-    public function destroy(Admin $admin)
-    {
-        //
-    }
-
-
-    /**
-     * Menampilkan halaman daftar siswa.
-     */
     public function studentList()
     {
         return view('admin.pages.pendaftar-daftar');
     }
-    /**
-     * Datatable daftar siswa.
-     */
+
     public function studentData()
     {
         $data = Student::query()->with(['registration']);
-        // dd($data->get()->toArray());
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -107,40 +56,60 @@ class AdminController extends Controller
                 }
                 return '<span class="badge rounded-pill bg-danger">Belum lengkap</span>';
             })
+            ->addColumn('status_verifikasi', function ($data) {
+                if ($data->registration->status_verifikasi === 'Disetujui') {
+                    return '<span class="badge rounded-pill bg-success">Disetujui</span>';
+                } elseif ($data->registration->status_verifikasi === 'Ditolak') {
+                    return '<span class="badge rounded-pill bg-danger">Ditolak</span>';
+                } elseif ($data->registration->is_locked) {
+                    return '<span class="badge rounded-pill bg-info">Menunggu</span>';
+                }
+                return '<span class="badge rounded-pill bg-secondary">Pending</span>';
+            })
             ->addColumn('aksi', function ($data) {
+                $deleteButton = '';
+                if (auth('admin')->user()->role === 'superadmin') {
+                    $deleteButton = '
+                        <form action="' . route('admin.student.delete', $data->id) . '" method="post">
+                            ' . csrf_field() . '
+                            ' . method_field("DELETE") . '
+                            <button type="button" class="btn btn-icon btn-danger waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
+                                <span class="ti ti-trash"></span>
+                            </button>
+                        </form>';
+                }
+
+                $resetPassButton = '
+                        <button type="button"
+                            class="btn btn-icon btn-warning btn-reset-password"
+                            data-id="' . $data->id . '"
+                            data-nama="' . $data->nama_lengkap . '"
+                            data-bs-toggle="tooltip"
+                            title="Reset Password">
+                            <span class="ti ti-key"></span>
+                        </button>';
+
                 return '
                 <div class="d-inline-flex align-items-center gap-1">
                     <a href="' . route('admin.student.detail', $data->nisn) . '" class="btn btn-icon btn-info waves-effect waves-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail">
                         <span class="ti ti-eye"></span>
                     </a>
-                    <form action="' . route('admin.student.delete', $data->id) . '" method="post">
-                        ' . csrf_field() . '
-                        ' . method_field("DELETE") . '
-                        <button type="button" class="btn btn-icon btn-warning waves-effect waves-light btn-hapus" data-nama="' . $data->nama_lengkap . '" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus">
-                            <span class="ti ti-trash"></span>
-                        </button>
-                    </form>
+                    ' . $resetPassButton . '
+                    ' . $deleteButton . '
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'status_data', 'status_dokumen'])
+            ->rawColumns(['aksi', 'status_data', 'status_dokumen', 'status_verifikasi'])
             ->toJson();
     }
 
-    /**
-     * Menampilkan halaman detail siswa.
-     */
     public function studentDetail(Student $student)
     {
         $student->load('guardian', 'documents');
-        $docs = $student->documents->pluck('path', 'jenis_dokumen')->toArray();
+        $docs = $student->documents->keyBy('jenis_dokumen');
         return view('admin.pages.pendaftar-detail', compact('student', 'docs'));
     }
 
-
-    /**
-     * Menampilkan halaman daftar & datatable siswa yang perlu verifikasi.
-     */
     public function studentConfirmList()
     {
         return view('admin.pages.pendaftar-verifikasi');
@@ -174,14 +143,11 @@ class AdminController extends Controller
             ->toJson();
     }
 
-    /**
-     * datatable siswa yang ditolak.
-     */
     public function studentRejectedData()
     {
         $data = Student::query()->whereHas('registration', function ($q) {
             $q->where('status_verifikasi', 'Ditolak');
-        })->with(['registration']);
+        })->with(['registration', 'guardian']);
 
         return DataTables::of($data)
             ->addIndexColumn()
@@ -189,12 +155,16 @@ class AdminController extends Controller
     }
 
     /**
-     * Menghasilkan data detail siswa dalam format JSON.
+     * Menghasilkan data detail siswa dalam format JSON (untuk verifikasi).
      */
     public function getStudentDetail(Student $student)
     {
         $student->load([
             'religion',
+            'hobby',
+            'dream',
+            'funder',
+            'houseStatus',
             'registration',
             'documents',
             'guardian.fatherJob',
@@ -203,14 +173,12 @@ class AdminController extends Controller
             'guardian.fatherEducation',
             'guardian.motherEducation',
             'guardian.waliEducation',
+            'guardian.fatherStatus',
+            'guardian.motherStatus',
         ]);
         return response()->json($student);
     }
 
-
-    /**
-     * Menampilkan halaman daftar & datatable siswa yang disetujui.
-     */
     public function studentApprovedList()
     {
         return view('admin.pages.pendaftar-disetujui');
@@ -241,11 +209,23 @@ class AdminController extends Controller
             ->toJson();
     }
 
-    /**
-     * Hapus calon siswa.
-     */
+    public function resetPassword(Request $request, Student $student)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|max:100',
+            'konfirmasi_password' => 'required|same:password',
+        ]);
+
+        $student->password = Hash::make($request->password);
+        $student->save();
+        return back()->with('sukses', 'Password berhasil direset!');
+    }
+
     public function studentDelete(Student $student)
     {
+        if (auth('admin')->user()->role !== 'superadmin') {
+            abort(403);
+        }
         $student->delete();
         return back()->with('sukses', 'Calon siswa berhasil dihapus!');
     }
@@ -280,5 +260,177 @@ class AdminController extends Controller
             'status_verifikasi' => 'Pending',
         ]);
         return back()->with('sukses', 'Verifikasi dibatalkan.');
+    }
+
+    /**
+     * Mengelola penjadwalan tes.
+     */
+    public function testPraktik()
+    {
+        $hasTest = TestPractice::exists();
+        return view('admin.pages.tes-praktik', compact('hasTest'));
+    }
+
+    public function testTertulis()
+    {
+        $hasTest = TestWritten::exists();
+        return view('admin.pages.tes-tertulis', compact('hasTest'));
+    }
+
+    public function testPraktikData()
+    {
+        $data = TestPractice::with('student.registration');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    public function testTertulisData()
+    {
+        $data = TestWritten::with('student.registration');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->toJson();
+    }
+
+    public function downloadTemplateJadwal()
+    {
+        return Excel::download(new JadwalTemplateExport, 'template-jadwal-tes.xlsx');
+    }
+
+    public function downloadTemplateNilai()
+    {
+        return Excel::download(new NilaiTemplateExport, 'template-input-nilai.xlsx');
+    }
+
+    public function importJadwal(Request $request)
+    {
+        $request->validate([
+            'jadwal_tes' => 'required|mimes:xlsx,xls|max:1024',
+            'type' => 'required|in:praktik,tertulis',
+        ]);
+
+        $import = new JadwalImport($request->type);
+        Excel::import($import, $request->file('jadwal_tes'));
+
+        return back()->with([
+            'import_summary' => [
+                'total' => $import->total,
+                'success' => $import->success,
+                'failed' => $import->failed,
+            ],
+            'import_errors' => array_slice($import->errors, 0, 10), // batasi 10 error
+        ]);
+    }
+
+    public function importNilai(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls|max:1024',
+        ]);
+
+        $import = new NilaiImport();
+        Excel::import($import, $request->file('file'));
+
+        return response()->json([
+            'message' => 'Import selesai',
+            'summary' => [
+                'total' => $import->total,
+                'success' => $import->success,
+                'failed' => $import->failed,
+            ],
+            'errors' => array_slice($import->errors, 0, 10)
+        ]);
+    }
+
+    public function downloadSiswaLulus()
+    {
+        return Excel::download(new SiswaLulusExport, 'data-siswa-lulus' . '-' . now()->timestamp . '.xlsx');
+    }
+
+    public function clearJadwal(Request $request)
+    {
+        $request->validate([
+            'type' => 'required|in:praktik,tertulis',
+        ]);;
+
+        if ($request->type === 'praktik') {
+            TestPractice::truncate();
+        } else {
+            TestWritten::truncate();
+        }
+        return back()->with('sukses', 'Jadwal berhasil dikosongkan');
+    }
+
+    /**
+     * Mengelola nilai dan kelulusan.
+     */
+    public function scoring()
+    {
+        return view(('admin.pages.penilaian'));
+    }
+
+    public function scoringData()
+    {
+        $data = Student::query()
+            ->whereHas('registration', function ($q) {
+                $q->where('status_verifikasi', 'Disetujui');
+            })
+            ->whereHas('testPractice')
+            ->whereHas('testWritten')
+            ->with(['registration', 'testPractice', 'testWritten'])
+            ->get();
+
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('final_score', function ($data) {
+                $practiceScore = $data->testPractice->score;
+                $writtenScore = $data->testWritten->score;
+
+                if ($practiceScore === null && $writtenScore === null) {
+                    return 0;
+                }
+                $final = ($practiceScore * 0.6) + ($writtenScore * 0.4);
+                return number_format($final);
+            })
+            ->addColumn('keterangan', function ($data) {
+                if ($data->testPractice->score === null && $data->testWritten->score === null) {
+                    return '<span class="badge rounded-pill bg-secondary">Belum ujian</span>';
+                }
+                if ($data->registration->lulus) {
+                    return '<span class="badge rounded-pill bg-success">Lulus</span>';
+                }
+                return '<span class="badge rounded-pill bg-danger">Tidak Lulus</span>';
+            })
+            ->rawColumns(['keterangan'])
+            ->toJson();
+    }
+
+    public function passed(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:students,id',
+        ]);
+
+        Student::whereIn('id', $request->ids)->each(function ($student) {
+            $student->registration->update(['lulus' => true]);
+        });
+
+        return response()->json(['message' => 'Siswa berhasil ditandai lulus.']);
+    }
+
+    public function failed(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:students,id',
+        ]);
+
+        Student::whereIn('id', $request->ids)->each(function ($student) {
+            $student->registration->update(['lulus' => false]);
+        });
+
+        return response()->json(['message' => 'Siswa berhasil ditandai tidak lulus.']);
     }
 }

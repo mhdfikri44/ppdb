@@ -5,55 +5,15 @@
         <h4 class="fw-bold mb-4">
             <span class="text-muted fw-light">Admin / Data Pendaftar /</span> Detail
         </h4>
-        <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">
-            <i class="ti ti-arrow-left"></i> Kembali
-        </a>
-    </div>
 
-    <!-- Data sekolah asal -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="text-primary fw-bold mb-0">Data Sekolah Asal</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="fw-bold">NISN</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->nisn }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold">Tahun lulus</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->tahun_lulus ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td td class="fw-bold">Asal sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->asal_sekolah ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Alamat asal sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->alamat_asal_sekolah ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div class="">
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">
+                <i class="ti ti-arrow-left"></i> Kembali
+            </a>
+            <a href="{{ route('admin.cetak.formulir.siswa', $student->nisn) }}"
+                class="btn btn-sm btn-info waves-effect waves-light" target="_blank">
+                <span class="ti-xs ti ti-printer me-1"></span>Cetak Formulir
+            </a>
         </div>
     </div>
 
@@ -68,6 +28,11 @@
                     <div class="table-responsive text-nowrap">
                         <table class="table table-hover">
                             <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td class="fw-bold">NISN</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->nisn }}</td>
+                                </tr>
                                 <tr>
                                     <td class="fw-bold">Nama lengkap</td>
                                     <td class="fw-bold">:</td>
@@ -93,6 +58,16 @@
                                     <td td class="fw-bold">:</td>
                                     <td>{{ $student->religion->name ?? '-' }}</td>
                                 </tr>
+                                <tr>
+                                    <td td class="fw-bold">Hobi</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->hobby->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Cita-cita</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->dream->name ?? '-' }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -103,14 +78,19 @@
                         <table class="table table-hover">
                             <tbody class="table-border-bottom-0">
                                 <tr>
-                                    <td td class="fw-bold">Hobi</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->hobi ?? '-' }}</td>
+                                    <td class="fw-bold">Tahun lulus</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->tahun_lulus ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Cita-cita</td>
+                                    <td td class="fw-bold">Asal sekolah</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->cita_cita ?? '-' }}</td>
+                                    <td>{{ $student->asal_sekolah ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Alamat asal sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->alamat_asal_sekolah ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">Prestasi</td>
@@ -118,71 +98,14 @@
                                     <td>{{ $student->prestasi ?? '-' }}</td>
                                 </tr>
                                 <tr>
+                                    <td td class="fw-bold">Yang membiayai sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->funder->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
                                     <td td class="fw-bold">Penyakit</td>
                                     <td td class="fw-bold">:</td>
                                     <td>{{ $student->penyakit ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Data keluarga -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="text-primary fw-bold mb-0">Data Keluarga</h5>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="fw-bold">Anak keberapa</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->anak_keberapa_label ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Jumlah saudara</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->jumlah_saudara ?? '-' }} Bersaudara</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Tempat tinggal</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->tempat_tinggal ?? '-' }}</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Transportasi ke sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->transportasi ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-6 px-2">
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <tbody class="table-border-bottom-0">
-                                <tr>
-                                    <td class="fw-bold">Jarak ke sekolah</td>
-                                    <td class="fw-bold">:</td>
-                                    <td>{{ $student->jarak_tempuh ?? '-' }} KM</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">Waktu ke sekolah</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->waktu_tempuh ?? '-' }} Menit</td>
-                                </tr>
-                                <tr>
-                                    <td td class="fw-bold">No. Kartu Keluarga (KK)</td>
-                                    <td td class="fw-bold">:</td>
-                                    <td>{{ $student->no_kk ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">No. KIP/PKH/KKS/KPS</td>
@@ -194,9 +117,17 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
+    <!-- Data orang tua -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="text-primary fw-bold mb-0">Data Orang Tua</h5>
+        </div>
+        <div class="card-body">
             <!-- Data Ayah -->
-            <div class="row mt-4">
+            <div class="row">
                 <div class="col px-2">
                     <div class="table-responsive text-nowrap">
                         <table class="table">
@@ -258,9 +189,9 @@
                                     <td>{{ $student->guardian->hp_ayah ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Keterangan ayah</td>
+                                    <td td class="fw-bold">Status ayah</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->guardian->keterangan_ayah ?? '-' }}</td>
+                                    <td>{{ $student->guardian->fatherStatus->name ?? '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -331,9 +262,9 @@
                                     <td>{{ $student->guardian->hp_ibu ?? '-' }}</td>
                                 </tr>
                                 <tr>
-                                    <td td class="fw-bold">Keterangan ibu</td>
+                                    <td td class="fw-bold">Status ibu</td>
                                     <td td class="fw-bold">:</td>
-                                    <td>{{ $student->guardian->keterangan_ibu ?? '-' }}</td>
+                                    <td>{{ $student->guardian->motherStatus->name ?? '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -364,6 +295,11 @@
                                     <td class="fw-bold">Nama wali</td>
                                     <td class="fw-bold">:</td>
                                     <td>{{ $student->guardian->nama_wali ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">NIK wali</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->guardian->nik_wali ?? '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td td class="fw-bold">Tempat, tgl lahir wali</td>
@@ -406,6 +342,75 @@
         </div>
     </div>
 
+    <!-- Data rumah & keluarga -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="text-primary fw-bold mb-0">Data Rumah & Keluarga</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6 px-2">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td td class="fw-bold">No. Kartu Keluarga (KK)</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->no_kk ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Alamat rumah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->alamat ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Status kepemilikan rumah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->houseStatus->name ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Anak keberapa</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->anak_keberapa_label ?? '-' }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-6 px-2">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <tbody class="table-border-bottom-0">
+                                <tr>
+                                    <td td class="fw-bold">Jumlah saudara</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->jumlah_saudara ?? '-' }} Bersaudara</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Transportasi ke sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->transportasi ?? '-' }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold">Jarak ke sekolah</td>
+                                    <td class="fw-bold">:</td>
+                                    <td>{{ $student->jarak_tempuh ?? '-' }} KM</td>
+                                </tr>
+                                <tr>
+                                    <td td class="fw-bold">Waktu ke sekolah</td>
+                                    <td td class="fw-bold">:</td>
+                                    <td>{{ $student->waktu_tempuh ?? '-' }} Menit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Dokumen -->
     <div class="card mb-4">
         <div class="card-header">
@@ -416,12 +421,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">1. Pasfoto Latar Merah</span>
                     @if (isset($docs['pasfoto']))
-                        <a href="{{ asset('storage/' . $docs['pasfoto']) }}" target="_blank"
-                            class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['pasfoto']->path) . '?v=' . $docs['pasfoto']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -429,12 +434,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">2. Surat Keterangan Aktif Sekolah Asli</span>
                     @if (isset($docs['suket_sekolah']))
-                        <a href="{{ asset('storage/' . $docs['suket_sekolah']) }}" target="_blank"
-                            class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['suket_sekolah']->path) . '?v=' . $docs['suket_sekolah']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -442,11 +447,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">3. Kartu Keluarga (KK) Asli</span>
                     @if (isset($docs['kk']))
-                        <a href="{{ asset('storage/' . $docs['kk']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['kk']->path) . '?v=' . $docs['kk']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -454,11 +460,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">4. KTP Kedua Orang Tua Asli</span>
                     @if (isset($docs['ktp']))
-                        <a href="{{ asset('storage/' . $docs['ktp']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['ktp']->path) . '?v=' . $docs['ktp']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -466,11 +473,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">5. Akta Kelahiran Asli</span>
                     @if (isset($docs['akta']))
-                        <a href="{{ asset('storage/' . $docs['akta']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['akta']->path) . '?v=' . $docs['akta']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -478,11 +486,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">6. Kartu NISN Asli</span>
                     @if (isset($docs['nisn']))
-                        <a href="{{ asset('storage/' . $docs['nisn']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['nisn']->path) . '?v=' . $docs['nisn']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -490,12 +499,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">7. Surat Keterangan Mengaji/Ijazah MDA/TPA Asli</span>
                     @if (isset($docs['suket_ngaji']))
-                        <a href="{{ asset('storage/' . $docs['suket_ngaji']) }}" target="_blank"
-                            class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['suket_ngaji']->path) . '?v=' . $docs['suket_ngaji']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -503,12 +512,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">8. Sertifikat Prestasi Akademik & Non Akademik Asli</span>
                     @if (isset($docs['sertifikat']))
-                        <a href="{{ asset('storage/' . $docs['sertifikat']) }}" target="_blank"
-                            class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['sertifikat']->path) . '?v=' . $docs['sertifikat']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
@@ -516,11 +525,12 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span class="fw-bold">9. Kartu KIP/PKH Asli</span>
                     @if (isset($docs['kartu']))
-                        <a href="{{ asset('storage/' . $docs['kartu']) }}" target="_blank" class="btn btn-sm btn-info">
+                        <a href="{{ route('student.file.show', $docs['kartu']->path) . '?v=' . $docs['kartu']->updated_at->timestamp }}"
+                            target="_blank" class="btn btn-sm btn-info">
                             <i class="ti ti-file"></i> Lihat
                         </a>
                     @else
-                        <button class="btn btn-sm btn-info" disabled>
+                        <button class="btn btn-sm btn-secondary" disabled>
                             <i class="ti ti-file"></i> Lihat
                         </button>
                     @endif
